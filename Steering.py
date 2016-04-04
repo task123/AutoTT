@@ -2,16 +2,12 @@
 
 """React to gyroscopic and stop/continue data sendt from AutoTTCommunication and control a class 'motors', which steers the motors.
 
-Sends messages speed('speed') and turn('turn') to 'motors'.
- - 'speed' is a number from -100 to 100, 100 being full speed forward.
- - 'turn' is a number from -100 to 100, 100 being full turn to the right.
+Sends messages set_right_speed('speed') and set_left_speed('speed') to 'motors'.
+ - 'speed' is a number from -100 to 100, 100 being full speed forward, -100 being full speed in reverse.
 """
 class SteeringWithIOSGyro:
-    min_roll_forward = 0.0
-    min_roll_backward = -min_roll_forward
-    max_roll_forward = 30.0 * 3.14 / 180.0
-    max_roll_backward = -max_roll_forward
-    min_pitch = 0.0
+    min_roll = 2.0 * 3.14 / 180.0
+    max_roll = 30.0 * 3.14 / 180.0
     max_pitch = 30.0 * 3.14 / 180.0
     
     def __init__(self, motors, autoTTCommunication = None, gyro_update_intervall = 1.0/60.0):
@@ -23,27 +19,39 @@ class SteeringWithIOSGyro:
     def receive_message(self, type, message):
         if (type == "Gyro" and self.stop == False):
             [roll, pitch, yaw] = message.split(';', 2)
-            print roll + " " + pitch + " " + yaw
             roll = float(roll)
             pitch = float(pitch)
             yaw = float(yaw)
-            if (roll < self.min_roll_forward and roll > self.min_roll_backward):
-                self.motors.speed(0.0)
-            elif (roll > self.max_roll_forward):
-                self.motors.speed(100.0)
-            elif (roll < self.max_roll_backward):
-                self.motors.speed(-100.0)
-            elif (roll > 0):
-                self.motors.speed(100.0 * (roll - self.min_roll_forward) / (self.max_roll_forward - self.min_roll_forward))
-            elif (roll < 0):
-                self.motors.speed(100.0 * (roll - self.min_roll_backward) / abs(self.max_roll_backward - self.min_roll_backward))
+            
+            direction_angle = math.atan(pitch / roll)
+            if (roll > 0 and pitch > 0):
+                direction_angle = math.pi / 2.0 - direction_angle
+            elif (roll < 0 and pitch > 0):
+                direction_angle = direction_angle - math.pi / 2.0
+            elif (roll < 0 and pitch < 0):
+                direction_angle = direction_angle + math.pi / 2.0
+            elif (roll > 0 and pitch < 0):
+                direction_angle = math.pi / 2.0 + direction_angle
+            direction_angle *= 180.0 / math.pi
+            speed = math.sqrt((roll / max_roll)**2 + (pitch / max_pitch)**2)
+            if (speed > 1.0):
+                speed = 1.0
+            elif (speed < (min_roll / max_roll)):
+                speed = 0.0
 
-            if (abs(pitch) < self.min_pitch):
-                self.motors.turn(0.0)
-            elif (abs(pitch) > self.max_pitch):
-                self.motors.turn(100.0 * (pitch - self.min_pitch) / abs(pitch))
-            else:
-                self.motors.turn(100.0 * (pitch - self.min_pitch) / (self.max_pitch - self.min_pitch))
+            if (direction_angle >= 0.0 and direction_angle <= 90.0):
+                right_speed = 100.0 * speed
+                left_speed = right_speed * (1 - direction_angle / 45.0)
+            elif (direction_angle < 0.0 and direction_angle >= -90.0):
+                left_speed = 100.0 * speed
+                right_speed = left_speed * (1 + direction_angle / 45.0)
+            elif (direction_angle > 90.0 and direction_angle <= 180.0):
+                left_speed = -100.0 * speed
+                right_speed = -left_speed * (1 - (direction_angle - 90.0) / 45.0)
+            elif (direction_angle < -90.0 and direction_angle >= -180.0):
+                right_speed = -100.0 * speed
+                left_speed = -right_speed * (1 + (direction_angle - 90.0) / 45.0)
+        
         elif (type == "Stop"):
             self.stop = True
             self.motors.speed(0.0)
@@ -53,7 +61,7 @@ class SteeringWithIOSGyro:
 
 """React to messages from AutoTTCommunication and control a class 'motors', which steers the motors.
     
-Sends messages right_speed('speed') and left_speed('speed') to 'motors'.
+Sends messages set_right_speed('speed') and set_left_speed('speed') to 'motors'.
 - 'speed' is a number from 0 to 100, 100 being full speed forward and 0 being stop.
 """
 class SteeringWithIOSButtons:
