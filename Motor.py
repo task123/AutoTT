@@ -42,7 +42,7 @@ class TripMeter:
     # no reason to call this explicitly as __init__ calls it in its own thread
     def trip_meter(self):
         while True:
-            right_read = self.arduino.analogRead(self.pin_right_trip_sensor)
+            right_read = self.arduino.analogRead(self.pin_right_trip_sensor) / 1023.0 * 5.0
             if (right_read > self.higher_limit_sensor and not self.right_previously_high):
                 self.right_count = self.right_count + 1
                 self.right_count_time3 = self.right_count_time2
@@ -56,7 +56,7 @@ class TripMeter:
                 self.right_count_time1 = time.time()
                 self.right_previously_high = False
             
-            left_read = self.arduino.analogRead(self.pin_left_trip_sensor)
+            left_read = self.arduino.analogRead(self.pin_left_trip_sensor) / 1023.0 * 5.0
             if (left_read > self.higher_limit_sensor and not self.left_previously_high):
                 self.left_count = self.left_count + 1
                 self.left_count_time3 = self.left_count_time2
@@ -106,7 +106,7 @@ class Motor:
     def __init__(trip_meter,  pin_right_forward = 5, pin_right_backward = 10, pin_left_forward = 6, pin_left_backward = 11, pin_motor_LED = 8, max_speed = 0.6, min_voltage = 1.0, correction_interval = 0.05, proportional_term_in_PID = 1.0, derivative_term_in_PID = 0.05):
         self.trip_meter = trip_meter
         self.arduino = trip_meter.arduino
-                            
+    
         self.pin_right_forward = pin_right_forward
         self.pin_right_backward = pin_right_backward
         self.pin_left_forward = pin_left_forward
@@ -144,7 +144,7 @@ class Motor:
         self.motor_control_thread = threading.Thread(target = self.motor_control)
         self.motor_control_thread.setDaemon(True)
         self.motor_control_thread.start()
-    
+        
     def motor_control(self):
         while True:
             true_right_speed = self.trip_meter.get_right_speed() * 100.0 / max_speed

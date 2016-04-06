@@ -1,18 +1,19 @@
 #!/usr/bin/python
 
+import math
+
 """React to gyroscopic and stop/continue data sendt from AutoTTCommunication and control a class 'motors', which steers the motors.
 
 Sends messages set_right_speed('speed') and set_left_speed('speed') to 'motors'.
  - 'speed' is a number from -100 to 100, 100 being full speed forward, -100 being full speed in reverse.
 """
 class SteeringWithIOSGyro:
-    min_roll = 2.0 * 3.14 / 180.0
-    max_roll = 30.0 * 3.14 / 180.0
-    max_pitch = 30.0 * 3.14 / 180.0
-    
-    def __init__(self, motors, autoTTCommunication = None, gyro_update_intervall = 1.0/60.0):
+    def __init__(self, motors, autoTTCommunication = None, gyro_update_intervall = 1.0/60.0, min_roll = 2.0 * 3.14 / 180.0, max_roll = 30.0 * 3.14 / 180.0, max_pitch = 30.0 * 3.14 / 180.0):
         self.motors = motors
         self.stop = True
+        self.min_roll = min_roll
+        self.max_roll = max_roll
+        self.max_pitch = max_pitch
         if (autoTTCommunication != None):
             autoTTCommunication.start_gyro_with_update_intervall(gyro_update_intervall)
 
@@ -22,36 +23,34 @@ class SteeringWithIOSGyro:
             roll = float(roll)
             pitch = float(pitch)
             yaw = float(yaw)
-            
-            direction_angle = math.atan(pitch / roll)
-            if (roll > 0 and pitch > 0):
-                direction_angle = math.pi / 2.0 - direction_angle
-            elif (roll < 0 and pitch > 0):
-                direction_angle = direction_angle - math.pi / 2.0
-            elif (roll < 0 and pitch < 0):
-                direction_angle = direction_angle + math.pi / 2.0
-            elif (roll > 0 and pitch < 0):
-                direction_angle = math.pi / 2.0 + direction_angle
+
+            direction_angle = math.atan2(pitch, roll)
             direction_angle *= 180.0 / math.pi
-            speed = math.sqrt((roll / max_roll)**2 + (pitch / max_pitch)**2)
+            
+            speed = math.sqrt((roll / self.max_roll)**2 + (pitch / self.max_pitch)**2)
             if (speed > 1.0):
                 speed = 1.0
-            elif (speed < (min_roll / max_roll)):
+            elif (speed < (self.min_roll / self.max_roll)):
                 speed = 0.0
-
+            
+            right_speed = 0.0
+            left_speed = 0.0
             if (direction_angle >= 0.0 and direction_angle <= 90.0):
-                right_speed = 100.0 * speed
-                left_speed = right_speed * (1 - direction_angle / 45.0)
-            elif (direction_angle < 0.0 and direction_angle >= -90.0):
                 left_speed = 100.0 * speed
-                right_speed = left_speed * (1 + direction_angle / 45.0)
+                right_speed = left_speed * (1 - direction_angle / 45.0)
+            elif (direction_angle < 0.0 and direction_angle >= -90.0):
+                right_speed = 100.0 * speed
+                left_speed = right_speed * (1 + direction_angle / 45.0)
             elif (direction_angle > 90.0 and direction_angle <= 180.0):
-                left_speed = -100.0 * speed
-                right_speed = -left_speed * (1 - (direction_angle - 90.0) / 45.0)
-            elif (direction_angle < -90.0 and direction_angle >= -180.0):
                 right_speed = -100.0 * speed
-                left_speed = -right_speed * (1 + (direction_angle - 90.0) / 45.0)
-        
+                left_speed = -right_speed * (1 - (direction_angle - 90.0) / 45.0)
+            elif (direction_angle < -90.0 and direction_angle >= -180.0):
+                left_speed = -100.0 * speed
+                right_speed = -left_speed * (1 + (direction_angle - 90.0) / 45.0)
+
+            self.motors.set_right_speed(right_speed)
+            self.motors.set_left_speed(left_speed)
+    
         elif (type == "Stop"):
             self.stop = True
             self.motors.speed(0.0)
@@ -88,3 +87,39 @@ class SteeringWithIOSButtons:
             self.motors.right_speed(0.0)
         elif (type == "Continue"):
             self.stop = False
+
+class Mode:
+    list_of_modes = ["Tilt Steering", "Tilt with AOA", "Button Steering", "Button with AOA", "Follow line", "Stop sign", "Traffic light", "Self steering"] # AOA - Automated Object Avoidence
+    
+    list_of_info_modes = ["Control the car by tilting your iOS device.", "Control the car by tilting your iOS device while AOA (Automated Object Avoidence) stops you from crashing into objects.", "Control the car by pushing the right and lift side of the screen.", "Control the car by pushing the right and left side of the screen while AOA (Automated Object Avoidence) stops you from crashing into objects.", "The car tries to follow a line on the ground and stops when objects blocks its way.", "The car tries to follow a line on the ground and stops for stop signs and objects blocking its way.", "The car tries to follow a line on the ground and stops for red traffic lights and objects blocking its way.", "The car tries to follow a line on the ground and stops for stop signs, red traffic lights and objects blocking its way."]
+    
+    def __init__(self, autoTTCommunication, steering):
+        self.autoTTCommunication = autoTTCommunication
+        self.steering = steering
+    
+    def recieve_message(self, type, message):
+        if (type == "Modes"):
+            self.autoTTCommunication.modes(self.list_of_modes)
+        elif (type == "InfoModes"):
+            self.autoTTCommunication.info_modes(self.list_of_info_modes)
+        elif (type == "ChosenMode"):
+            if (message == "0"): # Tilt Steering
+                steering = SteeringWithIOSGyro(self.motors, self.autoTTCommunication)
+                autoTTCommunication.set_receivers(gyro_recv = steering, stop_cont_recv = steering)
+            elif (message == "1"): # Tilt with AOA
+                steering = SteeringWithIOSGyro(self.motors, self.autoTTCommunication)
+                autoTTCommunication.set_receivers(gyro_recv = steering, stop_cont_recv = steering)
+            elif (message == "2"): # Button Steering
+                steering = SteeringWithIOSButtons(self.motors, self.autoTTCommunication)
+                autoTTCommunication.set_receivers(gyro_recv = steering, stop_cont_recv = steering)
+            elif (message == "3"): # Button with AOA
+                steering = SteeringWithIOSButtons(self.motors, self.autoTTCommunication)
+                autoTTCommunication.set_receivers(gyro_recv = steering, stop_cont_recv = steering)
+            elif (message == "4"): # Follow line
+                steering
+            elif (message == "5"): # Stop sign
+                steering
+            elif (message == "6"): # Traffic light
+                steering
+            elif (message == "7"): # Self steering
+                steering
