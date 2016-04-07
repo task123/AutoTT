@@ -74,14 +74,14 @@ class TripMeter:
                 self.left_count_time1 = time.time()
                 self.left_previously_high = False
             
-            self.right_distance = math.pi * self.wheel_diameter * self.right_count / (2 * number_of_notches)
-            self.left_distance = math.pi * self.wheel_diameter * self.left_count / (2 * number_of_notches)
+            self.right_distance = math.pi * self.wheel_diameter * self.right_count / (2 * self.number_of_notches)
+            self.left_distance = math.pi * self.wheel_diameter * self.left_count / (2 * self.number_of_notches)
             if ((time.time() - self.right_count_time1) < 2 * (self.right_count_time1 - self.right_count_time3)):
-                self.right_speed = math.pi * self.wheel_diameter / number_of_notches / (self.right_count_time1 - self.right_count_time3)
+                self.right_speed = math.pi * self.wheel_diameter / self.number_of_notches / (self.right_count_time1 - self.right_count_time3)
             else:
                 self.right_speed = 0.0
             if ((time.time() - self.left_count_time1) < 2 * (self.left_count_time1 - self.left_count_time3)):
-                self.left_speed = math.pi * self.wheel_diameter / number_of_notches / (self.left_count_time1 - self.left_count_time3)
+                self.left_speed = math.pi * self.wheel_diameter / self.number_of_notches / (self.left_count_time1 - self.left_count_time3)
             else:
                 self.left_speed = 0.0
             
