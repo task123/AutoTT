@@ -7,7 +7,10 @@ pin = 3
 GPIO.setup(pin, GPIO.OUT)
 
 while True:
-    GPIO.output(pin, 1)
-    time.sleep(2)
-    GPIO.output(pin, 0)
-    time.sleep(2)
+    try:
+        GPIO.output(pin, 1)
+        time.sleep(2)
+        GPIO.output(pin, 0)
+        time.sleep(2)
+    except:
+        GPIO.cleanup()
