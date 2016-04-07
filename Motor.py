@@ -90,7 +90,7 @@ class TripMeter:
             left_read = self.arduino.analogRead(self.pin_left_trip_sensor)
             if(self.i < 5):
                 print time.time() - self.t
-                i += 1
+                self.i += 1
             time.sleep(self.measurement_interval)
 
     def get_right_distance(self):
