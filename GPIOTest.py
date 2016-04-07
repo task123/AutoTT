@@ -12,6 +12,4 @@ try:
         time.sleep(2)
         GPIO.output(pin, 0)
         time.sleep(2)
-except KeyboardInterrupt:
-    2+2
-GPIO.cleanup()
+
