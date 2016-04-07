@@ -9,7 +9,7 @@ import time
 class TripMeter:
     #change default notches
     #sensor max value ~4.3, min value ~2.0
-    def __init__(self, pin_right_trip_sensor = 15, pin_left_trip_sensor = 14, lower_limit_sensor = 2.85, higher_limit_sensor = 3.35, number_of_notches = 100.0, wheel_diameter = 0.0694, measurement_interval = 0.01):
+    def __init__(self, pin_right_trip_sensor = 15, pin_left_trip_sensor = 14, lower_limit_sensor = 2.85, higher_limit_sensor = 3.35, number_of_notches = 100.0, wheel_diameter = 0.0694, measurement_interval = 0.001):
         self.pin_left_trip_sensor = pin_left_trip_sensor
         self.pin_right_trip_sensor = pin_right_trip_sensor
         self.lower_limit_sensor = lower_limit_sensor
