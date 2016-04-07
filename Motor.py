@@ -35,6 +35,8 @@ class TripMeter:
         self.left_count_time3 = time.time()
         self.right_speed = 0.0
         self.left_speed = 0.0
+        self.right_distance = 0.0
+        self.left_distance = 0.0
         
         self.trip_meter_thread = threading.Thread(target = self.trip_meter)
         self.trip_meter_thread.setDaemon(True)
