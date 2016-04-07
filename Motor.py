@@ -45,7 +45,9 @@ class TripMeter:
     
     # no reason to call this explicitly as __init__ calls it in its own thread
     def trip_meter(self):
+        self.first = True
         while True:
+            self.t = time.time()
             right_read = self.arduino.analogRead(self.pin_right_trip_sensor) / 1023.0 * 5.0
             if (right_read > self.higher_limit_sensor and not self.right_previously_high):
                 self.right_count = self.right_count + 1
@@ -84,7 +86,8 @@ class TripMeter:
                 self.left_speed = math.pi * self.wheel_diameter / self.number_of_notches / (self.left_count_time1 - self.left_count_time3)
             else:
                 self.left_speed = 0.0
-            
+            if(self.first):
+                print time.time() - self.t
             time.sleep(self.measurement_interval)
 
     def get_right_distance(self):
