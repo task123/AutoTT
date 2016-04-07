@@ -85,7 +85,7 @@ class TripMeter:
             else:
                 self.left_speed = 0.0
             
-            time.sleep(measurement_interval)
+            time.sleep(self.measurement_interval)
 
     def get_right_distance(self):
         return self.right_distance
