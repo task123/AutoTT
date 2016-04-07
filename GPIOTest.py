@@ -12,4 +12,7 @@ try:
         time.sleep(2)
         GPIO.output(pin, 0)
         time.sleep(2)
+except:
+    a = 1
+GPIO.cleanup()
 
