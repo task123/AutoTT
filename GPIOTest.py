@@ -6,11 +6,12 @@ pin = 3
 
 GPIO.setup(pin, GPIO.OUT)
 
+try:
 while True:
-    try:
         GPIO.output(pin, 1)
         time.sleep(2)
         GPIO.output(pin, 0)
         time.sleep(2)
-    except:
-        GPIO.cleanup()
+except KeyboardInterrupt:
+    GPIO.cleanup()
+#GPIO.cleanup()
