@@ -2,6 +2,7 @@ import TCP
 import Motor
 import Steering
 import Status
+import time
 
 port = 12345
 ip_address = "10.22.9.52"
@@ -15,7 +16,7 @@ status = Status.Status(autoTTCommunication, motors)
 autoTTCommunication.set_receivers(gyro_recv = steering, mode_recv = mode, status_recv = status, stop_cont_recv = steering)
 
 while True:
-    sleep(10)
+    time.sleep(10)
 
 
 
