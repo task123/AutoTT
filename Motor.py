@@ -166,7 +166,7 @@ class Motor:
                 self.arduino.analogWrite(self.pin_left_forward, self.left_forward_value)
                 self.arduino.analogWrite(self.pin_left_backward, self.left_backward_value)
                 
-            time.sleep(correction_interval)
+            time.sleep(self.correction_interval)
 
 
     def stop(self):
