@@ -13,8 +13,8 @@ connection = SerialManager(device='/dev/ttyACM0')
 
 Arduino=ArduinoApi(connection=connection)
 
-pin_right = 5
-pin_left = 6
+pin_right = 6
+pin_left = 5
 Arduino.pinMode(pin_right, Arduino.OUTPUT)
 Arduino.pinMode(pin_left, Arduino.OUTPUT)
 
