@@ -5,7 +5,7 @@ import Status
 
 port = 12345
 
-autoTTCommunication = AutoTTCommunication(port)
+autoTTCommunication = TCP.AutoTTCommunication(port)
 trip_meter = Motor.TripMeter()
 motors = Motor.Motor(trip_meter)
 steering = Steering.SteeringWithIOSGyro(motors, autoTTCommunication = autoTTCommunication)
