@@ -28,7 +28,7 @@ class Connection:
 
 class AutoTTCommunication:
     #all recv classes must implement receive_message(message_type, message)
-    def __init__(self, port, gyro_recv = None, main_view_recv = None, mode_recv = None, status_recv = None, stop_cont_recv = None, disconnect_recv = None, shut_down_recv = None,  video_recv = None, button_recv = None):
+    def __init__(self, port, ip_address = None, gyro_recv = None, main_view_recv = None, mode_recv = None, status_recv = None, stop_cont_recv = None, disconnect_recv = None, shut_down_recv = None,  video_recv = None, button_recv = None):
         self.gyro_recv = gyro_recv
         self.mode_recv = mode_recv
         self.status_recv = status_recv
@@ -37,7 +37,9 @@ class AutoTTCommunication:
         self.shut_down_recv = shut_down_recv
         self.video_recv = video_recv
         self.button_recv = button_recv
-        self.tcp = Connection(socket.gethostbyname(socket.gethostname()), port, self)
+        if (ip_address == None):
+            ip_address = socket.gethostbyname(socket.gethostname())
+        self.tcp = Connection(ip_address, port, self)
     
     def set_receivers(self, gyro_recv = None, main_view_recv = None, mode_recv = None, status_recv = None, stop_cont_recv = None, disconnect_recv = None, shut_down_recv = None,  video_recv = None, button_recv = None):
         self.gyro_recv = gyro_recv
