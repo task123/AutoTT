@@ -80,7 +80,7 @@ class Motor:
     # correct max speed, min voltage
     def __init__(self, trip_meter,  pin_right_forward = 5, pin_right_backward = 10, pin_left_forward = 6, pin_left_backward = 11, 
             pin_motor_LED = 8, max_speed = 0.5, min_voltage = 1.0, correction_interval = 0.005, 
-            proportional_term_in_PID = 1.0, derivative_term_in_PID = 0.0):
+            proportional_term_in_PID = 0.0, derivative_term_in_PID = 0.0):
         self.trip_meter = trip_meter
         self.connection = SerialManager(device='/dev/ttyACM0')
         self.arduino=ArduinoApi(connection=self.connection)
@@ -162,6 +162,15 @@ class Motor:
             
             if (not self.stop):
                 print self.right_forward_value
+                if (self.right_forward_value < 0.0){
+                    self.right_forward_value = 0.0
+                } else if (self.right_backward_value < 0.0) {
+                    self.right_backward_value = 0.0
+                } else if (self.left_forward_value < 0.0) {
+                    self.left_forward_value = 0.0
+                } else if (self.left_backward_value < 0.0) {
+                    self.left_backward_value = 0.0 
+                }
                 self.arduino.analogWrite(self.pin_right_forward, self.right_forward_value)
                 self.arduino.analogWrite(self.pin_right_backward, self.right_backward_value)
                 self.arduino.analogWrite(self.pin_left_forward, self.left_forward_value)
