@@ -10,46 +10,40 @@ import RPi.GPIO as GPIO
 class TripMeter:
     #change default notches
     #sensor max value ~4.3, min value ~2.0
-    def __init__(self, number_of_notches = 100.0, wheel_diameter = 0.0694, measurement_interval = 0.001, right_pin = 2, left_pin = 3):
+    def __init__(self, number_of_notches = 75.0, wheel_diameter = 0.0694, right_pin = 2, left_pin = 3):
         self.number_of_notches = number_of_notches
         self.wheel_diameter = wheel_diameter
         self.measurement_interval = measurement_interval
         self.right_pin = right_pin
         self.left_pin = left_pin
+        
+        self.right_count = 0
+        self.left_count = 0
+        self.right_count_time3 = 0.0
+        self.right_count_time2 = 0.0
+        self.right_count_time1 = 0.0
+        self.left_count_time3 = 0.0
+        self.left_count_time2 = 0.0
+        self.left_count_time1 = 0.0
+        
+        self.right_distance = 0.0
+        self.left_distance = 0.0
 
         GPIO.setmode(GPIO.BCM)
 
         GPIO.setup(right_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
         GPIO.setup(left_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        
+        GPIO.add_event_detect(right_pin, GPIO.RISING, callback=self.right_count)
+        GPIO.add_event_detect(left_pin, GPIO.RISING, callback=self.left_count)
 
-
-# now we'll define the threaded callback function
-# this will run in another thread when our event is detected
-def my_callback(channel):
-    print "Rising edge detected on port 24 - even though, in the main thread,"
-    print "we are still waiting for a falling edge - how cool?\n"
-
-print "Make sure you have a button connected so that when pressed"
-print "it will connect GPIO port 23 (pin 16) to GND (pin 6)\n"
-print "You will also need a second button connected so that when pressed"
-print "it will connect GPIO port 24 (pin 18) to 3V3 (pin 1)"
-raw_input("Press Enter when ready\n>")
-
-# The GPIO.add_event_detect() line below set things up so that
-# when a rising edge is detected on port 24, regardless of whatever
-# else is happening in the program, the function "my_callback" will be run
-# It will happen even while the program is waiting for
-# a falling edge on the other button.
-GPIO.add_event_detect(2, GPIO.RISING, callback=my_callback)
-
-try:
-    print "Waiting for falling edge on port 23"
-    GPIO.wait_for_edge(3, GPIO.FALLING)
-    print "Falling edge detected. Here endeth the second lesson."
-
-except KeyboardInterrupt:
-    GPIO.cleanup()       # clean up GPIO on CTRL+C exit
-GPIO.cleanup()           # clean up GPIO on normal exit
+    def right_count(self):
+        self.right_count += 1
+        self.right_count_time3 = self.right_count_time2
+        self.right_count_time2 = self.right_count_time1
+        self.right_count_time1 = time.time()
+        self.right_distance = math.pi * self.wheel_diameter * self.right_count / (2 * self.number_of_notches)
+        self.right_speed = math.pi * self.wheel_diameter / self.number_of_notches / (self.right_count_time1 - self.right_count_time3)
     
     # no reason to call this explicitly as __init__ calls it in its own thread
     def trip_meter(self):
