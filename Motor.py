@@ -28,11 +28,13 @@ class TripMeter:
         
         self.right_distance = 0.0
         self.left_distance = 0.0
+        self.right_speed = 0.0
+        self.left_speed = 0.0
 
         GPIO.setmode(GPIO.BCM)
 
-        GPIO.setup(right_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-        GPIO.setup(left_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        GPIO.setup(self.right_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        GPIO.setup(self.left_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
         
         GPIO.add_event_detect(right_pin, GPIO.RISING, callback=self.right_count)
         GPIO.add_event_detect(left_pin, GPIO.RISING, callback=self.left_count)
@@ -42,58 +44,16 @@ class TripMeter:
         self.right_count_time3 = self.right_count_time2
         self.right_count_time2 = self.right_count_time1
         self.right_count_time1 = time.time()
-        self.right_distance = math.pi * self.wheel_diameter * self.right_count / (2 * self.number_of_notches)
-        self.right_speed = math.pi * self.wheel_diameter / self.number_of_notches / (self.right_count_time1 - self.right_count_time3)
-    
-    # no reason to call this explicitly as __init__ calls it in its own thread
-    def trip_meter(self):
-        self.i = 0
-        while True:
-            right_read = self.arduino.analogRead(self.pin_right_trip_sensor) / 1023.0 * 5.0
-            if (right_read > self.higher_limit_sensor and not self.right_previously_high):
-                self.right_count = self.right_count + 1
-                self.right_count_time3 = self.right_count_time2
-                self.right_count_time2 = self.right_count_time1
-                self.right_count_time1 = time.time()
-                self.right_previously_high = True
-            elif (right_read < self.lower_limit_sensor and self.right_previously_high):
-                self.right_count = self.right_count + 1
-                self.right_count_time3 = self.right_count_time2
-                self.right_count_time2 = self.right_count_time1
-                self.right_count_time1 = time.time()
-                self.right_previously_high = False
-            
-            left_read = self.arduino.analogRead(self.pin_left_trip_sensor) / 1023.0 * 5.0
-            if (left_read > self.higher_limit_sensor and not self.left_previously_high):
-                self.left_count = self.left_count + 1
-                self.left_count_time3 = self.left_count_time2
-                self.left_count_time2 = self.left_count_time1
-                self.left_count_time1 = time.time()
-                self.left_previously_high = True
-            elif (left_read < self.lower_limit_sensor and self.left_previously_high):
-                self.left_count = self.left_count + 1
-                self.left_count_time3 = self.left_count_time2
-                self.left_count_time2 = self.left_count_time1
-                self.left_count_time1 = time.time()
-                self.left_previously_high = False
-            
-            self.right_distance = math.pi * self.wheel_diameter * self.right_count / (2 * self.number_of_notches)
-            self.left_distance = math.pi * self.wheel_diameter * self.left_count / (2 * self.number_of_notches)
-            if ((time.time() - self.right_count_time1) < 2 * (self.right_count_time1 - self.right_count_time3)):
-                self.right_speed = math.pi * self.wheel_diameter / self.number_of_notches / (self.right_count_time1 - self.right_count_time3)
-            else:
-                self.right_speed = 0.0
-            if ((time.time() - self.left_count_time1) < 2 * (self.left_count_time1 - self.left_count_time3)):
-                self.left_speed = math.pi * self.wheel_diameter / self.number_of_notches / (self.left_count_time1 - self.left_count_time3)
-            else:
-                self.left_speed = 0.0
-            self.t = time.time()
-            right_read = self.arduino.analogRead(self.pin_right_trip_sensor)
-            left_read = self.arduino.analogRead(self.pin_left_trip_sensor)
-            if(self.i < 5):
-                print time.time() - self.t
-                self.i += 1
-            time.sleep(self.measurement_interval)
+        self.right_distance = math.pi * self.wheel_diameter * self.right_count / self.number_of_notches
+        self.right_speed = math.pi * self.wheel_diameter / (2 * self.number_of_notches) / (self.right_count_time1 - self.right_count_time3)
+        
+    def left_count(self):
+        self.left_count += 1
+        self.left_count_time3 = self.left_count_time2
+        self.left_count_time2 = self.left_count_time1
+        self.left_count_time1 = time.time()
+        self.left_distance = math.pi * self.wheel_diameter * self.left_count / self.number_of_notches
+        self.left_speed = math.pi * self.wheel_diameter / (2 * self.number_of_notches) / (self.left_count_time1 - self.left_count_time3)
 
     def get_right_distance(self):
         return self.right_distance
@@ -103,10 +63,14 @@ class TripMeter:
 
     # the absolute value
     def get_right_speed(self):
+        if (time.time() - self.right_count_time1 > self.right_count_time1 - self.right_count_time3):
+            self.right_speed = 0.0
         return self.right_speed
 
     # the absolute value
     def get_left_speed(self):
+        if (time.time() - self.left_count_time1 > self.left_count_time1 - self.left_count_time3):
+            self.left_speed = 0.0
         return self.left_speed
 
     def reset(self):
