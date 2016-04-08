@@ -6,7 +6,7 @@ class R:
     print message
 
 r = R()
-connection = TCP.Connection(10.22.8.239, 12345, r);
+connection = TCP.Connection("10.22.8.239", 12345, r);
 
 print "hei"
 
