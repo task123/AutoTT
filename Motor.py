@@ -123,18 +123,18 @@ class Motor:
         
     def motor_control(self):
         while True:
-            true_right_speed = self.trip_meter.get_right_speed() * 100.0 / max_speed
-            true_left_speed = self.trip_meter.get_left_speed() * 100.0 / max_speed
+            self.true_right_speed = self.trip_meter.get_right_speed() * 100.0 / self.max_speed
+            self.true_left_speed = self.trip_meter.get_left_speed() * 100.0 / self.max_speed
             
-            if (right_speed > 0.0):
+            if (self.right_speed > 0.0):
                 self.right_backward_value = 0
                 next_previous_right_forward_value = self.right_forward_value
-                self.right_forward_value += self.proportional_term_in_PID * (right_speed - true_right_speed) - self.derivative_term_in_PID * (self.right_forward_value - self.previous_right_forward_value) / self.correction_interval
+                self.right_forward_value += self.proportional_term_in_PID * (self.right_speed - self.true_right_speed) - self.derivative_term_in_PID * (self.right_forward_value - self.previous_right_forward_value) / self.correction_interval
                 self.previous_right_forward_value = next_previous_right_forward_value
             elif (right_speed < 0.0):
                 self.right_forward_value = 0
                 next_previous_right_backward_value = self.right_backward_value
-                self.right_backward_value += self.proportional_term_in_PID * (right_speed - true_right_speed) - self.derivative_term_in_PID * (self.right_backward_value - self.previous_right_backward_value) / self.correction_interval
+                self.right_backward_value += self.proportional_term_in_PID * (self.right_speed - self.true_right_speed) - self.derivative_term_in_PID * (self.right_backward_value - self.previous_right_backward_value) / self.correction_interval
                 self.previous_right_backward_value = next_previous_right_backward_value
             else:
                 self.right_forward_value = 0
@@ -145,12 +145,12 @@ class Motor:
             if (left_speed > 0.0):
                 self.left_backward_value = 0
                 next_previous_left_forward_value = self.left_forward_value
-                self.left_forward_value += self.proportional_term_in_PID * (left_speed - true_left_speed) - self.derivative_term_in_PID * (self.left_forward_value - self.previous_left_forward_value) / self.correction_interval
+                self.left_forward_value += self.proportional_term_in_PID * (self.left_speed - self.true_left_speed) - self.derivative_term_in_PID * (self.left_forward_value - self.previous_left_forward_value) / self.correction_interval
                 self.previous_left_forward_value = next_previous_left_forward_value
             elif (left_speed < 0.0):
                 self.left_forward_value = 0
                 next_previous_left_backward_value = self.left_backward_value
-                self.left_backward_value += self.proportional_term_in_PID * (left_speed - true_left_speed) - self.derivative_term_in_PID * (self.left_backward_value - self.previous_left_backward_value) / self.correction_interval
+                self.left_backward_value += self.proportional_term_in_PID * (self.left_speed - self.true_left_speed) - self.derivative_term_in_PID * (self.left_backward_value - self.previous_left_backward_value) / self.correction_interval
                 self.previous_left_backward_value = next_previous_left_backward_value
             else:
                 self.left_forward_value = 0
@@ -187,13 +187,13 @@ class Motor:
     def set_right_speed(self, right_speed):
         self.right_speed = right_speed
         self.stop = False
-        if (right_speed == 0):
+        if (self.right_speed == 0):
             self.right_forward_value = 0
             self.right_backward_value = 0
-        elif (right_speed > 0):
+        elif (self.right_speed > 0):
             self.right_forward_value = self.right_speed / 100.0 * (255 - self.min_value) + self.min_value
             self.right_backward_value = 0
-        elif (right_speed < 0):
+        elif (self.right_speed < 0):
             self.right_forward_value = 0
             self.right_backward_value = -self.right_speed / 100.0 * (255 - self.min_value) + self.min_value
     
@@ -201,13 +201,13 @@ class Motor:
     def set_left_speed(self, left_speed):
         self.left_speed = left_speed
         self.stop = False
-        if (left_speed == 0):
+        if (self.left_speed == 0):
             self.left_forward_value = 0
             self.left_backward_value = 0
-        elif (left_speed > 0):
+        elif (self.left_speed > 0):
             self.left_forward_value = self.left_speed / 100.0 * (255 - self.min_value) + self.min_value
             self.left_backward_value = 0
-        elif (left_speed < 0):
+        elif (self.left_speed < 0):
             self.left_forward_value = 0
             self.left_backward_value = -self.left_speed / 100.0 * (255 - self.min_value) + self.min_value
 
