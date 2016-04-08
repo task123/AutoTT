@@ -2,7 +2,7 @@ import TCP
 import time
 
 class R:
-  def receive_of_messages(self, message):
+  def receive_message(self, message):
     print message
 
 r = R()
