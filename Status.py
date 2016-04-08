@@ -12,9 +12,9 @@ import Motor
 class Status:
     # need the 'trip_meter' to get the arduino connection
     # change pin_motor_battery and pin_raspberry_pi
-    def  __init__(self, autoTTCommunication, trip_meter, pin_motor_battery = 1, pin_raspberry_pi_battery = 2):
+    def  __init__(self, autoTTCommunication, motors, pin_motor_battery = 1, pin_raspberry_pi_battery = 2):
         self.autoTTCommunication = autoTTCommunication
-        self.arduino = trip_meter.arduino
+        self.arduino = motors.arduino
         self.pin_motor_battery = pin_motor_battery
         self.pin_raspberry_pi_battery = pin_raspberry_pi_battery
     
