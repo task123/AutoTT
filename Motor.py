@@ -9,19 +9,10 @@ import time
 class TripMeter:
     #change default notches
     #sensor max value ~4.3, min value ~2.0
-    def __init__(self, pin_right_trip_sensor = 15, pin_left_trip_sensor = 14, lower_limit_sensor = 2.85, higher_limit_sensor = 3.35, number_of_notches = 100.0, wheel_diameter = 0.0694, measurement_interval = 0.001):
-        self.pin_left_trip_sensor = pin_left_trip_sensor
-        self.pin_right_trip_sensor = pin_right_trip_sensor
-        self.lower_limit_sensor = lower_limit_sensor
-        self.higher_limit_sensor = higher_limit_sensor
+    def __init__(self, number_of_notches = 100.0, wheel_diameter = 0.0694, measurement_interval = 0.001):
         self.number_of_notches = number_of_notches
         self.wheel_diameter = wheel_diameter
         self.measurement_interval = measurement_interval
-        
-        self.connection = SerialManager(device='/dev/ttyACM0')
-        self.arduino=ArduinoApi(connection=self.connection)
-        self.arduino.pinMode(pin_right_trip_sensor, self.arduino.INPUT)
-        self.arduino.pinMode(pin_left_trip_sensor, self.arduino.INPUT)
         
         self.right_previously_high = False
         self.left_previously_high = False
@@ -115,7 +106,8 @@ class Motor:
     # correct max speed, min voltage
     def __init__(trip_meter,  pin_right_forward = 5, pin_right_backward = 10, pin_left_forward = 6, pin_left_backward = 11, pin_motor_LED = 8, max_speed = 0.6, min_voltage = 1.0, correction_interval = 0.05, proportional_term_in_PID = 1.0, derivative_term_in_PID = 0.05):
         self.trip_meter = trip_meter
-        self.arduino = trip_meter.arduino
+        self.connection = SerialManager(device='/dev/ttyACM0')
+        self.arduino=ArduinoApi(connection=self.connection)
     
         self.pin_right_forward = pin_right_forward
         self.pin_right_backward = pin_right_backward
