@@ -38,7 +38,7 @@ class TripMeter:
         GPIO.add_event_detect(self.right_pin, GPIO.RISING, self.right_count)
         GPIO.add_event_detect(self.left_pin, GPIO.RISING, self.left_count)
 
-    def right_count(channel):
+    def right_count(self, channel):
         self.right_count += 1
         self.right_count_time3 = self.right_count_time2
         self.right_count_time2 = self.right_count_time1
@@ -46,7 +46,7 @@ class TripMeter:
         self.right_distance = math.pi * self.wheel_diameter * self.right_count / self.number_of_notches
         self.right_speed = math.pi * self.wheel_diameter / (2 * self.number_of_notches) / (self.right_count_time1 - self.right_count_time3)
         
-    def left_count(channel):
+    def left_count(self, channel):
         self.left_count += 1
         self.left_count_time3 = self.left_count_time2
         self.left_count_time2 = self.left_count_time1
