@@ -23,5 +23,5 @@ Arduino.analogWrite(pin_right, 130)
 while True:
   Arudino.digitalWrite(pin_left, 1)
   time.sleep(0.01)
-  Ardino.digitalWrite(pin_left, 0)
+  Arudino.digitalWrite(pin_left, 0)
   time.sleep(0.01)
