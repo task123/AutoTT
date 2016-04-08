@@ -32,8 +32,8 @@ class TripMeter:
 
         GPIO.setmode(GPIO.BCM)
 
-        GPIO.setup(self.right_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-        GPIO.setup(self.left_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        GPIO.setup(self.right_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        GPIO.setup(self.left_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
         
         GPIO.add_event_detect(right_pin, GPIO.RISING, callback=self.right_count)
         GPIO.add_event_detect(left_pin, GPIO.RISING, callback=self.left_count)
