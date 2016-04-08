@@ -131,7 +131,7 @@ class Motor:
                 next_previous_right_forward_value = self.right_forward_value
                 self.right_forward_value += self.proportional_term_in_PID * (self.right_speed - self.true_right_speed) - self.derivative_term_in_PID * (self.right_forward_value - self.previous_right_forward_value) / self.correction_interval
                 self.previous_right_forward_value = next_previous_right_forward_value
-            elif (right_speed < 0.0):
+            elif (self.right_speed < 0.0):
                 self.right_forward_value = 0
                 next_previous_right_backward_value = self.right_backward_value
                 self.right_backward_value += self.proportional_term_in_PID * (self.right_speed - self.true_right_speed) - self.derivative_term_in_PID * (self.right_backward_value - self.previous_right_backward_value) / self.correction_interval
