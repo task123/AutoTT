@@ -161,6 +161,7 @@ class Motor:
                 self.previous_left_backward_value = 0
             
             if (not self.stop):
+                print self.right_forward_value
                 self.arduino.analogWrite(self.pin_right_forward, self.right_forward_value)
                 self.arduino.analogWrite(self.pin_right_backward, self.right_backward_value)
                 self.arduino.analogWrite(self.pin_left_forward, self.left_forward_value)
