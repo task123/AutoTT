@@ -10,39 +10,17 @@ import RPi.GPIO as GPIO
 class TripMeter:
     #change default notches
     #sensor max value ~4.3, min value ~2.0
-    def __init__(self, number_of_notches = 100.0, wheel_diameter = 0.0694, measurement_interval = 0.001, ):
+    def __init__(self, number_of_notches = 100.0, wheel_diameter = 0.0694, measurement_interval = 0.001, right_pin = 2, left_pin = 3):
         self.number_of_notches = number_of_notches
         self.wheel_diameter = wheel_diameter
         self.measurement_interval = measurement_interval
-        
+        self.right_pin = right_pin
+        self.left_pin = left_pin
+
         GPIO.setmode(GPIO.BCM)
 
-# GPIO 23 & 24 set up as inputs. One pulled up, the other down.
-# 23 will go to GND when button pressed and 24 will go to 3V3 (3.3V)
-# this enables us to demonstrate both rising and falling edge detection
-GPIO.setup(2, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-GPIO.setup(3, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-        
-        self.right_previously_high = False
-        self.left_previously_high = False
-        self.right_count = 0
-        self.left_count = 0
-        self.right_count_time1 = time.time()
-        self.right_count_time2 = time.time()
-        self.right_count_time3 = time.time()
-        self.left_count_time1 = time.time()
-        self.left_count_time2 = time.time()
-        self.left_count_time3 = time.time()
-        self.right_speed = 0.0
-        self.left_speed = 0.0
-        self.right_distance = 0.0
-        self.left_distance = 0.0
-        
-        self.trip_meter_thread = threading.Thread(target = self.trip_meter)
-        self.trip_meter_thread.setDaemon(True)
-        self.trip_meter_thread.start()
-
-
+        GPIO.setup(right_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        GPIO.setup(left_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
 
 # now we'll define the threaded callback function
