@@ -30,8 +30,10 @@ class Cameras:
   def camera_loop(self):
     while self.is_looping:
       _, image1 = video1.read()
+      blur_1 = cv2.GaussianBlur(image1,(5,5),0)
       if (self.stereo_vision_on):
         _, image2 = video2.read()
+        blur_1 = cv2.GaussianBlur(image2,(5,5),0)
       if (self.stream_on):
         ret, jpeg = cv2.imencode('.jpg', image1, [cv2.cv.CV_IMWRITE_JPEG_QUALITY,self.jpeg_quality])
       
