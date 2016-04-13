@@ -125,7 +125,7 @@ class Mode:
             elif (message == "7"): # Self steering
                 steering
 
-    def send_modes_and_status(self):
+    def send_modes_and_info_modes(self):
         self.autoTTCommunication.modes(self.list_of_modes)
         self.autoTTCommunication.info_modes(self.list_of_info_modes)
 
