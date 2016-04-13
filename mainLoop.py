@@ -32,6 +32,9 @@ while True:
 
         time.sleep(3)
         print "yes"
-    except:
+    except Exception as instance:
+        print type(inst)     # the exception instance
+        print inst.args      # arguments stored in .args
+        print inst
         motors.turn_off()
         connection_test.disconnect()
