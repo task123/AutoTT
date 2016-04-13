@@ -2,7 +2,7 @@ import Motor
 import time
 
 tripMeter = Motor.TripMeter()
-motors = Motor.Motor()
+motors = Motor.Motor(tripMeter)
 
 try:
     while True:
