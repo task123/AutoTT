@@ -72,6 +72,7 @@ class AutoTTCommunication:
                     self.stop_cont_recv.receive_message(type, message)
                 elif (type == "Disconnect" and self.disconnect_recv is not None):
                     self.disconnect_recv.receive_message(type, message)
+                    print "hei1"
                 elif (type == "ShutDown" and self.shut_down_recv is not None):
                     self.shut_down_recv.receive_message(type, message)
                 elif (type == "VideoStream" and self.video_recv is not None):
