@@ -7,8 +7,8 @@ import time
 port = 12345
 ip_address = "10.22.8.34"
 
-try:
-    while True:
+while True:
+    try:
         autoTTCommunication = TCP.AutoTTCommunication(port, ip_address = ip_address)
         trip_meter = Motor.TripMeter()
         motors = Motor.Motor(trip_meter)
@@ -27,6 +27,6 @@ try:
 
 
         print "yes"
-except:
-    motors.turn_off()
-    connection_test.disconnect()
+    except:
+        motors.turn_off()
+        connection_test.disconnect()
