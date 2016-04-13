@@ -134,7 +134,7 @@ class ConnectionTest:
     
     def set_connection_test_intervall(self, intervall):
         self.intervall = intervall
-        self.autoTTCommunication.send_message("ConnectionTest", self.intervall)
+        self.autoTTCommunication.send_message("ConnectionTest", str(self.intervall))
                                          
     def recieve_message(self, type, message):
         if (type == "ConnectionTest"):
