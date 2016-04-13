@@ -207,7 +207,7 @@ class Motor:
     # 'right_speed' is a number between -100 and 100, where 100 is full speed forward on the right wheel
     def set_right_speed(self, right_speed):
         self.right_speed = right_speed
-        self.stop = False
+        self.stopped = False
         if (self.right_speed == 0):
             self.right_forward_value = 0
             self.right_backward_value = 0
@@ -221,7 +221,7 @@ class Motor:
     # 'left_speed' is a number between -100 and 100, where 100 is full speed forward on the left wheel
     def set_left_speed(self, left_speed):
         self.left_speed = left_speed
-        self.stop = False
+        self.stopped = False
         if (self.left_speed == 0):
             self.left_forward_value = 0
             self.left_backward_value = 0
