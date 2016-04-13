@@ -3,6 +3,7 @@
 import time
 import threading
 import socket
+import os
 
 class Connection:
     #the class 'receiver_of_message' must implement receive_message(message)
