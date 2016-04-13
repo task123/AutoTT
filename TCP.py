@@ -33,7 +33,7 @@ class Connection:
         self.sock.close()
         line = os.popen('ps -fA | grep python').readline()
         print line
-        split_line = line.split(str=" ", num=3)
+        split_line = line.split()
         print split_line
         pid = split_line[1]
         print pid
