@@ -164,4 +164,5 @@ class ConnectionTest:
     def disconnect(self):
         self.motors.turn_off()
         self.good_connection = False
+        self.autoTTCommunication.close()
 
