@@ -5,7 +5,7 @@ import Status
 import time
 
 port = 12345
-ip_address = "10.22.9.52"
+ip_address = "10.22.8.34"
 
 autoTTCommunication = TCP.AutoTTCommunication(port, ip_address = ip_address)
 trip_meter = Motor.TripMeter()
