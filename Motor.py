@@ -10,7 +10,7 @@ import RPi.GPIO as GPIO
 class TripMeter:
     #change default notches
     #sensor max value ~4.3, min value ~2.0
-    def __init__(self, number_of_notches = 75.0, wheel_diameter = 0.0694, right_pin = 3, left_pin = 5):
+    def __init__(self, number_of_notches = 75.0, wheel_diameter = 0.0694, right_pin = 2, left_pin = 3):
         self.number_of_notches = number_of_notches
         self.wheel_diameter = wheel_diameter
         self.right_pin = right_pin
