@@ -11,6 +11,7 @@ while True:
     try:
         print "3"
         autoTTCommunication = TCP.AutoTTCommunication(port, ip_address = ip_address)
+        print "3.5"
         trip_meter = Motor.TripMeter()
         motors = Motor.Motor(trip_meter)
         print "4"
@@ -29,7 +30,7 @@ while True:
         while connection_test.get_good_connection():
             time.sleep(0.3)
 
-
+        time.sleep(3)
         print "yes"
     except:
         motors.turn_off()
