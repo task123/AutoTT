@@ -148,7 +148,7 @@ class ConnectionTest:
     def get_good_connection(self):
         if (self.good_connection):
             self.good_connection = (time.time() - self.time_of_last_connection < 5 * self.intervall)
-            if (self.good_connection)
+            if (self.good_connection):
                 return True
             else:
                 self.disconnected()
