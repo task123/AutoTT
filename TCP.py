@@ -21,6 +21,7 @@ class Connection:
     def receive_messages(self):
         while True:
             message = self.client.recv(1024)
+            print message
             self.receiver_of_messages.receive_message(message)
 
     def send_message(self, message):
