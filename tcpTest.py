@@ -6,9 +6,10 @@ class R:
     print message
 
 r = R()
-connection = TCP.Connection("10.22.9.52", 12345, r);
+connection = TCP.Connection("10.22.13.211", 12345, r);
 
 print "hei"
 
 while True:
-  time.sleep(10)
+    message = raw_input("Write message: ")
+    connection.send_message(message)
