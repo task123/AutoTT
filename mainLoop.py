@@ -22,7 +22,7 @@ try:
         #modes.send_modes_and_info_modes()
         
         print "hei2"
-        while connection_test.get_good_connection:
+        while connection_test.get_good_connection():
             time.sleep(0.3)
 
 
