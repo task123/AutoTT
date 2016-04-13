@@ -10,21 +10,26 @@ class Connection:
         self.ip_address = ip_address
         self.port = port
         self.receiver_of_messages = receiver_of_messages
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.bind((ip_address,port))
-        sock.listen(1)
-        (self.client, (self.ip_client,self.port_client)) = sock.accept()
+        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.sock.bind((ip_address,port))
+        self.sock.listen(1)
+        (self.client, (self.ip_client,self.port_client)) = self.sock.accept()
+        self.run_receive_message_thread = True
         self.receive_message_thread = threading.Thread(target = self.receive_messages)
         self.receive_message_thread.setDaemon(True)
         self.receive_message_thread.start()
 
     def receive_messages(self):
-        while True:
+        while self.run_receive_message_thread:
             message = self.client.recv(1024)
             self.receiver_of_messages.receive_message(message)
 
     def send_message(self, message):
         self.client.sendall(message)
+        
+    def close(self):
+        self.run_receive_message_thread = False
+        self.sock.close()
 
 class AutoTTCommunication:
     #all recv classes must implement receive_message(message_type, message)
@@ -90,6 +95,9 @@ class AutoTTCommunication:
                 message = next_message
             except:
                 message = ""
+                
+    def close(self):
+        self.connection.close()
 
     def send_message(self, type, message):
         self.tcp.send_message(type + "#$#" + message + "%^%\r\n")
