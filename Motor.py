@@ -103,7 +103,7 @@ class Motor:
         self.arduino.pinMode(pin_left_backward, self.arduino.OUTPUT)
         self.arduino.pinMode(pin_motor_battery, self.arduino.OUTPUT)
 
-        self.arduino.digitalWrite(pin_motor_battery, 1)
+        self.arduino.digitalWrite(pin_motor_battery, 0)
         
         self.power = 0.0
         self.turn = 0.0
@@ -200,7 +200,7 @@ class Motor:
         self.arduino.analogWrite(pin_left_backward, 0)
 
     def turn_off(self):
-        self.arduino.digitalWrite(self.pin_motor_battery, 0)
+        self.arduino.digitalWrite(self.pin_motor_battery, 1)
         self.stop()
         time.sleep(30)
 
