@@ -18,7 +18,7 @@ try:
         connection_test = Steering.ConnectionTest(autoTTCommunication, motors)
         autoTTCommunication.set_receivers(gyro_recv = steering, mode_recv = mode, status_recv = status, 
                 stop_cont_recv = steering, disconnect_recv = connection_test, shut_down_recv = connection_test)
-        #connection_test.set_connection_test_intervall(0.05)
+        connection_test.set_connection_test_intervall(0.05)
         #modes.send_modes_and_info_modes()
         
         print "hei2"
