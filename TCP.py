@@ -73,6 +73,7 @@ class AutoTTCommunication:
                 elif (type == "Continue" and self.stop_cont_recv is not None):
                     self.stop_cont_recv.receive_message(type, message)
                 elif (type == "Disconnect" and self.disconnect_recv is not None):
+                    print "her"
                     self.disconnect_recv.receive_message(type, message)
                 elif (type == "ShutDown" and self.shut_down_recv is not None):
                     self.shut_down_recv.receive_message(type, message)
