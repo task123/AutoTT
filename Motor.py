@@ -194,10 +194,10 @@ class Motor:
         self.right_backward_value = 0
         self.left_forward_value = 0
         self.left_backward_value = 0
-        self.arduino.analogWrite(pin_right_forward, 0)
-        self.arduino.analogWrite(pin_right_backward, 0)
-        self.arduino.analogWrite(pin_left_forward, 0)
-        self.arduino.analogWrite(pin_left_backward, 0)
+        self.arduino.analogWrite(self.pin_right_forward, 0)
+        self.arduino.analogWrite(self.pin_right_backward, 0)
+        self.arduino.analogWrite(self.pin_left_forward, 0)
+        self.arduino.analogWrite(self.pin_left_backward, 0)
 
     def turn_off(self):
         self.arduino.digitalWrite(self.pin_motor_battery, 1)
