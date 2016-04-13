@@ -14,7 +14,7 @@ while True:
     steering = Steering.SteeringWithIOSGyro(motors, autoTTCommunication = autoTTCommunication)
     mode = Steering.Mode(autoTTCommunication, steering)
     status = Status.Status(autoTTCommunication, motors)
-    connection_test = Steering.ConnectinTest(autoTTCommunication, motors)
+    connection_test = Steering.ConnectionTest(autoTTCommunication, motors)
     autoTTCommunication.set_receivers(gyro_recv = steering, mode_recv = mode, status_recv = status, stop_cont_recv = steering, disconnect_recv = connection_test, shut_down_recv = connection_test)
     connection_test.set_connection_test_intervall(0.05)
     
