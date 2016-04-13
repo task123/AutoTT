@@ -202,7 +202,6 @@ class Motor:
     def turn_off(self):
         self.arduino.digitalWrite(self.pin_motor_battery, 1)
         self.stop()
-        time.sleep(30)
 
     # 'right_speed' is a number between -100 and 100, where 100 is full speed forward on the right wheel
     def set_right_speed(self, right_speed):
