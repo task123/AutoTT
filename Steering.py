@@ -152,17 +152,16 @@ class ConnectionTest:
 
     def get_good_connection(self):
         if (self.good_connection):
-            self.good_connection = (time.time() - self.time_of_last_connection < 20 * self.intervall)
+            self.good_connection = (time.time() - self.time_of_last_connection < 10 * self.intervall)
             if (self.good_connection):
                 return True
             else:
-                self.disconnected()
+                self.disconnect()
                 return False
         else:
             return False
 
     def disconnect(self):
-        self.autoTTCommunication.send_message("ConnectionTestStop","")
         self.motors.turn_off()
         self.good_connection = False
 
