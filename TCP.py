@@ -56,7 +56,7 @@ class AutoTTCommunication:
             try:
                 [type, message] = message.split('#$#', 1)
                 [message, next_message] = message.split('%^%\r\n', 1)
-                if (type != "Gyro"):
+                if (type != "Gyro" and type != "" and type != "\n"):
                     print message
                 if (type == "Gyro" and self.gyro_recv is not None):
                     self.gyro_recv.receive_message(type, message)
