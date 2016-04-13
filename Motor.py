@@ -79,7 +79,7 @@ class TripMeter:
 class Motor:
     # correct max speed, min voltage
     def __init__(self, trip_meter,  pin_right_forward = 5, pin_right_backward = 10, pin_left_forward = 6, pin_left_backward = 11, 
-            pin_motor_LED = 8, max_speed = 0.55, min_voltage = 1.0, correction_interval = 0.01, 
+            pin_motor_battery = 8, max_speed = 0.55, min_voltage = 1.0, correction_interval = 0.01, 
             proportional_term_in_PID = 0.12, derivative_term_in_PID = 0.001):
         self.trip_meter = trip_meter
         self.connection = SerialManager(device='/dev/ttyACM0')
@@ -89,7 +89,7 @@ class Motor:
         self.pin_right_backward = pin_right_backward
         self.pin_left_forward = pin_left_forward
         self.pin_left_backward = pin_left_backward
-        self.pin_motor_LED = pin_motor_LED
+        self.pin_motor_battery = pin_motor_battery
         
         self.max_speed  = max_speed
         self.min_value = math.floor(min_voltage / 5.0 * 255)
@@ -103,7 +103,7 @@ class Motor:
         self.arduino.pinMode(pin_left_backward, self.arduino.OUTPUT)
         self.arduino.pinMode(pin_motor_LED, self.arduino.OUTPUT)
 
-        self.arduino.digitalWrite(pin_motor_LED, 0)
+        self.arduino.digitalWrite(pin_motor_battery, 1)
         
         self.power = 0.0
         self.turn = 0.0
@@ -200,7 +200,7 @@ class Motor:
         self.arduino.analogWrite(pin_left_backward, 0)
 
     def turn_off(self):
-        self.arduino.digitalWrite(pin_motor_LED, 1)
+        self.arduino.digitalWrite(pin_motor_battery, 0)
         self.stop()
         time.sleep(30)
 
