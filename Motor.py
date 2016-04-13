@@ -101,7 +101,7 @@ class Motor:
         self.arduino.pinMode(pin_right_backward, self.arduino.OUTPUT)
         self.arduino.pinMode(pin_left_forward, self.arduino.OUTPUT)
         self.arduino.pinMode(pin_left_backward, self.arduino.OUTPUT)
-        self.arduino.pinMode(pin_motor_LED, self.arduino.OUTPUT)
+        self.arduino.pinMode(pin_motor_battery, self.arduino.OUTPUT)
 
         self.arduino.digitalWrite(pin_motor_battery, 1)
         
