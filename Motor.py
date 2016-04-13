@@ -117,7 +117,7 @@ class Motor:
         self.previous_left_backward_value = 0
         self.right_speed = 0.0
         self.left_speed = 0.0
-        self.stop = True
+        self.stopped = True
     
         self.motor_control_thread = threading.Thread(target = self.motor_control)
         self.motor_control_thread.setDaemon(True)
@@ -160,7 +160,7 @@ class Motor:
                 self.previous_left_forward_value = 0
                 self.previous_left_backward_value = 0
             
-            if (not self.stop):
+            if (not self.stopped):
                 print self.right_forward_value
                 if (self.right_forward_value < 0):
                     self.right_forward_value = 0.0
@@ -187,7 +187,7 @@ class Motor:
 
 
     def stop(self):
-        self.stop = True
+        self.stopped = True
         self.right_speed = 0.0
         self.left_speed = 0.0
         self.right_forward_value = 0
