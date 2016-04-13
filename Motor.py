@@ -216,6 +216,7 @@ class Motor:
         elif (self.right_speed < 0):
             self.right_forward_value = 0
             self.right_backward_value = -self.right_speed / 100.0 * (255 - self.min_value) + self.min_value
+        print self.right_speed
     
     # 'left_speed' is a number between -100 and 100, where 100 is full speed forward on the left wheel
     def set_left_speed(self, left_speed):
@@ -230,6 +231,7 @@ class Motor:
         elif (self.left_speed < 0):
             self.left_forward_value = 0
             self.left_backward_value = -self.left_speed / 100.0 * (255 - self.min_value) + self.min_value
+        print self.left_speed
 
 
 
