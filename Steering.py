@@ -140,7 +140,7 @@ class ConnectionTest:
         self.intervall = intervall
         self.autoTTCommunication.send_message("ConnectionTest", str(self.intervall))
                                          
-    def recieve_message(self, type, message):
+    def receive_message(self, type, message):
         if (type == "ConnectionTest"):
             self.time_of_last_connection = time.time()
         elif (type == "Disconnect"):
