@@ -136,7 +136,7 @@ class ConnectionTest:
         self.good_connection = True
         self.time_of_last_connection = time.time()
     
-    def set_connection_test_intervall(self, intervall):
+    def set_intervall(self, intervall):
         self.intervall = intervall
         self.autoTTCommunication.send_message("ConnectionTest", str(self.intervall))
                                          
