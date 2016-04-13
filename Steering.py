@@ -134,6 +134,7 @@ class ConnectionTest:
         self.autoTTCommunication = autoTTCommunication
         self.motors = motors
         self.good_connection = True
+        self.time_of_last_connection = 0.0
     
     def set_connection_test_intervall(self, intervall):
         self.intervall = intervall
