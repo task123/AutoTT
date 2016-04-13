@@ -90,7 +90,6 @@ class AutoTTCommunication:
                 message = next_message
             except:
                 message = ""
-                print "Except"
 
     def send_message(self, type, message):
         self.tcp.send_message(type + "#$#" + message + "%^%\r\n")
