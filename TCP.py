@@ -56,7 +56,7 @@ class AutoTTCommunication:
             try:
                 [type, message] = message.split('#$#', 1)
                 [message, next_message] = message.split('%^%\r\n', 1)
-                if (type != "Gyro" and type != "" and type != "\n"):
+                if (type != "Gyro" and len(type) > 4):
                     print message
                 if (type == "Gyro" and self.gyro_recv is not None):
                     self.gyro_recv.receive_message(type, message)
@@ -74,7 +74,6 @@ class AutoTTCommunication:
                     self.stop_cont_recv.receive_message(type, message)
                 elif (type == "Disconnect" and self.disconnect_recv is not None):
                     self.disconnect_recv.receive_message(type, message)
-                    print "hei1"
                 elif (type == "ShutDown" and self.shut_down_recv is not None):
                     self.shut_down_recv.receive_message(type, message)
                 elif (type == "VideoStream" and self.video_recv is not None):
