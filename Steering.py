@@ -1,6 +1,8 @@
 #!/usr/bin/python
 
 import math
+import time
+import os
 
 """React to gyroscopic and stop/continue data sendt from AutoTTCommunication and control a class 'motors', which steers the motors.
 
@@ -123,3 +125,38 @@ class Mode:
                 steering
             elif (message == "7"): # Self steering
                 steering
+
+class ConnectionTest:
+    def __init__(self, autoTTCommunication, motors):
+        self.autoTTCommunication = autoTTCommunication
+        self.motors = motors
+        self.good_connection = True
+    
+    def set_connection_test_intervall(intervall):
+        self.intervall = intervall
+        self.autoTTCommunication.send_message("ConnectionTest", self.intervall)
+                                         
+    def recieve_message(self, type, message):
+        if (type == "ConnectionTest"):
+            self.time_of_last_connection = time.time()
+        elif (type == "Disconnect"):
+            self.disconnect()
+        elif (type == "Shutdown"):
+            self.disconnect()
+            os.system("sudo shutdown now")
+
+    def get_good_connection(self):
+        if (self.good_connection):
+            self.good_connection = time.time() - self.time_of_last_connection < 5 * self.intervall
+            if (self.good_connection)
+                return True
+            else:
+                self.disconnected()
+                return False
+        else:
+            return False
+
+    def disconnect(self):
+        self.motors.turn_off()
+        self.good_connection = False
+
