@@ -132,7 +132,7 @@ class ConnectionTest:
         self.motors = motors
         self.good_connection = True
     
-    def set_connection_test_intervall(intervall):
+    def set_connection_test_intervall(self, intervall):
         self.intervall = intervall
         self.autoTTCommunication.send_message("ConnectionTest", self.intervall)
                                          
