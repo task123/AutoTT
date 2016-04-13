@@ -165,6 +165,6 @@ class ConnectionTest:
         print "1"
         #self.motors.turn_off()
         self.good_connection = False
-        #self.autoTTCommunication.close()
+        self.autoTTCommunication.close()
         print "2"
 
