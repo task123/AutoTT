@@ -29,8 +29,8 @@ class Connection:
         
     def close(self):
         self.run_receive_message_thread = False
-        self.sock.setsockopt(2)
         self.sock.close()
+        time.sleep(10)
 
 class AutoTTCommunication:
     #all recv classes must implement receive_message(message_type, message)
