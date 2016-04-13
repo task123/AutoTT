@@ -55,8 +55,7 @@ class SteeringWithIOSGyro:
     
         elif (type == "Stop"):
             self.stop = True
-            self.motors.speed(0.0)
-            self.turn(0.0)
+            self.motors.stop()
         elif (type == "Continue"):
             self.stop = False
 
