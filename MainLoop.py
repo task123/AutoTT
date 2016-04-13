@@ -4,7 +4,7 @@ import Steering
 import Status
 import time
 
-port = 12345
+port = 12346
 ip_address = "10.22.8.34"
 
 while True:
