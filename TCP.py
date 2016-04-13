@@ -97,7 +97,7 @@ class AutoTTCommunication:
                 message = ""
                 
     def close(self):
-        self.connection.close()
+        self.tcp.close()
 
     def send_message(self, type, message):
         self.tcp.send_message(type + "#$#" + message + "%^%\r\n")
