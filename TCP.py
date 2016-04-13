@@ -30,7 +30,14 @@ class Connection:
     def close(self):
         self.run_receive_message_thread = False
         self.sock.close()
-        time.sleep(60)
+        line = os.popen('ps -fA | grep python').readline()
+        print line
+        split_line = line.split(str=" ", num=3)
+        print split_line
+        pid = split_line[1]
+        print pid
+        os.system("kill %s" % pid)
+
 
 class AutoTTCommunication:
     #all recv classes must implement receive_message(message_type, message)
