@@ -140,6 +140,7 @@ class ConnectionTest:
             self.time_of_last_connection = time.time()
         elif (type == "Disconnect"):
             self.disconnect()
+            print "Disconnected"
         elif (type == "Shutdown"):
             self.disconnect()
             os.system("sudo shutdown now")
