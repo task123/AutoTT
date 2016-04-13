@@ -24,6 +24,7 @@ class Connection:
             self.receiver_of_messages.receive_message(message)
 
     def send_message(self, message):
+        print message
         self.client.sendall(message)
 
 class AutoTTCommunication:

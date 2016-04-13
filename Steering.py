@@ -125,6 +125,10 @@ class Mode:
             elif (message == "7"): # Self steering
                 steering
 
+    def send_modes_and_status(self):
+        self.autoTTCommunication.modes(self.list_of_modes)
+        self.autoTTCommunication.info_modes(self.list_of_info_modes)
+
 class ConnectionTest:
     def __init__(self, autoTTCommunication, motors):
         self.autoTTCommunication = autoTTCommunication
@@ -157,6 +161,7 @@ class ConnectionTest:
             return False
 
     def disconnect(self):
+        self.autoTTCommunication.send_message("ConnectionTestStop","")
         self.motors.turn_off()
         self.good_connection = False
 
