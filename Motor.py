@@ -161,7 +161,6 @@ class Motor:
                 self.previous_left_backward_value = 0
             
             if (not self.stopped):
-                print self.right_forward_value
                 if (self.right_forward_value < 0):
                     self.right_forward_value = 0.0
                 elif (self.right_forward_value > 255):
