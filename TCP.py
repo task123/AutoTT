@@ -23,6 +23,8 @@ class Connection:
         while self.run_receive_message_thread:
             message = self.client.recv(1024)
             self.receiver_of_messages.receive_message(message)
+            
+        print "after while"
 
     def send_message(self, message):
         self.client.sendall(message)
