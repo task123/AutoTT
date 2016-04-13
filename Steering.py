@@ -162,7 +162,9 @@ class ConnectionTest:
             return False
 
     def disconnect(self):
+        print "1"
         self.motors.turn_off()
         self.good_connection = False
         self.autoTTCommunication.close()
+        print "2"
 
