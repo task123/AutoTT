@@ -29,7 +29,7 @@ class Connection:
         
     def close(self):
         self.run_receive_message_thread = False
-        self.close()
+        self.sock.close()
         self.sock.shutdown(socket.SHUT_WR)
         time.sleep(3)
 
