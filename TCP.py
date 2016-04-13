@@ -29,6 +29,7 @@ class Connection:
         
     def close(self):
         self.run_receive_message_thread = False
+        sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.sock.close()
 
 class AutoTTCommunication:
