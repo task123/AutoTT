@@ -32,6 +32,7 @@ class Connection:
         self.run_receive_message_thread = False
         time.sleep(3)
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_LINGER, struct.pack('ii', 1, 0))
+        self.sock.close()
 
 class AutoTTCommunication:
     #all recv classes must implement receive_message(message_type, message)
