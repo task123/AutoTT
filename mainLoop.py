@@ -32,6 +32,8 @@ while True:
         else:
             port -= 1
             
+        print port
+            
     except Exception as instance:
         print type(instance)     # the exception instance
         print instance.args      # arguments stored in .args
