@@ -30,8 +30,6 @@ class Connection:
         
     def close(self):
         self.run_receive_message_thread = False
-        time.sleep(3)
-        self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_LINGER, struct.pack('ii', 1, 0))
         self.sock.close()
 
 class AutoTTCommunication:
