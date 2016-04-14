@@ -152,7 +152,7 @@ class ConnectionTest:
 
     def get_good_connection(self):
         if (self.good_connection):
-            self.good_connection = True # (time.time() - self.time_of_last_connection < 10 * self.intervall)
+            self.good_connection = (time.time() - self.time_of_last_connection < 10 * self.intervall)
             if (self.good_connection):
                 return True
             else:
@@ -162,9 +162,7 @@ class ConnectionTest:
             return False
 
     def disconnect(self):
-        print "1"
-        #self.motors.turn_off()
+        self.motors.turn_off()
         self.good_connection = False
         self.autoTTCommunication.close()
-        print "2"
 
