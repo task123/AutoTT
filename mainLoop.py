@@ -28,4 +28,4 @@ except:
     motors.turn_off()
     connection_test.disconnect()
     
-os.system("sudo reboot")
+# os.system("sudo reboot")
