@@ -12,7 +12,6 @@ class Connection:
         self.port = port
         self.receiver_of_messages = receiver_of_messages
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.sock.bind((ip_address,port))
         self.sock.listen(1)
         (self.client, (self.ip_client,self.port_client)) = self.sock.accept()
@@ -32,7 +31,7 @@ class Connection:
     def close(self):
         self.run_receive_message_thread = False
         time.sleep(3)
-        self.sock.close()
+        self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_LINGER, struct.pack('ii', 1, 0))
 
 class AutoTTCommunication:
     #all recv classes must implement receive_message(message_type, message)
