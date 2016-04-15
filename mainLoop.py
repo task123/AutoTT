@@ -5,7 +5,7 @@ import Status
 import time
 import os
 
-port = 12345 # will change between 12345 and 12346
+port = 12345 
 ip_address = "10.22.6.65"
 
 motors = None
@@ -20,7 +20,7 @@ try:
     connection_test = Steering.ConnectionTest(autoTTCommunication, motors)
     autoTTCommunication.set_receivers(gyro_recv = steering, mode_recv = mode, status_recv = status, 
             stop_cont_recv = steering, disconnect_recv = connection_test, shut_down_recv = connection_test)
-    time.sleep(0.1)
+    time.sleep(0.1) # wait for the communication thread to start
     autoTTCommunication.start_gyro_with_update_intervall(1.0/60.0)
     #connection_test.set_intervall(0.05)
     #modes.send_modes_and_info_modes()
