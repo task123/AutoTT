@@ -8,6 +8,7 @@ import os
 port = 12345 # will change between 12345 and 12346
 ip_address = "10.22.8.34"
 
+
 try:
     autoTTCommunication = TCP.AutoTTCommunication(port, ip_address = ip_address)
     trip_meter = Motor.TripMeter()
@@ -25,7 +26,9 @@ try:
         time.sleep(0.3)
             
 except:
-    motors.turn_off()
-    connection_test.disconnect()
+    if (motors):
+        motors.turn_off()
+    if (connection_test):
+        connection_test.disconnect()
     
 # os.system("sudo reboot")
