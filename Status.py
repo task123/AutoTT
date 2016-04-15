@@ -52,7 +52,6 @@ class Status:
     def getRAMinfo(self):
         p = os.popen('free')
         i = 0
-        print p
         while 1:
             i = i + 1
             line = p.readline()
