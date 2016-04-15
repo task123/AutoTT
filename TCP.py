@@ -62,7 +62,6 @@ class AutoTTCommunication:
             try:
                 [type, message] = message.split('#$#', 1)
                 [message, next_message] = message.split('%^%\r\n', 1)
-                print type
                 if (type == "Gyro" and self.gyro_recv is not None):
                     self.gyro_recv.receive_message(type, message)
                 elif (type == "MainView" and self.main_view_recv is not None):
