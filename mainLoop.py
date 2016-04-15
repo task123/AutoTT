@@ -12,8 +12,9 @@ motors = None
 connection_test = None
 try:
     trip_meter = Motor.TripMeter()
-    autoTTCommunication = TCP.AutoTTCommunication(port, ip_address = ip_address)
+    time.sleep(5)
     motors = Motor.Motor(trip_meter)
+    autoTTCommunication = TCP.AutoTTCommunication(port, ip_address = ip_address)
     steering = Steering.SteeringWithIOSGyro(motors, autoTTCommunication = autoTTCommunication)
     mode = Steering.Mode(autoTTCommunication, steering)
     status = Status.Status(autoTTCommunication, motors)
