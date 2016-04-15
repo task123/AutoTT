@@ -32,7 +32,7 @@ class Status:
             a = int(self.getRAMinfo()[1])
             print type(a)
             a = a /1000
-            list_of_status.insert(4, "Memory used: %s MB" % (a)
+            list_of_status.insert(4, "Memory used: %s MB" % (a))
             list_of_status.insert(5, "Free memory: %s MB" % (self.getRAMinfo()[2]))
             list_of_status.insert(6, "Disk space used: %s GB" % (self.getDiskSpace()[1][:-1]))
             list_of_status.insert(7, "Free disk space: %s GB" % (self.getDiskSpace()[2][:-1]))
