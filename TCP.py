@@ -21,7 +21,6 @@ class Connection:
         self.receive_message_thread.start()
 
     def receive_messages(self):
-        print "receive_messages"
         while self.run_receive_message_thread:
             message = self.client.recv(1024)
             self.receiver_of_messages.receive_message(message)
