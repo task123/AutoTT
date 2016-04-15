@@ -24,11 +24,7 @@ class Status:
     def receive_message(self, type, message):
         if (type == "Status"):
             list_of_status = []
-            print "1"
-            motor_battery_volt = self.getMotorBatteryVolt()
-            print "1.5"
-            list_of_status.insert(0, "Motor battery voltage: %.3f V" % (motor_battery_volt))
-            print "2"
+            list_of_status.insert(0, "Motor battery voltage: %.3f V" % (self.getMotorBatteryVolt()))
             list_of_status.insert(1, "Raspberry Pis battery volgate: %.3f" % (self.getRaspberryPiBatteryVolt()))
             print "3"
             list_of_status.insert(2, "Temperature: %s C" % (self.getCPUTemperature()))
@@ -55,7 +51,10 @@ class Status:
 
     # Return CPU temperature as a character string
     def getCPUtemperature(self):
+        print "temp"
         res = os.popen('vcgencmd measure_temp').readline()
+        print "temp2"
+        print res
         return(res.replace("temp=","").replace("'C\n",""))
 
     # Return RAM information (unit=kb) in a list
