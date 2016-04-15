@@ -58,10 +58,13 @@ class Status:
     def getRAMinfo(self):
         p = os.popen('free')
         i = 0
+        print p
         while 1:
             i = i + 1
             line = p.readline()
             if i==2:
+                print line
+                print type(line)
                 return(line.split()[1:4])
 
     # Return % of CPU used by user as a character string
@@ -77,11 +80,8 @@ class Status:
     def getDiskSpace(self):
         p = os.popen("df -h /")
         i = 0
-        print p
         while 1:
             i = i +1
             line = p.readline()
             if i==2:
-                print line
-                print type(line)
                 return(line.split()[1:5])
