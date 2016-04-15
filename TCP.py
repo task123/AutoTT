@@ -58,6 +58,7 @@ class AutoTTCommunication:
         self.button_recv = button_recv
 
     def receive_message(self, message):
+        print message
         while (len(message) > 0):
             try:
                 [type, message] = message.split('#$#', 1)
