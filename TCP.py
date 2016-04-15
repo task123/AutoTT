@@ -58,7 +58,6 @@ class AutoTTCommunication:
         self.button_recv = button_recv
 
     def receive_message(self, message):
-        print message
         while (len(message) > 0):
             try:
                 [type, message] = message.split('#$#', 1)
@@ -73,7 +72,6 @@ class AutoTTCommunication:
                 elif (type == "InfoModes" and self.mode_recv is not None):
                     self.mode_recv.receive_message(type, message)
                 elif (type == "ChosenMode" and self.mode_recv is not None):
-                    print "yes"
                     self.mode_recv.receive_message(type, message)
                 elif (type == "Status" and self.status_recv is not None):
                     self.status_recv.receive_message(type, message)
