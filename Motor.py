@@ -82,7 +82,13 @@ class Motor:
             pin_motor_battery = 8, max_speed = 0.55, min_voltage = 1.0, correction_interval = 0.01, 
             proportional_term_in_PID = 0.12, derivative_term_in_PID = 0.001):
         self.trip_meter = trip_meter
-        self.connection = SerialManager(device='/dev/ttyACM0')
+        try:
+            self.connection = SerialManager(device='/dev/ttyACM0')
+        except:
+            try:
+                self.connection = SerialManager(device='/dev/ttyACM1')
+            except:
+                print "Could not connect to the arduino using /dev/ttyACM0 or /dev/ttyACM1"
         self.arduino=ArduinoApi(connection=self.connection)
     
         self.pin_right_forward = pin_right_forward
