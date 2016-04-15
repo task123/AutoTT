@@ -43,14 +43,13 @@ class Status:
             print "status sendt"
             
     def getMotorBatteryVolt(self):
-        print "getMotorBattery"
         return self.arduino.analogRead(self.pin_motor_battery) / 1023.0 * 5.0
     
     def getRaspberryPiBatteryVolt(self):
         return self.arduino.analogRead(self.pin_raspberry_pi_battery) / 1023.0 * 5.0
 
     # Return CPU temperature as a character string
-    def getCPUtemperature(self):
+    def getCPUTemperature(self):
         print "temp"
         res = os.popen('vcgencmd measure_temp').readline()
         print "temp2"
