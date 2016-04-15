@@ -24,8 +24,8 @@ class Status:
     def receive_message(self, type, message):
         if (type == "Status"):
             list_of_status = []
-            list_of_status.insert(0, "Motor battery voltage: %.3f V" % (self.getMotorBatteryVolt()))
-            list_of_status.insert(1, "Raspberry Pis battery voltage: %.3f V" % (self.getRaspberryPiBatteryVolt()))
+            list_of_status.insert(0, "Motor battery voltage: %.2f V" % (self.getMotorBatteryVolt()))
+            list_of_status.insert(1, "Raspberry Pis battery voltage: %.2f V" % (self.getRaspberryPiBatteryVolt()))
             list_of_status.insert(2, "Temperature: %s C" % (self.getCPUtemperature()))
             list_of_status.insert(3, "CPU usage: %s %%" % (self.getCPUuse()))
             list_of_status.insert(4, "Memory used: %d MB" % (self.getRAMinfo()[1]))
@@ -35,10 +35,10 @@ class Status:
             self.autoTTCommunication.status(list_of_status)
 
     def getMotorBatteryVolt(self):
-        return self.arduino.analogRead(self.pin_motor_battery) / 1023.0 * 5.0
+        return self.arduino.analogRead(self.pin_motor_battery) / 1023.0 * 4.51
     
     def getRaspberryPiBatteryVolt(self):
-        return self.arduino.analogRead(self.pin_raspberry_pi_battery) / 1023.0 * 5.0
+        return self.arduino.analogRead(self.pin_raspberry_pi_battery) / 1023.0 * 4.51
 
     # Return CPU temperature as a character string
     def getCPUtemperature(self):
