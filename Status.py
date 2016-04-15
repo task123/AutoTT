@@ -28,9 +28,10 @@ class Status:
             list_of_status.insert(1, "Raspberry Pis battery voltage: %.3f" % (self.getRaspberryPiBatteryVolt()))
             list_of_status.insert(2, "Temperature: %s C" % (self.getCPUtemperature()))
             list_of_status.insert(3, "CPU usage: %s %%" % (self.getCPUuse()))
-            print self.getRAMinfo()[1]
-            print type(self.getRAMinfo()[1])
-            a = int(self.getRAMinfo()[1])
+            r = self.getRAMinfo()[1]
+            print r
+            print type(r)
+            a = int(r)
             print type(a)
             a = a /1000
             list_of_status.insert(4, "Memory used: %s MB" % (a))
