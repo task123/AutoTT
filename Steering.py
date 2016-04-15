@@ -17,7 +17,7 @@ class SteeringWithIOSGyro:
         self.max_roll = max_roll
         self.max_pitch = max_pitch
         if (autoTTCommunication != None):
-            autoTTCommunication.start_gyro_with_update_intervall(gyro_update_intervall)
+            #autoTTCommunication.start_gyro_with_update_intervall(gyro_update_intervall)
 
     def receive_message(self, type, message):
         if (type == "Gyro" and self.stop == False):
