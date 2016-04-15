@@ -46,6 +46,7 @@ class Status:
             print "status sendt"
             
     def getMotorBatteryVolt(self):
+        print "getMotorBattery"
         return self.arduino.analogRead(self.pin_motor_battery) / 1023.0 * 5.0
     
     def getRaspberryPiBatteryVolt(self):
