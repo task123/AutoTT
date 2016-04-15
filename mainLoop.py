@@ -11,9 +11,9 @@ ip_address = "10.22.6.65"
 motors = None
 connection_test = None
 try:
-    autoTTCommunication = TCP.AutoTTCommunication(port, ip_address = ip_address)
     trip_meter = Motor.TripMeter()
     motors = Motor.Motor(trip_meter)
+    autoTTCommunication = TCP.AutoTTCommunication(port, ip_address = ip_address)
     steering = Steering.SteeringWithIOSGyro(motors, autoTTCommunication = autoTTCommunication)
     mode = Steering.Mode(autoTTCommunication, steering)
     status = Status.Status(autoTTCommunication, motors)
