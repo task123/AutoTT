@@ -12,19 +12,12 @@ motors = None
 connection_test = None
 try:
     autoTTCommunication = TCP.AutoTTCommunication(port, ip_address = ip_address)
-    print "1"
     trip_meter = Motor.TripMeter()
-    print "2"
     motors = Motor.Motor(trip_meter)
-    print "3"
     steering = Steering.SteeringWithIOSGyro(motors, autoTTCommunication = autoTTCommunication)
-    print "4"
     mode = Steering.Mode(autoTTCommunication, steering)
-    print "5"
     status = Status.Status(autoTTCommunication, motors)
-    print "6"
     connection_test = Steering.ConnectionTest(autoTTCommunication, motors)
-    print "7"
     autoTTCommunication.set_receivers(gyro_recv = steering, mode_recv = mode, status_recv = status, 
             stop_cont_recv = steering, disconnect_recv = connection_test, shut_down_recv = connection_test)
     #connection_test.set_intervall(0.05)
