@@ -15,14 +15,12 @@ try:
     motors = Motor.Motor(trip_meter)
     autoTTCommunication = TCP.AutoTTCommunication(port, ip_address = ip_address)
     steering = Steering.SteeringWithIOSGyro(motors, autoTTCommunication = autoTTCommunication)
-    #mode = Steering.Mode(autoTTCommunication, steering)
-    #status = Status.Status(autoTTCommunication, motors)
-    #connection_test = Steering.ConnectionTest(autoTTCommunication, motors)
-    #autoTTCommunication.set_receivers(gyro_recv = steering, mode_recv = mode, status_recv = status, 
-            #stop_cont_recv = steering, disconnect_recv = connection_test, shut_down_recv = connection_test)
-    autoTTCommunication.set_receivers(gyro_recv = steering, stop_cont_recv = steering)
-    #time.sleep(0.5) # wait for the communication thread to start
-    print "main"
+    mode = Steering.Mode(autoTTCommunication, steering)
+    status = Status.Status(autoTTCommunication, motors)
+    connection_test = Steering.ConnectionTest(autoTTCommunication, motors)
+    autoTTCommunication.set_receivers(gyro_recv = steering, mode_recv = mode, status_recv = status, 
+            stop_cont_recv = steering, disconnect_recv = connection_test, shut_down_recv = connection_test)
+    time.sleep(0.5) # wait for AutoTT iOS app to start the gyro class
     autoTTCommunication.start_gyro_with_update_intervall(1.0/60.0)
     #connection_test.set_intervall(0.05)
     #modes.send_modes_and_info_modes()
