@@ -8,7 +8,11 @@ import os
 port = 12345 # will change between 12345 and 12346
 ip_address = "10.22.6.65"
 
-motors = None
+class T:
+    a = 2
+    
+t = T()
+motors = t
 print motors
 connection_test = None
 try:
