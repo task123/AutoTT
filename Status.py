@@ -22,17 +22,24 @@ class Status:
         self.arduino.pinMode(pin_raspberry_pi_battery, self.arduino.INPUT)
 
     def receive_message(self, type, message):
-        print "status"
-        print type
         if (type == "Status"):
+            print "1"
             list_of_status.insert(0, "Motor battery voltage: %.3f V" % (self.getMotorBatteryVolt()))
+            print "2"
             list_of_status.insert(1, "Raspberry Pis battery volgate: %.3f" % (self.getRaspberryPiBatteryVolt()))
+            print "3"
             list_of_status.insert(2, "Temperature: %s C" % (self.getCPUTemperature()))
+            print "4"
             list_of_status.insert(3, "CPU usage: %s %%" % (self.getCPUUse()))
+            print "5"
             list_of_status.insert(4, "Memory used: %s kb" % (self.getRAMinfo()[1]))
+            print "6"
             list_of_status.insert(5, "Free memory: %s kb" % (self.getRAMinfo()[2]))
+            print "7"
             list_of_status.insert(6, "Disk space used: %s kb" % (getDiskSpace()[1]))
+            print "8"
             list_of_status.insert(7, "Free disk space: %s kb" % (getDiskSpace()[2]))
+            print "9"
             self.autoTTCommunication.status(list_of_status)
             print "status sendt"
             
