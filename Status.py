@@ -31,8 +31,6 @@ class Status:
             r = self.getRAMinfo()[1]
             print "this is the ram"
             print r
-            print type(r)
-            print "rett etter"
             a = int(r)
             print type(a)
             a = a /1000
