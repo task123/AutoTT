@@ -15,11 +15,12 @@ try:
     motors = Motor.Motor(trip_meter)
     autoTTCommunication = TCP.AutoTTCommunication(port, ip_address = ip_address)
     steering = Steering.SteeringWithIOSGyro(motors, autoTTCommunication = autoTTCommunication)
-    mode = Steering.Mode(autoTTCommunication, steering)
-    status = Status.Status(autoTTCommunication, motors)
-    connection_test = Steering.ConnectionTest(autoTTCommunication, motors)
-    autoTTCommunication.set_receivers(gyro_recv = steering, mode_recv = mode, status_recv = status, 
-            stop_cont_recv = steering, disconnect_recv = connection_test, shut_down_recv = connection_test)
+    #mode = Steering.Mode(autoTTCommunication, steering)
+    #status = Status.Status(autoTTCommunication, motors)
+    #connection_test = Steering.ConnectionTest(autoTTCommunication, motors)
+    #autoTTCommunication.set_receivers(gyro_recv = steering, mode_recv = mode, status_recv = status, 
+            #stop_cont_recv = steering, disconnect_recv = connection_test, shut_down_recv = connection_test)
+    autoTTCommunication.set_receivers(gyro_recv = steering, stop_cont_recv = steering)
     #time.sleep(0.5) # wait for the communication thread to start
     print "main"
     time.sleep(0.5)
