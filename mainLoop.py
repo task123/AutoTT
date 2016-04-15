@@ -21,7 +21,7 @@ try:
     autoTTCommunication.set_receivers(gyro_recv = steering, mode_recv = mode, status_recv = status, 
             stop_cont_recv = steering, disconnect_recv = connection_test, shut_down_recv = connection_test)
     time.sleep(5)
-    autoTTCommunication.start_gyro_with_update_intervall(gyro_update_intervall)
+    #autoTTCommunication.start_gyro_with_update_intervall(gyro_update_intervall)
     #connection_test.set_intervall(0.05)
     #modes.send_modes_and_info_modes()
         
