@@ -99,7 +99,7 @@ class Modes:
         self.autoTTCommunication = autoTTCommunication
         self.steering = steering
     
-    def recieve_message(self, type, message):
+    def receive_message(self, type, message):
         if (type == "Modes"):
             self.autoTTCommunication.modes(self.list_of_modes)
         elif (type == "InfoModes"):
