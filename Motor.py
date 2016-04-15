@@ -85,9 +85,7 @@ class Motor:
         try:
             self.connection = SerialManager(device='/dev/ttyACM0')
             self.arduino=ArduinoApi(connection=self.connection)
-            print "in try block"
         except:
-            print "in exception"
             try:
                 self.connection = SerialManager(device='/dev/ttyACM1')
                 self.arduino=ArduinoApi(connection=self.connection)
