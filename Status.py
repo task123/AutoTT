@@ -23,7 +23,7 @@ class Status:
 
     def receive_message(self, type, message):
         if (type == "Status"):
-            list = []
+            list_of_status = []
             print "1"
             motor_battery_volt = self.getMotorBatteryVolt()
             print "1.5"
