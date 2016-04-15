@@ -63,6 +63,7 @@ class AutoTTCommunication:
             try:
                 [type, message] = message.split('#$#', 1)
                 [message, next_message] = message.split('%^%\r\n', 1)
+                print type
                 if (type == "Gyro" and self.gyro_recv is not None):
                     self.gyro_recv.receive_message(type, message)
                 elif (type == "MainView" and self.main_view_recv is not None):
@@ -72,6 +73,7 @@ class AutoTTCommunication:
                 elif (type == "InfoModes" and self.mode_recv is not None):
                     self.mode_recv.receive_message(type, message)
                 elif (type == "ChosenMode" and self.mode_recv is not None):
+                    print "yes"
                     self.mode_recv.receive_message(type, message)
                 elif (type == "Status" and self.status_recv is not None):
                     self.status_recv.receive_message(type, message)
