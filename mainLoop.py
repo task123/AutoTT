@@ -8,18 +8,12 @@ import os
 port = 12345 # will change between 12345 and 12346
 ip_address = "10.22.6.65"
 
-class T:
-    a = 2
-    
-t = T()
-motors = t
-print motors
+motors = None
 connection_test = None
 try:
-    autoTTCommunication = TCP.AutoTTCommunication(port, ip_address = ip_address)
     trip_meter = Motor.TripMeter()
     motors = Motor.Motor(trip_meter)
-    print motors
+    autoTTCommunication = TCP.AutoTTCommunication(port, ip_address = ip_address)
     steering = Steering.SteeringWithIOSGyro(motors, autoTTCommunication = autoTTCommunication)
     mode = Steering.Mode(autoTTCommunication, steering)
     status = Status.Status(autoTTCommunication, motors)
@@ -29,7 +23,6 @@ try:
     #connection_test.set_intervall(0.05)
     #modes.send_modes_and_info_modes()
         
-    print "hei"
     while True: #connection_test.get_good_connection():
         time.sleep(0.3)
             
