@@ -11,12 +11,14 @@ Sends messages set_right_speed('speed') and set_left_speed('speed') to 'motors'.
  - 'speed' is a number from -100 to 100, 100 being full speed forward, -100 being full speed in reverse.
 """
 class SteeringWithIOSGyro:
-    def __init__(self, motors, gyro_update_intervall = 1.0/60.0, min_roll = 2.0 * 3.14 / 180.0, max_roll = 30.0 * 3.14 / 180.0, max_pitch = 30.0 * 3.14 / 180.0):
+    def __init__(self, motors, autoTTCommunication = None, gyro_update_intervall = 1.0/60.0, min_roll = 2.0 * 3.14 / 180.0, max_roll = 30.0 * 3.14 / 180.0, max_pitch = 30.0 * 3.14 / 180.0):
         self.motors = motors
         self.stop = True
         self.min_roll = min_roll
         self.max_roll = max_roll
         self.max_pitch = max_pitch
+        if (autoTTCommunication != None):
+            autoTTCommunication.start_gyro_with_update_intervall(gyro_update_intervall)
 
     def receive_message(self, type, message):
         if (type == "Gyro" and self.stop == False):
