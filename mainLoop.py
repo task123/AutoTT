@@ -20,8 +20,8 @@ try:
     connection_test = Steering.ConnectionTest(autoTTCommunication, motors)
     autoTTCommunication.set_receivers(gyro_recv = steering, mode_recv = mode, status_recv = status, 
             stop_cont_recv = steering, disconnect_recv = connection_test, shut_down_recv = connection_test)
-    connection_test.set_intervall(0.05)
-    modes.send_modes_and_info_modes()
+    #connection_test.set_intervall(0.05)
+    #modes.send_modes_and_info_modes()
         
     while True: #connection_test.get_good_connection():
         time.sleep(0.3)
