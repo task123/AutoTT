@@ -22,6 +22,7 @@ class Status:
         self.arduino.pinMode(pin_raspberry_pi_battery, self.arduino.INPUT)
 
     def recieve_message(self, type, message):
+        print "status"
         if (type == "Status"):
             list_of_status.insert(0, "Motor battery voltage: %.3f V" % (self.getMotorBatteryVolt()))
             list_of_status.insert(1, "Raspberry Pis battery volgate: %.3f" % (self.getRaspberryPiBatteryVolt()))
@@ -32,6 +33,7 @@ class Status:
             list_of_status.insert(6, "Disk space used: %s kb" % (getDiskSpace()[1]))
             list_of_status.insert(7, "Free disk space: %s kb" % (getDiskSpace()[2]))
             self.autoTTCommunication.status(list_of_status)
+            print "status sendt"
             
     def getMotorBatteryVolt(self):
         return self.arduino.analogRead(self.pin_motor_battery) / 1023.0 * 5.0
