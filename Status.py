@@ -27,9 +27,9 @@ class Status:
             list_of_status.insert(0, "Motor battery voltage: %.3f V" % (self.getMotorBatteryVolt()))
             list_of_status.insert(1, "Raspberry Pis battery volgate: %.3f" % (self.getRaspberryPiBatteryVolt()))
             print "3"
-            list_of_status.insert(2, "Temperature: %s C" % (self.getCPUTemperature()))
+            list_of_status.insert(2, "Temperature: %s C" % (self.getCPUtemperature()))
             print "4"
-            list_of_status.insert(3, "CPU usage: %s %%" % (self.getCPUUse()))
+            list_of_status.insert(3, "CPU usage: %s %%" % (self.getCPUuse()))
             print "5"
             list_of_status.insert(4, "Memory used: %s kb" % (self.getRAMinfo()[1]))
             print "6"
@@ -49,11 +49,8 @@ class Status:
         return self.arduino.analogRead(self.pin_raspberry_pi_battery) / 1023.0 * 5.0
 
     # Return CPU temperature as a character string
-    def getCPUTemperature(self):
-        print "temp"
+    def getCPUtemperature(self):
         res = os.popen('vcgencmd measure_temp').readline()
-        print "temp2"
-        print res
         return(res.replace("temp=","").replace("'C\n",""))
 
     # Return RAM information (unit=kb) in a list
