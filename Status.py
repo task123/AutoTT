@@ -78,6 +78,7 @@ class Status:
     # Index 3: percentage of disk used
     def getDiskSpace(self):
         p = os.popen("df -h /")
+        print p
         i = 0
         while 1:
             i = i +1
