@@ -133,13 +133,11 @@ class AutoTTCommunication:
         self.send_message("InfoModes", message)
 
     def status(self, list_of_status):
-        print "tcp status"
         message = ""
         for status in list_of_status:
             message = message + status + ";"
         if (len(message) > 0):
             message = message[:-1]
-        print message
         self.send_message("Status", message)
 
     def message(self, message):
