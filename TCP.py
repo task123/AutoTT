@@ -70,6 +70,8 @@ class AutoTTCommunication:
                     self.mode_recv.receive_message(type, message)
                 elif (type == "InfoModes" and self.mode_recv is not None):
                     self.mode_recv.receive_message(type, message)
+                elif (type == "ChosenMode" and self.mode_recv is not None):
+                    self.mode_recv.receive_message(type, message)
                 elif (type == "Status" and self.status_recv is not None):
                     self.status_recv.receive_message(type, message)
                 elif (type == "Stop" and self.stop_cont_recv is not None):
