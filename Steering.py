@@ -67,7 +67,7 @@ Sends messages set_right_speed('speed') and set_left_speed('speed') to 'motors'.
 """
 class SteeringWithIOSButtons:
     max_speed = 100.0
-    def __init__(self, motors, gyro_update_intervall = 1.0/60.0):
+    def __init__(self, motors, autoTTCommunication = None, gyro_update_intervall = 1.0/60.0):
         self.motors = motors
         self.stop = True
         if (autoTTCommunication != None):
