@@ -135,7 +135,7 @@ class AutoTTCommunication:
     def status(self, list_of_status):
         print "tcp status"
         message = ""
-        for status in list_of_info_status:
+        for status in list_of_status:
             message = message + status + ";"
         if (len(message) > 0):
             message = message[:-1]
