@@ -26,7 +26,9 @@ class Status:
         print type
         if (type == "Status"):
             print "1"
-            list_of_status.insert(0, "Motor battery voltage: %.3f V" % (self.getMotorBatteryVolt()))
+            motor_battery_volt = self.getMotorBatteryVolt()
+            print "1.5"
+            list_of_status.insert(0, "Motor battery voltage: %.3f V" % (motor_battery_volt))
             print "2"
             list_of_status.insert(1, "Raspberry Pis battery volgate: %.3f" % (self.getRaspberryPiBatteryVolt()))
             print "3"
