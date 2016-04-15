@@ -84,7 +84,9 @@ class Motor:
         self.trip_meter = trip_meter
         try:
             self.connection = SerialManager(device='/dev/ttyACM0')
+            print "in try block"
         except:
+            print "in exception"
             try:
                 self.connection = SerialManager(device='/dev/ttyACM1')
             except:
