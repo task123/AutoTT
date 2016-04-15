@@ -128,8 +128,8 @@ class Modes:
 
     def send_modes_and_info_modes(self):
         print "send Mode"
-        #self.autoTTCommunication.modes(self.list_of_modes)
-        #self.autoTTCommunication.info_modes(self.list_of_info_modes)
+        self.autoTTCommunication.modes(self.list_of_modes)
+        self.autoTTCommunication.info_modes(self.list_of_info_modes)
 
 class ConnectionTest:
     def __init__(self, autoTTCommunication, motors):
