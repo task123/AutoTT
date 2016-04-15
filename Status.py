@@ -26,19 +26,14 @@ class Status:
             list_of_status = []
             list_of_status.insert(0, "Motor battery voltage: %.3f V" % (self.getMotorBatteryVolt()))
             list_of_status.insert(1, "Raspberry Pis battery voltage: %.3f" % (self.getRaspberryPiBatteryVolt()))
-            print "3"
             list_of_status.insert(2, "Temperature: %s C" % (self.getCPUtemperature()))
             list_of_status.insert(3, "CPU usage: %s %%" % (self.getCPUuse()))
             list_of_status.insert(4, "Memory used: %s kb" % (self.getRAMinfo()[1]))
             list_of_status.insert(5, "Free memory: %s kb" % (self.getRAMinfo()[2]))
-            print "7"
             list_of_status.insert(6, "Disk space used: %s GB" % (self.getDiskSpace()[1][:-1]))
-            print "8"
             list_of_status.insert(7, "Free disk space: %s GB" % (self.getDiskSpace()[2][:-1]))
-            print "9"
             self.autoTTCommunication.status(list_of_status)
-            print "status sendt"
-            
+
     def getMotorBatteryVolt(self):
         return self.arduino.analogRead(self.pin_motor_battery) / 1023.0 * 5.0
     
