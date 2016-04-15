@@ -84,14 +84,15 @@ class Motor:
         self.trip_meter = trip_meter
         try:
             self.connection = SerialManager(device='/dev/ttyACM0')
+            self.arduino=ArduinoApi(connection=self.connection)
             print "in try block"
         except:
             print "in exception"
             try:
                 self.connection = SerialManager(device='/dev/ttyACM1')
+                self.arduino=ArduinoApi(connection=self.connection)
             except:
                 print "Could not connect to the arduino using /dev/ttyACM0 or /dev/ttyACM1"
-        self.arduino=ArduinoApi(connection=self.connection)
     
         self.pin_right_forward = pin_right_forward
         self.pin_right_backward = pin_right_backward
