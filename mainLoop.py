@@ -18,7 +18,7 @@ try:
     mode = Steering.Mode(autoTTCommunication, steering)
     status = Status.Status(autoTTCommunication, motors)
     connection_test = Steering.ConnectionTest(autoTTCommunication, motors)
-    #autoTTCommunication.set_receivers(gyro_recv = steering, mode_recv = mode, status_recv = status, 
+    autoTTCommunication.set_receivers(gyro_recv = steering, mode_recv = mode, status_recv = status, 
             #stop_cont_recv = steering, disconnect_recv = connection_test, shut_down_recv = connection_test)
     #autoTTCommunication.start_gyro_with_update_intervall(gyro_update_intervall)
     #connection_test.set_intervall(0.05)
