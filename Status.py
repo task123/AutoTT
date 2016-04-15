@@ -29,8 +29,10 @@ class Status:
             list_of_status.insert(2, "Temperature: %s C" % (self.getCPUtemperature()))
             list_of_status.insert(3, "CPU usage: %s %%" % (self.getCPUuse()))
             r = self.getRAMinfo()[1]
+            print "this is the ram"
             print r
             print type(r)
+            print "rett etter"
             a = int(r)
             print type(a)
             a = a /1000
