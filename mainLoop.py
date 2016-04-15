@@ -23,6 +23,7 @@ try:
     #connection_test.set_intervall(0.05)
     #modes.send_modes_and_info_modes()
         
+    print "hei"
     while True: #connection_test.get_good_connection():
         time.sleep(0.3)
             
