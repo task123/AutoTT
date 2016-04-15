@@ -63,7 +63,10 @@ class Status:
             i = i + 1
             line = p.readline()
             if i==2:
-                print line.split()[1:4]
+                ramInfo = line.split()[1:4]
+                print type(ramInfo)
+                ramInfo[0] = int(ramInfo[0])
+                print type(ramInfo)
                 return(line.split()[1:4])
 
     # Return % of CPU used by user as a character string
