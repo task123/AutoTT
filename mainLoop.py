@@ -15,7 +15,7 @@ try:
     motors = Motor.Motor(trip_meter)
     autoTTCommunication = TCP.AutoTTCommunication(port, ip_address = ip_address)
     steering = Steering.SteeringWithIOSGyro(motors, autoTTCommunication = autoTTCommunication)
-    mode = Steering.Mode(autoTTCommunication, steering)
+    modes = Steering.Modes(autoTTCommunication, steering)
     status = Status.Status(autoTTCommunication, motors)
     connection_test = Steering.ConnectionTest(autoTTCommunication, motors)
     autoTTCommunication.set_receivers(gyro_recv = steering, mode_recv = mode, status_recv = status, 
