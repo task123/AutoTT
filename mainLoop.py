@@ -23,7 +23,6 @@ try:
     autoTTCommunication.set_receivers(gyro_recv = steering, stop_cont_recv = steering)
     #time.sleep(0.5) # wait for the communication thread to start
     print "main"
-    time.sleep(0.5)
     autoTTCommunication.start_gyro_with_update_intervall(1.0/60.0)
     #connection_test.set_intervall(0.05)
     #modes.send_modes_and_info_modes()
