@@ -28,14 +28,8 @@ class Status:
             list_of_status.insert(1, "Raspberry Pis battery voltage: %.3f" % (self.getRaspberryPiBatteryVolt()))
             list_of_status.insert(2, "Temperature: %s C" % (self.getCPUtemperature()))
             list_of_status.insert(3, "CPU usage: %s %%" % (self.getCPUuse()))
-            r = self.getRAMinfo()[1]
-            print "this is the ram"
-            print r
-            a = int(r)
-            print type(a)
-            a = a /1000
-            list_of_status.insert(4, "Memory used: %s MB" % (a))
-            list_of_status.insert(5, "Free memory: %s MB" % (self.getRAMinfo()[2]))
+            list_of_status.insert(4, "Memory used: %d MB" % (self.getRAMinfo()[1]))
+            list_of_status.insert(5, "Free memory: %d MB" % (self.getRAMinfo()[2]))
             list_of_status.insert(6, "Disk space used: %s GB" % (self.getDiskSpace()[1][:-1]))
             list_of_status.insert(7, "Free disk space: %s GB" % (self.getDiskSpace()[2][:-1]))
             self.autoTTCommunication.status(list_of_status)
@@ -64,10 +58,10 @@ class Status:
             line = p.readline()
             if i==2:
                 ramInfo = line.split()[1:4]
-                print type(ramInfo)
                 ramInfo[0] = int(ramInfo[0])
-                print type(ramInfo)
-                return(line.split()[1:4])
+                ramInfo[1] = int(ramInfo[1])
+                ramInfo[2] = int(ramInfo[2])
+                return ramInfo
 
     # Return % of CPU used by user as a character string
     def getCPUuse(self):
