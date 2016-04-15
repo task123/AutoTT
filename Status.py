@@ -23,6 +23,7 @@ class Status:
 
     def receive_message(self, type, message):
         print "status"
+        print type
         if (type == "Status"):
             list_of_status.insert(0, "Motor battery voltage: %.3f V" % (self.getMotorBatteryVolt()))
             list_of_status.insert(1, "Raspberry Pis battery volgate: %.3f" % (self.getRaspberryPiBatteryVolt()))
