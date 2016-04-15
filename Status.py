@@ -22,6 +22,7 @@ class Status:
         self.arduino.pinMode(pin_raspberry_pi_battery, self.arduino.INPUT)
 
     def receive_message(self, type, message):
+        print "hei"
         if (type == "Status"):
             print "1"
             list_of_status.insert(0, "Motor battery voltage: %.3f V" % (self.getMotorBatteryVolt()))
