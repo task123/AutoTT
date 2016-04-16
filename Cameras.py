@@ -19,9 +19,9 @@ class Cameras:
         self.arduino.digitalWrite(self.pin_battery_camera_2, 1) # activ low
         
         self.jpeg_quality = 95
-        self.fps = 30
-        self.frame_height = 720
-        self.frame_width = 1280
+        self.fps = 15
+        self.frame_height = 480
+        self.frame_width = 640
         self.stream_on = False
         self.camera_1_on = False
         self.camera_2_on = False
