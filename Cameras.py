@@ -3,14 +3,14 @@ import cv2
 
 class Cameras:
   def __init__(self):
-    video1 = cv2.VideoCapture(0)
-    video2 = cv2.VideoCapture(1)
-    video1.set(cv2.cv.CV_CAP_PROP_FPS,30)
-    video2.set(cv2.cv.CV_CAP_PROP_FPS,30)
-    video1.set(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT,720)
-    video2.set(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT,720)
-    video1.set(cv2.cv.CV_CAP_PROP_FRAME_WIDTH,1280)
-    video2.set(cv2.cv.CV_CAP_PROP_FRAME_WIDTH,1280)
+    video_1 = cv2.VideoCapture(0)
+    video_2 = cv2.VideoCapture(1)
+    video_1.set(cv2.CAP_PROP_FPS,30)
+    video_2.set(cv2.CAP_PROP_FPS,30)
+    video_1.set(cv2.CAP_PROP_FRAME_HEIGHT,720)
+    video_2.set(cv2.CAP_PROP_FRAME_HEIGHT,720)
+    video_1.set(cv2.CAP_PROP_FRAME_WIDTH,1280)
+    video_2.set(cv2.CAP_PROP_FRAME_WIDTH,1280)
     self.jpeg_quality = 100
     
   def start(self):
@@ -29,13 +29,13 @@ class Cameras:
     
   def camera_loop(self):
     while self.is_looping:
-      _, image1 = video1.read()
-      blur_1 = cv2.GaussianBlur(image1,(5,5),0)
+      _, image_1 = video1.read()
+      blur_1 = cv2.GaussianBlur(image_1,(5,5),0)
       if (self.stereo_vision_on):
         _, image2 = video2.read()
-        blur_1 = cv2.GaussianBlur(image2,(5,5),0)
+        blur_1 = cv2.GaussianBlur(image_2,(5,5),0)
       if (self.stream_on):
-        ret, jpeg = cv2.imencode('.jpg', image1, [cv2.cv.CV_IMWRITE_JPEG_QUALITY,self.jpeg_quality])
+        ret, jpeg = cv2.imencode('.jpg', image1, [cv2.IMWRITE_JPEG_QUALITY,self.jpeg_quality])
       
       
   def __del__(self):
