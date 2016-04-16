@@ -36,7 +36,7 @@ class Status:
             self.autoTTCommunication.status(list_of_status)
 
     def getMotorBatteryVolt(self):
-        return 2 * self.arduino.analogRead(self.pin_motor_battery) / 1023.0 * self.arduino_max_voltage_analog_read
+        return (99.2 + 99.7) / 99.7 * self.arduino.analogRead(self.pin_motor_battery) / 1023.0 * self.arduino_max_voltage_analog_read
     
     def getRaspberryPiBatteryVolt(self):
         return (220.0 + 100.0) / 220.0 * self.arduino.analogRead(self.pin_raspberry_pi_battery) / 1023.0 * self.arduino_max_voltage_analog_read
