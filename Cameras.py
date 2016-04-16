@@ -72,7 +72,7 @@ class Cameras:
                 _, image2 = self.video2.read()
                 blur_1 = cv2.GaussianBlur(image_2,(5,5),0)
             if (self.stream_on):
-                ret, self.stream_image_jpeg = cv2.imencode('.jpg', self.image_1, [cv2.IMWRITE_JPEG_QUALITY,self.jpeg_quality])
+                ret, self.stream_image_jpeg = cv2.imencode('.jpg', image_1, [cv2.IMWRITE_JPEG_QUALITY,self.jpeg_quality])
                 self.new_stream_image = True
             time.sleep(0.01)
 
@@ -121,7 +121,7 @@ class Cameras:
             self.stop_camera_1()
             
     def video_stream_loop(self):
-        flaskAapp = Flask(__name__)
+        flaskApp = Flask(__name__)
         running = False
         
         print "1"
