@@ -29,12 +29,14 @@ class Cameras:
         self.camera_thread.setDaemon(True)
         self.camera_thread.start()
 
+    def get_camera_1_on(self):
+        return self.camera_1_on
+        
     def turn_on_relay_camera_1(self):
         self.arduino.digitalWrite(self.pin_battery_camera_1, 1) # activ high
 
-    def conditinal_turn_off_relay_camera_1(self):
-        if (not self.camera_1_on):
-            self.arduino.digitalWrite(self.pin_battery_camera_1, 0)
+    def turn_off_relay_camera_1(self):
+        self.arduino.digitalWrite(self.pin_battery_camera_1, 0)
             
     def start_camera_1(self):
         self.turn_on_relay_camera_1()
@@ -46,7 +48,7 @@ class Cameras:
         
     def stop_camera_1(self):
         self.camera_1_on = False
-        self.conditinal_turn_off_relay_camera_1()
+        self.turn_off_relay_camera_1()
         self.video_1.release()
 
     def start_camera_2(self):
