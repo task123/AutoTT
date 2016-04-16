@@ -44,7 +44,7 @@ class Status:
     
     def getRaspberryPiBatteryVolt(self):
         voltage = 0.0
-        if (True): #self.cameras.get_camera_1_on()):
+        if (self.cameras.is_camera_1_on()):
             voltage = (220.0 + 100.0) / 220.0 * self.arduino.analogRead(self.pin_raspberry_pi_battery) / 1023.0 * self.arduino_max_voltage_analog_read
         else:
             self.cameras.turn_on_relay_camera_1()
