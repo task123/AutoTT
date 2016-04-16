@@ -37,7 +37,7 @@ class Cameras:
             
     def start_camera_1(self):
         self.arduino.digitalWrite(self.pin_battery_camera_1, 1) # activ high
-        time.sleep(0.2)
+        time.sleep(0.3)
         self.video_1 = cv2.VideoCapture(0)
         self.video_1.set(cv2.CAP_PROP_FPS, self.fps)
         self.video_1.set(cv2.CAP_PROP_FRAME_HEIGHT, self.frame_height)
@@ -52,7 +52,7 @@ class Cameras:
 
     def start_camera_2(self):
         self.arduino.digitalWrite(self.pin_battery_camera_2, 0) # activ low
-        time.sleep(0.2)
+        time.sleep(0.3)
         self.video_2 = cv2.VideoCapture(0)
         self.video_2.set(cv2.CAP_PROP_FPS, self.fps)
         self.video_2.set(cv2.CAP_PROP_FRAME_HEIGHT, self.frame_height)
@@ -107,7 +107,8 @@ class Cameras:
                 
     def start_video_stream(self):
         print "start video"
-        self.start_camera_1()
+        if (not self.camera_1_on):
+            self.start_camera_1()
         self.stream_on = True
         self.video_stream_thread = threading.Thread(target = self.video_stream_loop)
         self.video_stream_thread.setDaemon(True)
