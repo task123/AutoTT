@@ -8,7 +8,6 @@ from nanpy import ArduinoApi
 from nanpy import SerialManager
 import TCP
 import Motor
-import time
 
 class Status:
     # need the 'trip_meter' to get the arduino connection
@@ -41,15 +40,7 @@ class Status:
         return (99.2 + 99.7) / 99.7 * self.arduino.analogRead(self.pin_motor_battery) / 1023.0 * self.arduino_max_voltage_analog_read
     
     def getRaspberryPiBatteryVolt(self):
-        voltage = 0.0
-        if (self.cameras.is_camera_1_on()):
-            voltage = (223.1 + 99.7) / 223.1 * self.arduino.analogRead(self.pin_raspberry_pi_battery) / 1023.0 * self.arduino_max_voltage_analog_read
-        else:
-            self.cameras.turn_on_relay_camera_1()
-            time.sleep(2)
-            voltage = (223.1 + 99.7) / 223.1 * self.arduino.analogRead(self.pin_raspberry_pi_battery) / 1023.0 * self.arduino_max_voltage_analog_read
-            self.cameras.turn_off_relay_camera_1()
-        return voltage
+        return (223.1 + 99.7) / 223.1 * self.arduino.analogRead(self.pin_raspberry_pi_battery) / 1023.0 * self.arduino_max_voltage_analog_read
 
     # Return CPU temperature as a character string
     def getCPUtemperature(self):
