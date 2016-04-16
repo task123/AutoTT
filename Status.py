@@ -12,10 +12,9 @@ import Motor
 class Status:
     # need the 'trip_meter' to get the arduino connection
     # change pin_motor_battery and pin_raspberry_pi
-    def  __init__(self, autoTTCommunication, motors, cameras, pin_motor_battery = 15, pin_raspberry_pi_battery = 14, arduino_max_voltage_analog_read = 5.01):
+    def  __init__(self, autoTTCommunication, motors, pin_motor_battery = 15, pin_raspberry_pi_battery = 14, arduino_max_voltage_analog_read = 5.01):
         self.autoTTCommunication = autoTTCommunication
         self.arduino = motors.arduino
-        self.cameras = cameras
         self.pin_motor_battery = pin_motor_battery
         self.pin_raspberry_pi_battery = pin_raspberry_pi_battery
         self.arduino_max_voltage_analog_read = arduino_max_voltage_analog_read
