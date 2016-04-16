@@ -31,10 +31,6 @@ class Cameras:
         self.camera_thread = threading.Thread(target = self.camera_loop)
         self.camera_thread.setDaemon(True)
         self.camera_thread.start()
-        
-        self.video_stream_thread = threading.Thread(target = self.video_stream_loop)
-        self.video_stream_thread.setDaemon(True)
-        self.video_stream_thread.start()
 
     def is_camera_1_on(self):
         return self.camera_1_on
@@ -115,6 +111,9 @@ class Cameras:
         if (not self.camera_1_on):
             self.start_camera_1()
         self.stream_on = True
+        self.video_stream_thread = threading.Thread(target = self.video_stream_loop)
+        self.video_stream_thread.setDaemon(True)
+        self.video_stream_thread.start()
 
     def stop_video_stream(self):
         self.stream_on = False
@@ -134,10 +133,8 @@ class Cameras:
             return render_template('index.html')
     
         def gen():
-            while True:
-                while (not self.stream_on):
-                    time.sleep(0.1)
-                while not self.new_stream_image:
+            while (self.stream_on):
+                while (not self.new_stream_image):
                     time.sleep(0.001)
                 self.new_stream_image = False
                 yield (b'--frame\r\n'
