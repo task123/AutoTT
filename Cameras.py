@@ -92,10 +92,10 @@ class Cameras:
                 self.stop_video_stream()
         if (type == "VideoQuality"):
             if (message == "High"):
-                self.fps = 30
+                self.fps = 15
                 self.frame_height = 720
                 self.frame_width = 1280
-                self.jpeg_quality = 95
+                self.jpeg_quality = 20
                 if (self.video_1 != None):
                     self.video_1.set(cv2.CAP_PROP_FPS, self.fps)
                     self.video_1.set(cv2.CAP_PROP_FRAME_HEIGHT, self.frame_height)
@@ -108,7 +108,7 @@ class Cameras:
                 self.fps = 15
                 self.frame_height = 450
                 self.frame_width = 700
-                self.jpeg_quality = 70
+                self.jpeg_quality = 95
                 if (self.video_1 != None):
                     self.video_1.set(cv2.CAP_PROP_FPS, self.fps)
                     self.video_1.set(cv2.CAP_PROP_FRAME_HEIGHT, self.frame_height)
@@ -119,9 +119,9 @@ class Cameras:
                     self.video_2.set(cv2.CAP_PROP_FRAME_WIDTH, self.frame_width)
             elif (message == "Low"):
                 self.fps = 15
-                self.frame_height = 480
-                self.frame_width = 640
-                self.jpeg_quality = 70
+                self.frame_height = 360
+                self.frame_width = 600
+                self.jpeg_quality = 50
                 if (self.video_1 != None):
                     self.video_1.set(cv2.CAP_PROP_FPS, self.fps)
                     self.video_1.set(cv2.CAP_PROP_FRAME_HEIGHT, self.frame_height)
