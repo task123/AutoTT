@@ -11,7 +11,7 @@ Sends messages set_right_speed('speed') and set_left_speed('speed') to 'motors'.
  - 'speed' is a number from -100 to 100, 100 being full speed forward, -100 being full speed in reverse.
 """
 class SteeringWithIOSGyro:
-    def __init__(self, motors, autoTTCommunication = None, gyro_update_intervall = 1.0/60.0, min_roll = 2.0 * 3.14 / 180.0, max_roll = 30.0 * 3.14 / 180.0, max_pitch = 30.0 * 3.14 / 180.0):
+    def __init__(self, motors, autoTTCommunication = None, gyro_update_intervall = 1.0/60.0, min_roll = 5.0 * 3.14 / 180.0, max_roll = 45.0 * 3.14 / 180.0, max_pitch = 45.0 * 3.14 / 180.0):
         self.motors = motors
         self.stop = True
         self.min_roll = min_roll
