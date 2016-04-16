@@ -6,7 +6,7 @@ import time
 import os
 
 port = 12345 
-ip_address = "10.22.6.65"
+ip_address = "10.22.7.247"
 
 motors = None
 connection_test = None
