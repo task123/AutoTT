@@ -6,6 +6,7 @@ import threading
 from flask import Flask, render_template, Response
 
 class Cameras:
+    # streaming_port on AutoTT iOS app is by default port + 1
     def __init__(self, motors, streaming_port, pin_battery_camera_1 = 13, pin_battery_camera_2 = 9):
         self.arduino = motors.arduino
         self.streaming_port = streaming_port
