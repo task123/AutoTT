@@ -3,10 +3,12 @@ import cv2
 from nanpy import ArduinoApi
 import time
 import threading
+from flask import Flask, render_template, Response
 
 class Cameras:
-    def __init__(self, motors, pin_battery_camera_1 = 13, pin_battery_camera_2 = 9):
+    def __init__(self, motors, port, pin_battery_camera_1 = 13, pin_battery_camera_2 = 9):
         self.arduino = motors.arduino
+        self.streaming_port = port + 1
         self.pin_battery_camera_1 = pin_battery_camera_1
         self.pin_battery_camera_2 = pin_battery_camera_2
         
@@ -15,7 +17,7 @@ class Cameras:
         self.arduino.digitalWrite(self.pin_battery_camera_1, 0) # activ high
         self.arduino.digitalWrite(self.pin_battery_camera_2, 1) # activ low
         
-        self.jpeg_quality = 100
+        self.jpeg_quality = 95
         self.fps = 30
         self.frame_height = 720
         self.frame_width = 1280
@@ -81,5 +83,48 @@ class Cameras:
     def turn_off(self):
         self.stop_camera_2()
         self.stop_camera_1()
-
         
+    def receive_message(self, type, message):
+        if (type == "VideoStream"):
+            if (message == "On"):
+                a
+            elif (message == "Off"):
+                b
+        if (type == "VideoQuality"):
+            if (message == "High"):
+                self.fps = 30
+                self.frame_height = 720
+                self.frame_width = 1280
+                self.jpeg_quality = 95
+            elif (message == "Medium"):
+                self.fps = 15
+                self.frame_height = 720
+                self.frame_width = 1280
+                self.jpeg_quality = 90
+            elif (message == "Low):
+                self.fps = 15
+                self.frame_height = 480
+                self.frame_width = 640
+                self.jpeg_quality = 70
+                
+    def video_steam_loop(self):
+        flaskAapp = Flask(__name__)
+        running = False
+        
+        @flaskApp.route('/')
+        def index():
+            return render_template('index.html')
+
+    
+        def gen(camera):
+            while True:
+                frame = camera.get_frame()
+                yield (b'--frame\r\n'
+                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+
+        @flaskApp.route('/video_feed')
+        def video_feed():
+            return Response(gen(VideoCamera()),
+                mimetype='multipart/x-mixed-replace; boundary=frame')
+                
+        flaskApp.run(host='0.0.0.0', port=12346, debug=False)
