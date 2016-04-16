@@ -22,6 +22,8 @@ class Cameras:
         self.stream_on = False
         self.camera_1_on = False
         self.camera_2_on = False
+        self.video_1 = None
+        self.video_2 = None
         
         self.camera_thread = threading.Thread(target = self.camera_loop)
         self.camera_thread.setDaemon(True)
