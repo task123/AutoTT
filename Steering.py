@@ -132,9 +132,10 @@ class Modes:
         self.autoTTCommunication.info_modes(self.list_of_info_modes)
 
 class ConnectionTest:
-    def __init__(self, autoTTCommunication, motors):
+    def __init__(self, autoTTCommunication, motors, cameras):
         self.autoTTCommunication = autoTTCommunication
         self.motors = motors
+        self.cameras = cameras
         self.good_connection = True
         self.time_of_last_connection = time.time()
     
@@ -167,6 +168,7 @@ class ConnectionTest:
 
     def disconnect(self):
         self.motors.turn_off()
+        self.cameras.turn_off()
         self.good_connection = False
         self.autoTTCommunication.close()
 
