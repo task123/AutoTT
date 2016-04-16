@@ -104,11 +104,13 @@ class Cameras:
                 self.jpeg_quality = 70
                 
     def start_video_stream(self):
+        print "start video"
         self.camera_1_on = True
         self.stream_on = True
         self.video_stream_thread = threading.Thread(target = self.video_stream_loop)
         self.video_stream_thread.setDaemon(True)
         self.video_stream_thread.start()
+        print "start suksess"
         
     def stop_video_stream(self):
         self.stream_on = False
@@ -122,6 +124,7 @@ class Cameras:
         flaskAapp = Flask(__name__)
         running = False
         
+        print "1"
         @flaskApp.route('/')
         def index():
             return render_template('index.html')
@@ -139,5 +142,7 @@ class Cameras:
         def video_feed():
             return Response(gen(),
                 mimetype='multipart/x-mixed-replace; boundary=frame')
-                
+        
+        print "2"
         flaskApp.run(host='0.0.0.0', port=self.streaming_port, debug=False)
+        print "3"
