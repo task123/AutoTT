@@ -12,9 +12,10 @@ import Motor
 class Status:
     # need the 'trip_meter' to get the arduino connection
     # change pin_motor_battery and pin_raspberry_pi
-    def  __init__(self, autoTTCommunication, motors, pin_motor_battery = 15, pin_raspberry_pi_battery = 14, arduino_max_voltage_analog_read = 5.01):
+    def  __init__(self, autoTTCommunication, motors, cameras, pin_motor_battery = 15, pin_raspberry_pi_battery = 14, arduino_max_voltage_analog_read = 5.01):
         self.autoTTCommunication = autoTTCommunication
         self.arduino = motors.arduino
+        self.cameras = cameras
         self.pin_motor_battery = pin_motor_battery
         self.pin_raspberry_pi_battery = pin_raspberry_pi_battery
         self.arduino_max_voltage_analog_read = arduino_max_voltage_analog_read
@@ -39,7 +40,15 @@ class Status:
         return (99.2 + 99.7) / 99.7 * self.arduino.analogRead(self.pin_motor_battery) / 1023.0 * self.arduino_max_voltage_analog_read
     
     def getRaspberryPiBatteryVolt(self):
-        return (220.0 + 100.0) / 220.0 * self.arduino.analogRead(self.pin_raspberry_pi_battery) / 1023.0 * self.arduino_max_voltage_analog_read
+        voltage = 0.0
+        if (self.cameras.get_camera_1_on()):
+            voltage = (220.0 + 100.0) / 220.0 * self.arduino.analogRead(self.pin_raspberry_pi_battery) / 1023.0 * self.arduino_max_voltage_analog_read
+        else:
+            self.cameras.turn_on_relay_camera_1()
+            time.sleep(0.2)
+            voltage = (223.1 + 99.7) / 223.1 * self.arduino.analogRead(self.pin_raspberry_pi_battery) / 1023.0 * self.arduino_max_voltage_analog_read
+            self.cameras.turn_off_relay_camera_1()
+        return voltage
 
     # Return CPU temperature as a character string
     def getCPUtemperature(self):
