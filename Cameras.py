@@ -106,8 +106,8 @@ class Cameras:
                     self.video_2.set(cv2.CAP_PROP_FRAME_WIDTH, self.frame_width)
             elif (message == "Medium"):
                 self.fps = 15
-                self.frame_height = 450
-                self.frame_width = 700
+                self.frame_height = 460
+                self.frame_width = 800
                 self.jpeg_quality = 95
                 if (self.video_1 != None):
                     self.video_1.set(cv2.CAP_PROP_FPS, self.fps)
