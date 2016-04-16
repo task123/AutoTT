@@ -84,6 +84,7 @@ class Cameras:
         self.stop_camera_1()
         
     def receive_message(self, type, message):
+        print message
         if (type == "VideoStream"):
             if (message == "On"):
                 self.start_video_stream()
