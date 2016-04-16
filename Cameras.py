@@ -116,8 +116,8 @@ class Cameras:
         self.video_stream_thread.start()
 
     def stop_video_stream(self):
-        print "stop_video_stream"
         self.stream_on = False
+        time.sleep(1)
         self.conditionally_stop_camera_1()
     
     def conditionally_stop_camera_1(self):
@@ -147,3 +147,4 @@ class Cameras:
                 mimetype='multipart/x-mixed-replace; boundary=frame')
         
         flaskApp.run(host='0.0.0.0', port=self.streaming_port, debug=False)
+        print "video_stream_loop finished"
