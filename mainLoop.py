@@ -32,11 +32,11 @@ try:
         time.sleep(0.3)
             
 except:
-    if (motors):
+    if (motors != None):
         motors.turn_off()
-    if (cameras):
+    if (cameras != None):
         cameras.turn_off()
-    if (connection_test):
+    if (connection_test != None):
         connection_test.disconnect()
     
 # os.system("sudo reboot")
