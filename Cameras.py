@@ -146,5 +146,5 @@ class Cameras:
             return Response(gen(),
                 mimetype='multipart/x-mixed-replace; boundary=frame')
         
-        flaskApp.run(host='0.0.0.0', port=self.streaming_port, debug=False)
+        flaskApp.run(host='0.0.0.0', port=self.streaming_port, debug=True, use_reloader=False)
         print "video_stream_loop finished"
