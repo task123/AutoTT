@@ -138,7 +138,7 @@ class Cameras:
                     time.sleep(0.001)
                 self.new_stream_image = False
                 yield (b'--frame\r\n'
-                    b'Content-Type: image/jpeg\r\n\r\n' + self.stream_image_jpeg + b'\r\n\r\n')
+                    b'Content-Type: image/jpeg\r\n\r\n' + self.stream_image_jpeg.tostring() + b'\r\n\r\n')
                 
 
         @flaskApp.route('/video_feed')
