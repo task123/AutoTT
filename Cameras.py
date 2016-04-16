@@ -34,15 +34,9 @@ class Cameras:
 
     def is_camera_1_on(self):
         return self.camera_1_on
-        
-    def turn_on_relay_camera_1(self):
-        self.arduino.digitalWrite(self.pin_battery_camera_1, 1) # activ high
-
-    def turn_off_relay_camera_1(self):
-        self.arduino.digitalWrite(self.pin_battery_camera_1, 0)
             
     def start_camera_1(self):
-        self.turn_on_relay_camera_1()
+        self.arduino.digitalWrite(self.pin_battery_camera_1, 1) # activ high
         self.video_1 = cv2.VideoCapture(0)
         self.video_1.set(cv2.CAP_PROP_FPS, self.fps)
         self.video_1.set(cv2.CAP_PROP_FRAME_HEIGHT, self.frame_height)
@@ -51,7 +45,7 @@ class Cameras:
         
     def stop_camera_1(self):
         self.camera_1_on = False
-        self.turn_off_relay_camera_1()
+        self.arduino.digitalWrite(self.pin_battery_camera_1, 0)
         if (self.video_1 != None):
             self.video_1.release()
 
