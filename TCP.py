@@ -33,7 +33,7 @@ class Connection:
         self.sock.close()
 
 class AutoTTCommunication:
-    #all recv classes must implement receive_message(message_type, message)
+    #all recv classes must implement receive_message(self, message_type, message)
     def __init__(self, port, ip_address = None, gyro_recv = None, main_view_recv = None, mode_recv = None, status_recv = None, stop_cont_recv = None, disconnect_recv = None, shut_down_recv = None, connection_test_recv = None,  video_recv = None, button_recv = None):
         self.gyro_recv = gyro_recv
         self.mode_recv = mode_recv
