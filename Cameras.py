@@ -77,7 +77,8 @@ class Cameras:
                 _, image2 = self.video2.read()
                 blur_1 = cv2.GaussianBlur(image_2,(5,5),0)
             if (self.stream_on):
-                ret, jpeg = cv2.imencode('.jpg', self.image_1, [cv2.IMWRITE_JPEG_QUALITY,self.jpeg_quality])
+                ret, self.stream_image_jpeg = cv2.imencode('.jpg', self.image_1, [cv2.IMWRITE_JPEG_QUALITY,self.jpeg_quality])
+                self.new_stream_image = True
             time.sleep(0.01)
 
     def turn_off(self):
@@ -87,9 +88,9 @@ class Cameras:
     def receive_message(self, type, message):
         if (type == "VideoStream"):
             if (message == "On"):
-                a
+                self.start_video_stream()
             elif (message == "Off"):
-                b
+                self.stop_video_stream()
         if (type == "VideoQuality"):
             if (message == "High"):
                 self.fps = 30
@@ -107,24 +108,41 @@ class Cameras:
                 self.frame_width = 640
                 self.jpeg_quality = 70
                 
-    def video_steam_loop(self):
+    def start_video_stream(self):
+        self.camera_1_on = True
+        self.stream_on = True
+        self.video_stream_thread = threading.Thread(target = self.video_stream_loop)
+        self.video_stream_thread.setDaemon(True)
+        self.video_stream_thread.start()
+        
+    def stop_video_stream(self):
+        self.stream_on = False
+        self.conditionally_set_camera_1_off()
+    
+    def conditionally_set_camera_1_off(self):
+        if (not self.stream_on):
+            self.camera_1_on = False
+            
+    def video_stream_loop(self):
         flaskAapp = Flask(__name__)
         running = False
         
         @flaskApp.route('/')
         def index():
             return render_template('index.html')
-
     
-        def gen(camera):
-            while True:
-                frame = camera.get_frame()
+        def gen():
+            while self.stream_on:
+                while not self.new_stream_image:
+                    time.sleep(0.001)
+                self.new_stream_image = False
                 yield (b'--frame\r\n'
-                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+                    b'Content-Type: image/jpeg\r\n\r\n' + self.stream_image_jpeg + b'\r\n\r\n')
+                
 
         @flaskApp.route('/video_feed')
         def video_feed():
-            return Response(gen(VideoCamera()),
+            return Response(gen(),
                 mimetype='multipart/x-mixed-replace; boundary=frame')
                 
-        flaskApp.run(host='0.0.0.0', port=12346, debug=False)
+        flaskApp.run(host='0.0.0.0', port=self.streaming_port, debug=False)
