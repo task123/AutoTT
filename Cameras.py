@@ -133,7 +133,9 @@ class Cameras:
             return render_template('index.html')
     
         def gen():
-            while self.stream_on:
+            while True:
+                while (not self.stream_on):
+                    time.sleep(0.1)
                 while not self.new_stream_image:
                     time.sleep(0.001)
                 self.new_stream_image = False
