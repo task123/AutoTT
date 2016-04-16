@@ -10,8 +10,8 @@ class Cameras:
         
         self.arduino.pinMode(self.pin_battery_camera_1, arduino.OUTPUT)
         self.arduino.pinMode(self.pin_battery_camera_2, arduino.OUTPUT)
-        self.arduino.digitalWrite(self.pin_battery_camera_1, 0)
-        self.arduino.digitalWrite(self.pin_battery_camera_2, 0)
+        self.arduino.digitalWrite(self.pin_battery_camera_1, 0) # activ high
+        self.arduino.digitalWrite(self.pin_battery_camera_2, 1) # activ low
         
         self.jpeg_quality = 100
         self.fps = 30
@@ -27,7 +27,7 @@ class Cameras:
         self.camera_thread.start()
         
     def turn_on_relay_camera_1(self):
-        self.arduino.digitalWrite(self.pin_battery_camera_1, 1)
+        self.arduino.digitalWrite(self.pin_battery_camera_1, 1) # activ high
 
     def conditinal_turn_off_relay_camera_1(self):
         if (not self.camera_1_on):
@@ -47,7 +47,7 @@ class Cameras:
         self.video_1.release()
 
     def start_camera_2(self):
-        self.arduino.digitalWrite(self.pin_battery_camera_2, 1)
+        self.arduino.digitalWrite(self.pin_battery_camera_2, 0) # activ low
         self.video_2 = cv2.VideoCapture(0)
         self.video_2.set(cv2.CAP_PROP_FPS, self.fps)
         self.video_2.set(cv2.CAP_PROP_FRAME_HEIGHT, self.frame_height)
@@ -56,7 +56,7 @@ class Cameras:
         
     def stop_camera_2(self):
         self.camera_2_on = False
-        self.arduino.digitalWrite(self.pin_battery_camera_2, 0)
+        self.arduino.digitalWrite(self.pin_battery_camera_2, 1)
         self.video_2.release()
     
     def camera_loop(self):
