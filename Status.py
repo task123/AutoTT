@@ -12,11 +12,12 @@ import Motor
 class Status:
     # need the 'trip_meter' to get the arduino connection
     # change pin_motor_battery and pin_raspberry_pi
-    def  __init__(self, autoTTCommunication, motors, pin_motor_battery = 14, pin_raspberry_pi_battery = 15):
+    def  __init__(self, autoTTCommunication, motors, pin_motor_battery = 14, pin_raspberry_pi_battery = 15, arduino_max_voltage_analog_read = 4.78):
         self.autoTTCommunication = autoTTCommunication
         self.arduino = motors.arduino
         self.pin_motor_battery = pin_motor_battery
         self.pin_raspberry_pi_battery = pin_raspberry_pi_battery
+        self.arduino_max_voltage_analog_read = arduino_max_voltage_analog_read
     
         self.arduino.pinMode(pin_motor_battery, self.arduino.INPUT)
         self.arduino.pinMode(pin_raspberry_pi_battery, self.arduino.INPUT)
@@ -35,10 +36,10 @@ class Status:
             self.autoTTCommunication.status(list_of_status)
 
     def getMotorBatteryVolt(self):
-        return self.arduino.analogRead(self.pin_motor_battery) / 1023.0 * 4.51
+        return 2 * self.arduino.analogRead(self.pin_motor_battery) / 1023.0 * self.arduino_max_voltage_analog_read
     
     def getRaspberryPiBatteryVolt(self):
-        return self.arduino.analogRead(self.pin_raspberry_pi_battery) / 1023.0 * 4.51
+        return (220.0 + 100.0) / 220.0 * self.arduino.analogRead(self.pin_raspberry_pi_battery) / 1023.0 * self.arduino_max_voltage_analog_read
 
     # Return CPU temperature as a character string
     def getCPUtemperature(self):
