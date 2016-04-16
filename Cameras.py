@@ -5,6 +5,7 @@ import time
 
 class Cameras:
     def __init__(self, motors, pin_battery_camera_1 = 13, pin_battery_camera_2 = 9):
+        print "33"
         self.arduino = motors.arduino
         print "34"
         self.pin_battery_camera_1 = pin_battery_camera_1
