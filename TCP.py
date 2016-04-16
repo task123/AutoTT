@@ -48,7 +48,7 @@ class AutoTTCommunication:
             ip_address = socket.gethostbyname(socket.gethostname())
         self.tcp = Connection(ip_address, port, self)
     
-    def set_receivers(self, gyro_recv = None, main_view_recv = None, mode_recv = None, status_recv = None, stop_cont_recv = None, disconnect_recv = None, shut_down_recv = None, connection_test = None, video_recv = None, button_recv = None):
+    def set_receivers(self, gyro_recv = None, main_view_recv = None, mode_recv = None, status_recv = None, stop_cont_recv = None, disconnect_recv = None, shut_down_recv = None, connection_test_recv = None, video_recv = None, button_recv = None):
         self.gyro_recv = gyro_recv
         self.mode_recv = mode_recv
         self.status_recv = status_recv
