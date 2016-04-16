@@ -5,7 +5,6 @@ import time
 
 class Cameras:
     def __init__(self, motors, pin_battery_camera_1 = 13, pin_battery_camera_2 = 9):
-        print "33"
         self.arduino = motors.arduino
         print "34"
         self.pin_battery_camera_1 = pin_battery_camera_1
@@ -16,18 +15,20 @@ class Cameras:
         self.arduino.digitalWrite(self.pin_battery_camera_1, 0) # activ high
         self.arduino.digitalWrite(self.pin_battery_camera_2, 1) # activ low
         
+        print "35"
         self.jpeg_quality = 100
         self.fps = 30
         self.frame_height = 720
         self.frame_width = 1280
-        self.is_looping = True
         self.stream_on = False
         self.camera_1_on = False
         self.camera_2_on = False
         
+        print "36"
         self.camera_thread = threading.Thread(target = self.camera_loop)
         self.camera_thread.setDaemon(True)
         self.camera_thread.start()
+        print "37"
         
     def turn_on_relay_camera_1(self):
         self.arduino.digitalWrite(self.pin_battery_camera_1, 1) # activ high
@@ -64,6 +65,7 @@ class Cameras:
     
     def camera_loop(self):
         while True:
+            print "38"
             if (self.camera_1_on):
                 (_, image_1) = self.video_1.read()
                 blur_1 = cv2.GaussianBlur(image_1,(5,5),0)
