@@ -84,7 +84,6 @@ class Cameras:
         self.stop_camera_1()
         
     def receive_message(self, type, message):
-        print message
         if (type == "VideoStream"):
             if (message == "On"):
                 self.start_video_stream()
@@ -109,19 +108,17 @@ class Cameras:
                 self.jpeg_quality = 70
                 
     def start_video_stream(self):
-        print "start video"
         if (not self.camera_1_on):
             self.start_camera_1()
         self.stream_on = True
         self.video_stream_thread = threading.Thread(target = self.video_stream_loop)
         self.video_stream_thread.setDaemon(True)
         self.video_stream_thread.start()
-        print "start suksess"
-        
+
     def stop_video_stream(self):
         print "stop_video_stream"
         self.stream_on = False
-        self.conditionally_set_camera_1_off()
+        self.conditionally_stop_camera_1()
     
     def conditionally_stop_camera_1(self):
         if (not self.stream_on):
@@ -131,7 +128,6 @@ class Cameras:
         flaskApp = Flask(__name__)
         running = False
         
-        print "1"
         @flaskApp.route('/')
         def index():
             return render_template('index.html')
@@ -150,6 +146,4 @@ class Cameras:
             return Response(gen(),
                 mimetype='multipart/x-mixed-replace; boundary=frame')
         
-        print "2"
         flaskApp.run(host='0.0.0.0', port=self.streaming_port, debug=False)
-        print "3"
