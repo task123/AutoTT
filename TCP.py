@@ -34,26 +34,28 @@ class Connection:
 
 class AutoTTCommunication:
     #all recv classes must implement receive_message(message_type, message)
-    def __init__(self, port, ip_address = None, gyro_recv = None, main_view_recv = None, mode_recv = None, status_recv = None, stop_cont_recv = None, disconnect_recv = None, shut_down_recv = None,  video_recv = None, button_recv = None):
+    def __init__(self, port, ip_address = None, gyro_recv = None, main_view_recv = None, mode_recv = None, status_recv = None, stop_cont_recv = None, disconnect_recv = None, shut_down_recv = None, connection_test_recv = None,  video_recv = None, button_recv = None):
         self.gyro_recv = gyro_recv
         self.mode_recv = mode_recv
         self.status_recv = status_recv
         self.stop_cont_recv = stop_cont_recv
         self.disconnect_recv = disconnect_recv
         self.shut_down_recv = shut_down_recv
+        self.connection_test_recv = connection_test_recv
         self.video_recv = video_recv
         self.button_recv = button_recv
         if (ip_address == None):
             ip_address = socket.gethostbyname(socket.gethostname())
         self.tcp = Connection(ip_address, port, self)
     
-    def set_receivers(self, gyro_recv = None, main_view_recv = None, mode_recv = None, status_recv = None, stop_cont_recv = None, disconnect_recv = None, shut_down_recv = None,  video_recv = None, button_recv = None):
+    def set_receivers(self, gyro_recv = None, main_view_recv = None, mode_recv = None, status_recv = None, stop_cont_recv = None, disconnect_recv = None, shut_down_recv = None, connection_test = None, video_recv = None, button_recv = None):
         self.gyro_recv = gyro_recv
         self.mode_recv = mode_recv
         self.status_recv = status_recv
         self.stop_cont_recv = stop_cont_recv
         self.disconnect_recv = disconnect_recv
         self.shut_down_recv = shut_down_recv
+        self.connection_test_recv = connection_test_recv
         self.video_recv = video_recv
         self.button_recv = button_recv
 
@@ -82,6 +84,8 @@ class AutoTTCommunication:
                     self.disconnect_recv.receive_message(type, message)
                 elif (type == "ShutDown" and self.shut_down_recv is not None):
                     self.shut_down_recv.receive_message(type, message)
+                elif (type == "ConnectionTest" and self.connection_test_recv is not None):
+                    self.connection_test_recv.receive_message(type, message)
                 elif (type == "VideoStream" and self.video_recv is not None):
                     self.video_recv.receive_message(type, message)
                 elif (type == "VideoQuality" and self.video_recv is not None):
