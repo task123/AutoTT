@@ -165,7 +165,7 @@ class ConnectionTest:
             self.disconnect()
             os.system("sudo shutdown now")
 
-    def get_good_connection(self):
+    def is_connection_good(self):
         if (self.good_connection):
             self.good_connection = True
             print time.time() - self.time_of_last_connection
