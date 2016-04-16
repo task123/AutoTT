@@ -17,7 +17,8 @@ try:
     steering = Steering.SteeringWithIOSGyro(motors, autoTTCommunication = autoTTCommunication)
     modes = Steering.Modes(autoTTCommunication, steering)
     status = Status.Status(autoTTCommunication, motors)
-    connection_test = Steering.ConnectionTest(autoTTCommunication, motors)
+    cameras = Cameras.Cameras()
+    connection_test = Steering.ConnectionTest(autoTTCommunication, motors, cameras)
     autoTTCommunication.set_receivers(gyro_recv = steering, mode_recv = modes, status_recv = status, 
             stop_cont_recv = steering, disconnect_recv = connection_test, shut_down_recv = connection_test)
     time.sleep(0.5) # wait for AutoTT iOS app to start the gyro class
