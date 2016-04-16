@@ -21,7 +21,7 @@ try:
     autoTTCommunication = TCP.AutoTTCommunication(port, ip_address = ip_address)
     steering = Steering.SteeringWithIOSGyro(motors, autoTTCommunication = autoTTCommunication)
     modes = Steering.Modes(autoTTCommunication, steering)
-    cameras = Cameras.Cameras(motors)
+    cameras = Cameras.Cameras(motors, streaming_port = port + 1)
     #status = Status.Status(autoTTCommunication, motors, cameras)
     #connection_test = TCP.ConnectionTest(autoTTCommunication, motors, cameras)
     autoTTCommunication.set_receivers(gyro_recv = steering, mode_recv = modes, status_recv = status, stop_cont_recv = steering, 
