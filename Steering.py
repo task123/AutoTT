@@ -53,7 +53,6 @@ class SteeringWithIOSGyro:
 
             self.motors.set_right_speed(right_speed)
             self.motors.set_left_speed(left_speed)
-    
         elif (type == "Stop"):
             self.stop = True
             self.motors.stop()
