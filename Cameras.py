@@ -102,7 +102,7 @@ class Cameras:
                 self.frame_height = 720
                 self.frame_width = 1280
                 self.jpeg_quality = 90
-            elif (message == "Low):
+            elif (message == "Low"):
                 self.fps = 15
                 self.frame_height = 480
                 self.frame_width = 640
