@@ -9,6 +9,7 @@ port = 12345
 ip_address = "10.22.7.247"
 
 motors = None
+cameras = None
 connection_test = None
 try:
     trip_meter = Motor.TripMeter()
@@ -32,6 +33,8 @@ try:
 except:
     if (motors):
         motors.turn_off()
+    if (cameras):
+        cameras.turn_off()
     if (connection_test):
         connection_test.disconnect()
     
