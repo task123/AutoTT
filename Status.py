@@ -26,8 +26,11 @@ class Status:
     def receive_message(self, type, message):
         if (type == "Status"):
             list_of_status = []
+            print "1"
             list_of_status.insert(0, "Motor battery voltage: %.2f V" % (self.getMotorBatteryVolt()))
+            print "2"
             list_of_status.insert(1, "Raspberry Pis battery voltage: %.2f V" % (self.getRaspberryPiBatteryVolt()))
+            print "3"
             list_of_status.insert(2, "Temperature: %s C" % (self.getCPUtemperature()))
             list_of_status.insert(3, "CPU usage: %s %%" % (self.getCPUuse()))
             list_of_status.insert(4, "Memory used: %d MB" % (self.getRAMinfo()[1]))
