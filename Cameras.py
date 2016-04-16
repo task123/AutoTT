@@ -6,7 +6,6 @@ import time
 class Cameras:
     def __init__(self, motors, pin_battery_camera_1 = 13, pin_battery_camera_2 = 9):
         self.arduino = motors.arduino
-        print "34"
         self.pin_battery_camera_1 = pin_battery_camera_1
         self.pin_battery_camera_2 = pin_battery_camera_2
         
@@ -15,7 +14,6 @@ class Cameras:
         self.arduino.digitalWrite(self.pin_battery_camera_1, 0) # activ high
         self.arduino.digitalWrite(self.pin_battery_camera_2, 1) # activ low
         
-        print "35"
         self.jpeg_quality = 100
         self.fps = 30
         self.frame_height = 720
@@ -64,6 +62,7 @@ class Cameras:
         self.video_2.release()
     
     def camera_loop(self):
+        print "36.5"
         while True:
             print "38"
             if (self.camera_1_on):
