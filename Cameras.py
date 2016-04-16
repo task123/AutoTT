@@ -45,6 +45,7 @@ class Cameras:
         self.camera_1_on = True
         
     def stop_camera_1(self):
+        print "stop_camera_1"
         self.camera_1_on = False
         self.arduino.digitalWrite(self.pin_battery_camera_1, 0)
         if (self.video_1 != None):
@@ -87,6 +88,7 @@ class Cameras:
             if (message == "On"):
                 self.start_video_stream()
             elif (message == "Off"):
+                print "Off"
                 self.stop_video_stream()
         if (type == "VideoQuality"):
             if (message == "High"):
@@ -116,6 +118,7 @@ class Cameras:
         print "start suksess"
         
     def stop_video_stream(self):
+        print "stop_video_stream"
         self.stream_on = False
         self.conditionally_set_camera_1_off()
     
