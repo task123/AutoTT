@@ -23,14 +23,10 @@ class Cameras:
         self.camera_1_on = False
         self.camera_2_on = False
         
-        print "36"
         self.camera_thread = threading.Thread(target = self.camera_loop)
-        print "36.1"
         self.camera_thread.setDaemon(True)
-        print "36.2"
         self.camera_thread.start()
-        print "37"
-        
+
     def turn_on_relay_camera_1(self):
         self.arduino.digitalWrite(self.pin_battery_camera_1, 1) # activ high
 
@@ -65,9 +61,7 @@ class Cameras:
         self.video_2.release()
     
     def camera_loop(self):
-        print "36.5"
         while True:
-            print "38"
             if (self.camera_1_on):
                 (_, image_1) = self.video_1.read()
                 blur_1 = cv2.GaussianBlur(image_1,(5,5),0)
@@ -76,9 +70,6 @@ class Cameras:
                 blur_1 = cv2.GaussianBlur(image_2,(5,5),0)
             if (self.stream_on):
                 ret, jpeg = cv2.imencode('.jpg', self.image_1, [cv2.IMWRITE_JPEG_QUALITY,self.jpeg_quality])
-            time.sleep(3)
-            print "hei"
-
 
     def turn_off(self):
         self.stop_camera_2()
