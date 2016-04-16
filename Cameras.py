@@ -49,7 +49,8 @@ class Cameras:
     def stop_camera_1(self):
         self.camera_1_on = False
         self.turn_off_relay_camera_1()
-        self.video_1.release()
+        if (self.video_1 != None):
+            self.video_1.release()
 
     def start_camera_2(self):
         self.arduino.digitalWrite(self.pin_battery_camera_2, 0) # activ low
@@ -62,7 +63,8 @@ class Cameras:
     def stop_camera_2(self):
         self.camera_2_on = False
         self.arduino.digitalWrite(self.pin_battery_camera_2, 1)
-        self.video_2.release()
+        if (self.video_2 != None):
+            self.video_2.release()
     
     def camera_loop(self):
         while True:
