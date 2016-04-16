@@ -18,6 +18,7 @@ try:
     steering = Steering.SteeringWithIOSGyro(motors, autoTTCommunication = autoTTCommunication)
     modes = Steering.Modes(autoTTCommunication, steering)
     status = Status.Status(autoTTCommunication, motors)
+    print "boe"
     cameras = Cameras.Cameras(motors)
     #connection_test = Steering.ConnectionTest(autoTTCommunication, motors, cameras)
     autoTTCommunication.set_receivers(gyro_recv = steering, mode_recv = modes, status_recv = status, 
