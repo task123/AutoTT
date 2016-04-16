@@ -69,7 +69,6 @@ class Cameras:
                 blur_1 = cv2.GaussianBlur(image_2,(5,5),0)
             if (self.stream_on):
                 ret, jpeg = cv2.imencode('.jpg', self.image_1, [cv2.IMWRITE_JPEG_QUALITY,self.jpeg_quality])
-            cv2.imshow("image", image_1)
 
 
     def turn_off(self):
