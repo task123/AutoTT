@@ -29,7 +29,7 @@ class Cameras:
         self.camera_thread.setDaemon(True)
         self.camera_thread.start()
 
-    def get_camera_1_on(self):
+    def is_camera_1_on(self):
         return self.camera_1_on
         
     def turn_on_relay_camera_1(self):
