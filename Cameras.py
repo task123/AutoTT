@@ -105,7 +105,7 @@ class Cameras:
                 
     def start_video_stream(self):
         print "start video"
-        self.camera_1_on = True
+        self.start_camera_1()
         self.stream_on = True
         self.video_stream_thread = threading.Thread(target = self.video_stream_loop)
         self.video_stream_thread.setDaemon(True)
@@ -116,9 +116,9 @@ class Cameras:
         self.stream_on = False
         self.conditionally_set_camera_1_off()
     
-    def conditionally_set_camera_1_off(self):
+    def conditionally_stop_camera_1(self):
         if (not self.stream_on):
-            self.camera_1_on = False
+            self.stop_camera_1()
             
     def video_stream_loop(self):
         flaskAapp = Flask(__name__)
