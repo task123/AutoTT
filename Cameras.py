@@ -54,7 +54,7 @@ class Cameras:
     def start_camera_2(self):
         self.arduino.digitalWrite(self.pin_battery_camera_2, 0) # activ low
         time.sleep(5)
-        self.video_2 = cv2.VideoCapture(0)
+        self.video_2 = cv2.VideoCapture(1)
         self.video_2.set(cv2.CAP_PROP_FPS, self.fps)
         self.video_2.set(cv2.CAP_PROP_FRAME_HEIGHT, self.frame_height)
         self.video_2.set(cv2.CAP_PROP_FRAME_WIDTH, self.frame_width)
@@ -96,16 +96,40 @@ class Cameras:
                 self.frame_height = 720
                 self.frame_width = 1280
                 self.jpeg_quality = 95
+                if (self.video_1 != None):
+                    self.video_1.set(cv2.CAP_PROP_FPS, self.fps)
+                    self.video_1.set(cv2.CAP_PROP_FRAME_HEIGHT, self.frame_height)
+                    self.video_1.set(cv2.CAP_PROP_FRAME_WIDTH, self.frame_width)
+                if (self.video_2 != None):
+                    self.video_2.set(cv2.CAP_PROP_FPS, self.fps)
+                    self.video_2.set(cv2.CAP_PROP_FRAME_HEIGHT, self.frame_height)
+                    self.video_2.set(cv2.CAP_PROP_FRAME_WIDTH, self.frame_width)
             elif (message == "Medium"):
                 self.fps = 15
-                self.frame_height = 720
-                self.frame_width = 1280
-                self.jpeg_quality = 90
+                self.frame_height = 450
+                self.frame_width = 700
+                self.jpeg_quality = 70
+                if (self.video_1 != None):
+                    self.video_1.set(cv2.CAP_PROP_FPS, self.fps)
+                    self.video_1.set(cv2.CAP_PROP_FRAME_HEIGHT, self.frame_height)
+                    self.video_1.set(cv2.CAP_PROP_FRAME_WIDTH, self.frame_width)
+                if (self.video_2 != None):
+                    self.video_2.set(cv2.CAP_PROP_FPS, self.fps)
+                    self.video_2.set(cv2.CAP_PROP_FRAME_HEIGHT, self.frame_height)
+                    self.video_2.set(cv2.CAP_PROP_FRAME_WIDTH, self.frame_width)
             elif (message == "Low"):
                 self.fps = 15
                 self.frame_height = 480
                 self.frame_width = 640
                 self.jpeg_quality = 70
+                if (self.video_1 != None):
+                    self.video_1.set(cv2.CAP_PROP_FPS, self.fps)
+                    self.video_1.set(cv2.CAP_PROP_FRAME_HEIGHT, self.frame_height)
+                    self.video_1.set(cv2.CAP_PROP_FRAME_WIDTH, self.frame_width)
+                if (self.video_2 != None):
+                    self.video_2.set(cv2.CAP_PROP_FPS, self.fps)
+                    self.video_2.set(cv2.CAP_PROP_FRAME_HEIGHT, self.frame_height)
+                    self.video_2.set(cv2.CAP_PROP_FRAME_WIDTH, self.frame_width)
                 
     def start_video_stream(self):
         if (not self.camera_1_on):
@@ -146,5 +170,5 @@ class Cameras:
             return Response(gen(),
                 mimetype='multipart/x-mixed-replace; boundary=frame')
         
-        flaskApp.run(host='0.0.0.0', port=self.streaming_port, debug=True, use_reloader=False)
+        flaskApp.run(host='0.0.0.0', port=self.streaming_port, debug=False, use_reloader=False)
         print "video_stream_loop finished"
