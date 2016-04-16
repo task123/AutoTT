@@ -2,6 +2,7 @@
 import cv2
 from nanpy import ArduinoApi
 import time
+import threading
 
 class Cameras:
     def __init__(self, motors, pin_battery_camera_1 = 13, pin_battery_camera_2 = 9):
@@ -24,7 +25,9 @@ class Cameras:
         
         print "36"
         self.camera_thread = threading.Thread(target = self.camera_loop)
+        print "36.1"
         self.camera_thread.setDaemon(True)
+        print "36.2"
         self.camera_thread.start()
         print "37"
         
