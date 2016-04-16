@@ -30,7 +30,8 @@ try:
     
     while connection_test.is_connection_good():
         time.sleep(0.3)
-            
+        print trip_meter.get_right_speed()
+
 except:
     if (motors != None):
         motors.turn_off()
