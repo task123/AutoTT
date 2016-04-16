@@ -46,7 +46,7 @@ class Status:
             voltage = (223.1 + 99.7) / 223.1 * self.arduino.analogRead(self.pin_raspberry_pi_battery) / 1023.0 * self.arduino_max_voltage_analog_read
         else:
             self.cameras.turn_on_relay_camera_1()
-            time.sleep(0.2)
+            time.sleep(2)
             voltage = (223.1 + 99.7) / 223.1 * self.arduino.analogRead(self.pin_raspberry_pi_battery) / 1023.0 * self.arduino_max_voltage_analog_read
             self.cameras.turn_off_relay_camera_1()
         return voltage
