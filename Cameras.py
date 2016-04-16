@@ -1,6 +1,7 @@
 #! /usr/bin/python
 import cv2
 from nanpy import ArduinoApi
+import time
 
 class Cameras:
     def __init__(self, motors, pin_battery_camera_1 = 13, pin_battery_camera_2 = 9):
@@ -69,6 +70,8 @@ class Cameras:
                 blur_1 = cv2.GaussianBlur(image_2,(5,5),0)
             if (self.stream_on):
                 ret, jpeg = cv2.imencode('.jpg', self.image_1, [cv2.IMWRITE_JPEG_QUALITY,self.jpeg_quality])
+            time.sleep(3)
+            print "hei"
 
 
     def turn_off(self):
