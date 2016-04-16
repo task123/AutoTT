@@ -31,6 +31,10 @@ class Cameras:
         self.camera_thread = threading.Thread(target = self.camera_loop)
         self.camera_thread.setDaemon(True)
         self.camera_thread.start()
+        
+        self.video_stream_thread = threading.Thread(target = self.video_stream_loop)
+        self.video_stream_thread.setDaemon(True)
+        self.video_stream_thread.start()
 
     def is_camera_1_on(self):
         return self.camera_1_on
@@ -111,9 +115,6 @@ class Cameras:
         if (not self.camera_1_on):
             self.start_camera_1()
         self.stream_on = True
-        self.video_stream_thread = threading.Thread(target = self.video_stream_loop)
-        self.video_stream_thread.setDaemon(True)
-        self.video_stream_thread.start()
 
     def stop_video_stream(self):
         self.stream_on = False
