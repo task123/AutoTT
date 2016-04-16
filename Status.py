@@ -26,11 +26,8 @@ class Status:
     def receive_message(self, type, message):
         if (type == "Status"):
             list_of_status = []
-            print "1"
             list_of_status.insert(0, "Motor battery voltage: %.2f V" % (self.getMotorBatteryVolt()))
-            print "2"
             list_of_status.insert(1, "Raspberry Pis battery voltage: %.2f V" % (self.getRaspberryPiBatteryVolt()))
-            print "3"
             list_of_status.insert(2, "Temperature: %s C" % (self.getCPUtemperature()))
             list_of_status.insert(3, "CPU usage: %s %%" % (self.getCPUuse()))
             list_of_status.insert(4, "Memory used: %d MB" % (self.getRAMinfo()[1]))
@@ -44,13 +41,20 @@ class Status:
     
     def getRaspberryPiBatteryVolt(self):
         voltage = 0.0
+        print "1"
+        self.cameras.is_camera_1_on()
+        print "2"
         if (self.cameras.is_camera_1_on()):
             voltage = (220.0 + 100.0) / 220.0 * self.arduino.analogRead(self.pin_raspberry_pi_battery) / 1023.0 * self.arduino_max_voltage_analog_read
         else:
+            print "3"
             self.cameras.turn_on_relay_camera_1()
+            print "4"
             time.sleep(0.2)
             voltage = (223.1 + 99.7) / 223.1 * self.arduino.analogRead(self.pin_raspberry_pi_battery) / 1023.0 * self.arduino_max_voltage_analog_read
+            print "5"   
             self.cameras.turn_off_relay_camera_1()
+            print "6"
         return voltage
 
     # Return CPU temperature as a character string
