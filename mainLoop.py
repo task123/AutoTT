@@ -4,6 +4,7 @@ import Steering
 import Status
 import time
 import os
+import Cameras
 
 port = 12345 
 ip_address = "10.22.7.247"
@@ -18,6 +19,7 @@ try:
     steering = Steering.SteeringWithIOSGyro(motors, autoTTCommunication = autoTTCommunication)
     modes = Steering.Modes(autoTTCommunication, steering)
     status = Status.Status(autoTTCommunication, motors)
+    print "mo"
     cameras = Cameras.Cameras(motors)
     print "boe"
     #connection_test = Steering.ConnectionTest(autoTTCommunication, motors, cameras)
