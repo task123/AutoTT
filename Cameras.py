@@ -6,9 +6,9 @@ import threading
 from flask import Flask, render_template, Response
 
 class Cameras:
-    def __init__(self, motors, port, pin_battery_camera_1 = 13, pin_battery_camera_2 = 9):
+    def __init__(self, motors, streaming_port, pin_battery_camera_1 = 13, pin_battery_camera_2 = 9):
         self.arduino = motors.arduino
-        self.streaming_port = port + 1
+        self.streaming_port = streaming_port
         self.pin_battery_camera_1 = pin_battery_camera_1
         self.pin_battery_camera_2 = pin_battery_camera_2
         
