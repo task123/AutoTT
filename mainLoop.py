@@ -23,7 +23,7 @@ try:
     modes = Steering.Modes(autoTTCommunication, steering)
     cameras = Cameras.Cameras(motors, streaming_port = port + 1)
     status = Status.Status(autoTTCommunication, motors)
-    fan_controller = Statur.FanController(motors, status)
+    fan_controller = Statur.FanController(motors, status, autoTTCommunication)
     #connection_test = TCP.ConnectionTest(autoTTCommunication, motors, cameras)
     autoTTCommunication.set_receivers(gyro_recv = steering, mode_recv = modes, status_recv = status, stop_cont_recv = steering, 
             disconnect_recv = connection_test, shut_down_recv = connection_test, connection_test_recv = connection_test, 
