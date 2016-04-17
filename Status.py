@@ -8,6 +8,7 @@ from nanpy import ArduinoApi
 from nanpy import SerialManager
 import TCP
 import Motor
+import time
 
 class Status:
     # need the 'trip_meter' to get the arduino connection
@@ -83,8 +84,29 @@ class Status:
                 return(line.split()[1:5])
 
 class FanController:
-    def __init__(self, motors, ):
+    def __init__(self, motors, status):
+        self.start_temp = 70.0
+        self.stop_temp = 65.0
+        self.start_value = 100
+        self.max_value = 400
+        self.fan_pin = 3
+        
         self.arduino = motors.arduino
+        self.status = status
+        
+        arduino.pinMode(self.fan_pin, arduino.OUTPUT)
+        
+        self.fan_control_thread = threading.Thread(target = self.fan_controller_loop)
+        self.fan_control_thread.setDaemon(True)
+        self.fan_control_thread.start()
         
     def fan_controller_loop(self):
-        
+        while True:
+            temp = float(self.status.getCPUtemperature())
+            if (temp > self.start_temp):
+                fan_value = (temp - self.start_temp) / (85.0 - self.start_temp) * (self.max_value - self.start_value) + self.start_value
+            elif (temp < self.stop_temp):
+                fan_value = 0
+            self.arduino.analogWrite(self.fan_pin, fan_value)
+            time.sleep(3)
+            
