@@ -81,3 +81,10 @@ class Status:
             line = p.readline()
             if i==2:
                 return(line.split()[1:5])
+
+class FanController:
+    def __init__(self, motors, ):
+        self.arduino = motors.arduino
+        
+    def fan_controller_loop(self):
+        
