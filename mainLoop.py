@@ -12,9 +12,6 @@ ip_address = "10.22.7.247"
 motors = None
 cameras = None
 connection_test = None
-
-cameras = None
-status = None
 try:
     trip_meter = Motor.TripMeter()
     motors = Motor.Motor(trip_meter)
@@ -44,4 +41,4 @@ except:
     if (connection_test != None):
         connection_test.disconnect()
     
-# os.system("sudo reboot")
+os.system("./restart_mainLoop.py")
