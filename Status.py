@@ -84,15 +84,19 @@ class Status:
                 return(line.split()[1:5])
 
 class FanController:
-    def __init__(self, motors, status):
+    def __init__(self, motors, status, autoTTCommunication):
         self.start_temp = 70.0
         self.stop_temp = 65.0
+        self.warning_message_temp = 80.0
         self.start_value = 100
         self.max_value = 400
         self.fan_pin = 3
         
         self.arduino = motors.arduino
         self.status = status
+        self.autoTTCommunication = autoTTCommunication
+        
+        self.warning_message_sendt = False
         
         arduino.pinMode(self.fan_pin, arduino.OUTPUT)
         
@@ -105,8 +109,12 @@ class FanController:
             temp = float(self.status.getCPUtemperature())
             if (temp > self.start_temp):
                 fan_value = (temp - self.start_temp) / (85.0 - self.start_temp) * (self.max_value - self.start_value) + self.start_value
+                if (temp > warning_message_temp and not self.warning_message_sendt):
+                    self.autoTTCommunication.message("The CPU temperatur is over %f C." % (self.warning_message_temp))
+                    self.warning_message_sendt = True
             elif (temp < self.stop_temp):
                 fan_value = 0
+                self.warning_message_sendt = False
             self.arduino.analogWrite(self.fan_pin, fan_value)
             time.sleep(3)
             
