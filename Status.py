@@ -113,7 +113,6 @@ class FanController:
         self.run_loop = False
         time.sleep(0.001) # just to make sure the fan doesn't get set after the next line
         self.arduino.analogWrite(self.fan_pin, 0)
-        print "turn off"
 
     def fan_controller_loop(self):
         self.arduino.analogWrite(self.fan_pin, 0)
