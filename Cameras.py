@@ -44,7 +44,7 @@ class Cameras:
         self.arduino.digitalWrite(self.pin_battery_camera_1, 1) # activ high
         time.sleep(5)
         self.video_1 = cv2.VideoCapture(0)
-        self.video_1.set(cv2.CAP_PROP_FPS, self.fps)
+        #self.video_1.set(cv2.CAP_PROP_FPS, self.fps)
         self.video_1.set(cv2.CAP_PROP_FRAME_HEIGHT, self.frame_height)
         self.video_1.set(cv2.CAP_PROP_FRAME_WIDTH, self.frame_width)
         self.camera_1_on = True
@@ -60,7 +60,7 @@ class Cameras:
         self.arduino.digitalWrite(self.pin_battery_camera_2, 0) # activ low
         time.sleep(5)
         self.video_2 = cv2.VideoCapture(1)
-        self.video_2.set(cv2.CAP_PROP_FPS, self.fps)
+        #self.video_2.set(cv2.CAP_PROP_FPS, self.fps)
         self.video_2.set(cv2.CAP_PROP_FRAME_HEIGHT, self.frame_height)
         self.video_2.set(cv2.CAP_PROP_FRAME_WIDTH, self.frame_width)
         self.camera_2_on = True
