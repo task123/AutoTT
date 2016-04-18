@@ -23,6 +23,7 @@ try:
     status = Status.Status(autoTTCommunication, motors)
     fan_controller = Status.FanController(motors, status, autoTTCommunication)
     connection_test = TCP.ConnectionTest(autoTTCommunication, motors, cameras, fan_controller)
+    cameras.connection_test = connection_test
     autoTTCommunication.set_receivers(gyro_recv = steering, mode_recv = modes, status_recv = status, stop_cont_recv = steering, 
             disconnect_recv = connection_test, shut_down_recv = connection_test, connection_test_recv = connection_test, 
             video_recv = cameras)
