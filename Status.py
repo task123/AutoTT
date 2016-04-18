@@ -95,7 +95,6 @@ class FanController:
         self.warning_message_motor_battery_volt_sendt = False
         self.warning_message_raspberry_pi_battery_volt = 4.9
         self.warning_message_motor_battery_volt_sendt = False
-"""
         
         self.arduino = motors.arduino
         self.status = status
@@ -105,6 +104,7 @@ class FanController:
         
         arduino.pinMode(self.fan_pin, arduino.OUTPUT)
         
+        """
         self.fan_control_thread = threading.Thread(target = self.fan_controller_loop)
         self.fan_control_thread.setDaemon(True)
         self.fan_control_thread.start()
