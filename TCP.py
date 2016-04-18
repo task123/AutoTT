@@ -163,7 +163,6 @@ class ConnectionTest:
     def receive_message(self, type, message):
         if (type == "ConnectionTest"):
             self.time_of_last_connection = time.time()
-            print time.time()
         elif (type == "Disconnect"):
             self.disconnect()
         elif (type == "Shutdown"):
