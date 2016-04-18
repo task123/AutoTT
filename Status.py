@@ -105,11 +105,10 @@ class FanController:
         self.arduino.pinMode(self.fan_pin, self.arduino.OUTPUT)
         
         print "here"
-        #self.fan_control_thread = threading.Thread(target = self.fan_controller_loop)
+        self.fan_control_thread = threading.Thread(target = self.fan_controller_loop)
         print "hei"
         #self.fan_control_thread.setDaemon(True)
         #self.fan_control_thread.start()
         
     def fan_controller_loop(self):
-        while True:
-            time.sleep(2)
+        print "ffff"
