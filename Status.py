@@ -102,7 +102,7 @@ class FanController:
         
         self.warning_message_sendt = False
         
-        arduino.pinMode(self.fan_pin, arduino.OUTPUT)
+        #arduino.pinMode(self.fan_pin, arduino.OUTPUT)
         
         """
         self.fan_control_thread = threading.Thread(target = self.fan_controller_loop)
