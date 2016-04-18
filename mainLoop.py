@@ -31,7 +31,7 @@ try:
     connection_test.set_intervall(0.05)
     modes.send_modes_and_info_modes()
     
-    while not camera.opening_video_stream and connection_test.is_connection_good():
+    while not cameras.opening_video_stream and connection_test.is_connection_good():
         time.sleep(0.3)
         print "opening" + str(camera.opening_video_stream)
 
