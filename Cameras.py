@@ -51,7 +51,6 @@ class Cameras:
         self.camera_1_on = True
         
     def stop_camera_1(self):
-        print "stop_camera_1"
         self.camera_1_on = False
         self.arduino.digitalWrite(self.pin_battery_camera_1, 0)
         if (self.video_1 != None):
@@ -97,7 +96,6 @@ class Cameras:
             elif (message == "Off"):
                 self.stop_video_stream()
         if (type == "VideoQuality"):
-            print "VideoQuality"
             if (message == "High"):
                 self.fps = 15
                 self.frame_height = 720
