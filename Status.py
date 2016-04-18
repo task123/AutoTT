@@ -108,7 +108,7 @@ class FanController:
         self.fan_control_thread.setDaemon(True)
         self.fan_control_thread.start()
         
-    def self.fan_controller_loop(self):
+    def fan_controller_loop(self):
         #self.arduino.analogWrite(self.fan_pin, 0)
         while True:
             """
