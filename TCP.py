@@ -172,6 +172,7 @@ class ConnectionTest:
     def is_connection_good(self):
         if (self.good_connection and not self.cameras.opening_video_stream):
             self.good_connection = (time.time() - self.time_of_last_connection < 100 * self.intervall)
+            print time.time() - self.time_of_last_connection
             if (self.good_connection):
                 return True
             else:
