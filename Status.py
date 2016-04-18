@@ -120,7 +120,6 @@ class FanController:
         while self.run_loop:
             time.sleep(3)
             temp = float(self.status.getCPUtemperature())
-            print temp
             if (temp > self.start_temp):
                 fan_value = (temp - self.start_temp) / (85.0 - self.start_temp) * (self.max_value - self.start_value) + self.start_value
                 if (temp > self.warning_limit_temp and not self.warning_temp_sendt):
