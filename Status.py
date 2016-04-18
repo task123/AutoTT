@@ -9,6 +9,7 @@ from nanpy import SerialManager
 import TCP
 import Motor
 import time
+import threading
 
 class Status:
     # need the 'trip_meter' to get the arduino connection
@@ -104,14 +105,27 @@ class FanController:
         
         self.arduino.pinMode(self.fan_pin, self.arduino.OUTPUT)
         
-        print "here"
-        self.fan_control_thread = threading.Thread(target = self.test)
-        print "hei"
-        #self.fan_control_thread.setDaemon(True)
-        #self.fan_control_thread.start()
-        
-    def test(self):
-        print "hhhh"
+        self.fan_control_thread = threading.Thread(target = self.fan_controller_loop)
+        self.fan_control_thread.setDaemon(True)
+        self.fan_control_thread.start()
         
     def fan_controller_loop(self):
-        print "ffff"
+        self.arduino.analogWrite(self.fan_pin, 0)
+        while True:
+            temp = float(self.status.getCPUtemperature())
+            if (temp > self.start_temp):
+                fan_value = (temp - self.start_temp) / (85.0 - self.start_temp) * (self.max_value - self.start_value) + self.start_value
+                if (temp > warning_message_temp and not self.warning_message_sendt):
+                    self.autoTTCommunication.message("The CPU temperatur is over %f C." % (self.warning_message_temp))
+                    self.warning_message_sendt = True
+                self.arduino.analogWrite(self.fan_pin, fan_value)
+            elif (temp < self.stop_temp):
+                self.warning_message_sendt = False
+                self.arduino.analogWrite(self.fan_pin, 0)
+            motor_battery_volt = self.status.getMotorBatteryVolt()
+            if (motor_battery_volt < self.warning_message_motor_battery_volt):
+                self.autoTTCommunication.message("The voltage on the battery driving the motors is under %.2f V" % (motor_battery_volt))
+            raspberry_pi_battery_volt = self.status.getRaspberryPiBatteryVolt()
+            if (raspberry_pi_battery_volt < self.warning_message_raspberry_pi_volt):
+                self.autoTTCommunication.message("The voltage on the battery driving the raspberry pi is under %.2f V" % (raspberry_pi_battery_volt))
+            time.sleep(3)
