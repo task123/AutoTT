@@ -23,6 +23,7 @@ class Cameras:
         self.frame_height = 480
         self.frame_width = 640
         self.stream_on = False
+        self.new_stream_image = False
         self.camera_1_on = False
         self.camera_2_on = False
         self.video_1 = None
