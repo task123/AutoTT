@@ -171,11 +171,12 @@ class ConnectionTest:
 
     def is_connection_good(self):
         if (self.good_connection):
-            self.good_connection = (time.time() - self.time_of_last_connection < 5 * self.intervall)
+            self.good_connection = (time.time() - self.time_of_last_connection < 10 * self.intervall)
             if (self.good_connection):
                 return True
             else:
                 self.disconnect()
+                print "Lost connection!"
                 return False
         else:
             return False
