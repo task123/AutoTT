@@ -81,8 +81,9 @@ class Cameras:
                 _, image2 = self.video2.read()
                 blur_1 = cv2.GaussianBlur(image_2,(5,5),0)
             if (self.stream_on):
-                ret, self.stream_image_jpeg = cv2.imencode('.jpg', image_1, [cv2.IMWRITE_JPEG_QUALITY,self.jpeg_quality])
-                self.new_stream_image = True
+                if (image_1 != None):
+                    ret, self.stream_image_jpeg = cv2.imencode('.jpg', image_1, [cv2.IMWRITE_JPEG_QUALITY,self.jpeg_quality])
+                    self.new_stream_image = True
             time.sleep(0.01)
 
     def turn_off(self):
