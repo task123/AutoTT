@@ -148,10 +148,11 @@ class AutoTTCommunication:
         self.send_message("Message",message)
 
 class ConnectionTest:
-    def __init__(self, autoTTCommunication, motors, cameras):
+    def __init__(self, autoTTCommunication, motors, cameras, fan_controller):
         self.autoTTCommunication = autoTTCommunication
         self.motors = motors
         self.cameras = cameras
+        self.fan_controller = fan_controller
         self.good_connection = True
         self.time_of_last_connection = time.time()
     
@@ -183,5 +184,6 @@ class ConnectionTest:
     def disconnect(self):
         self.motors.turn_off()
         self.cameras.turn_off()
+        self.fan_controller.turn_off()
         self.good_connection = False
         self.autoTTCommunication.close()
