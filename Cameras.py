@@ -20,9 +20,9 @@ class Cameras:
         self.arduino.digitalWrite(self.pin_battery_camera_2, 1) # activ low
         
         self.jpeg_quality = 95
-        self.fps = 15
-        self.frame_height = 480
-        self.frame_width = 640
+        #self.fps = 15
+        #self.frame_height = 480
+        #self.frame_width = 640
         self.stream_on = False
         self.new_stream_image = False
         self.camera_1_on = False
@@ -134,11 +134,11 @@ class Cameras:
                 if (self.video_1 != None):
                     # self.video_1.set(cv2.CAP_PROP_FPS, self.fps)
                     self.video_1.set(cv2.CAP_PROP_FRAME_HEIGHT, self.frame_height)
-                    #self.video_1.set(cv2.CAP_PROP_FRAME_WIDTH, self.frame_width)
+                    self.video_1.set(cv2.CAP_PROP_FRAME_WIDTH, self.frame_width)
                 if (self.video_2 != None):
                     # self.video_2.set(cv2.CAP_PROP_FPS, self.fps)
                     self.video_2.set(cv2.CAP_PROP_FRAME_HEIGHT, self.frame_height)
-                    #self.video_2.set(cv2.CAP_PROP_FRAME_WIDTH, self.frame_width)
+                    self.video_2.set(cv2.CAP_PROP_FRAME_WIDTH, self.frame_width)
                 self.autoTTCommunication.send_message("VideoStreamRefresh", "")
                 
     def start_video_stream(self):
