@@ -143,6 +143,7 @@ class Cameras:
         if (not self.camera_1_on):
             self.start_camera_1()
         self.stream_on = True
+        self.autoTTCommunication.send_message("VideoStreamRefresh", "")
         time.sleep(3) # wait to make sure the stream is running
         self.autoTTCommunication.send_message("VideoStreamRefresh", "")
         
