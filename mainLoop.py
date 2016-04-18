@@ -41,4 +41,4 @@ except:
     if (connection_test != None):
         connection_test.disconnect()
     
-os.system("./restart_mainLoop.py")
+os.system("./restart_mainLoop.sh")
