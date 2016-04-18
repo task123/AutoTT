@@ -14,8 +14,6 @@ class Cameras:
         self.pin_battery_camera_1 = pin_battery_camera_1
         self.pin_battery_camera_2 = pin_battery_camera_2
         
-        self.opening_video_stream = False
-        
         self.arduino.pinMode(self.pin_battery_camera_1, self.arduino.OUTPUT)
         self.arduino.pinMode(self.pin_battery_camera_2, self.arduino.OUTPUT)
         self.arduino.digitalWrite(self.pin_battery_camera_1, 0) # activ high
@@ -128,7 +126,6 @@ class Cameras:
                 self.autoTTCommunication.send_message("VideoStreamRefresh", "")
                 
     def start_video_stream(self):
-        self.opening_video_stream = True
         if (not self.camera_1_on):
             self.start_camera_1()
         self.have_yield = False
@@ -139,8 +136,7 @@ class Cameras:
         while (not self.have_yield):
             time.sleep(0.1)
         self.autoTTCommunication.send_message("VideoStreamStarted", "")
-        self.opening_video_steam = False
-        
+
 
     def stop_video_stream(self):
         self.stream_on = False
