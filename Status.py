@@ -94,9 +94,9 @@ class FanController:
         self.max_value = 400
         self.fan_pin = 3
         self.warning_limit_motor_battery_volt = 6.0
-        self.warning_message_motor_battery_volt_sendt = False
+        self.warning_motor_battery_volt_sendt = False
         self.warning_limit_raspberry_pi_battery_volt = 4.9
-        self.warning_message_raspberry_pi_volt_sendt = False
+        self.warning_raspberry_pi_volt_sendt = False
         
         self.arduino = motors.arduino
         self.status = status
