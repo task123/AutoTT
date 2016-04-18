@@ -112,7 +112,7 @@ class FanController:
     def fan_controller_loop(self):
         self.arduino.analogWrite(self.fan_pin, 0)
         while True:
-            temp = float(self.status.getCPUtemperature())
+            # temp = float(self.status.getCPUtemperature())
             """
             if (temp > self.start_temp):
                 fan_value = (temp - self.start_temp) / (85.0 - self.start_temp) * (self.max_value - self.start_value) + self.start_value
