@@ -113,6 +113,7 @@ class FanController:
         self.arduino.analogWrite(self.fan_pin, 0)
         while True:
             temp = float(self.status.getCPUtemperature())
+            """
             if (temp > self.start_temp):
                 fan_value = (temp - self.start_temp) / (85.0 - self.start_temp) * (self.max_value - self.start_value) + self.start_value
                 if (temp > warning_message_temp and not self.warning_message_sendt):
@@ -128,5 +129,6 @@ class FanController:
             raspberry_pi_battery_volt = self.status.getRaspberryPiBatteryVolt()
             if (raspberry_pi_battery_volt < self.warning_message_raspberry_pi_volt):
                 self.autoTTCommunication.message("The voltage on the battery driving the raspberry pi is under %.2f V" % (raspberry_pi_battery_volt))
+            """
             time.sleep(3)
             
