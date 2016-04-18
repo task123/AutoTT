@@ -149,7 +149,7 @@ class Cameras:
         self.autoTTCommunication.send_message("VideoStreamRefresh", "")
         while (not self.have_yield):
             time.sleep(0.1)
-        print "YIELD"
+        self.autoTTCommunication.send_message("VideoStreamStarted", "")
         
 
     def stop_video_stream(self):
