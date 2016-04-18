@@ -95,7 +95,7 @@ class FanController:
         self.warning_message_motor_battery_volt_sendt = False
         self.warning_message_raspberry_pi_battery_volt = 4.9
         self.warning_message_motor_battery_volt_sendt = False
-
+"""
         
         self.arduino = motors.arduino
         self.status = status
@@ -129,4 +129,4 @@ class FanController:
             if (raspberry_pi_battery_volt < self.warning_message_raspberry_pi_volt):
                 self.autoTTCommunication.message("The voltage on the battery driving the raspberry pi is under %.2f V" % (raspberry_pi_battery_volt))
             time.sleep(3)
-            
+       """     
