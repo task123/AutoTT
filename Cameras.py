@@ -149,7 +149,7 @@ class Cameras:
 
     def stop_video_stream(self):
         self.stream_on = False
-        time.sleep(1)
+        time.sleep(0.05)
         self.conditionally_stop_camera_1()
     
     def conditionally_stop_camera_1(self):
