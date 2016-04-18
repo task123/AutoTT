@@ -129,7 +129,6 @@ class Cameras:
                 
     def start_video_stream(self):
         self.opening_video_stream = True
-        print "True"
         if (not self.camera_1_on):
             self.start_camera_1()
         self.have_yield = False
