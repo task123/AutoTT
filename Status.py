@@ -103,7 +103,7 @@ class FanController:
         self.warning_message_sendt = False
         
         self.arduino.pinMode(self.fan_pin, self.arduino.OUTPUT)
-        
+    """    
         self.fan_control_thread = threading.Thread(target = self.fan_controller_loop)
         self.fan_control_thread.setDaemon(True)
         self.fan_control_thread.start()
@@ -128,3 +128,4 @@ class FanController:
             if (raspberry_pi_battery_volt < self.warning_message_raspberry_pi_volt):
                 self.autoTTCommunication.message("The voltage on the battery driving the raspberry pi is under %.2f V" % (raspberry_pi_battery_volt))
             time.sleep(3)
+"""
