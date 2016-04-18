@@ -33,7 +33,7 @@ try:
     
     while True: #connection_test.is_connection_good():
         time.sleep(0.3)
-        #print connection_test.is_connection_good()
+        print connection_test.is_connection_good()
 
 except:
     if (motors != None):
