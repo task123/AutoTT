@@ -117,22 +117,28 @@ class FanController:
     def fan_controller_loop(self):
         self.arduino.analogWrite(self.fan_pin, 0)
         while self.run_loop:
+            time.sleep(3)
             temp = float(self.status.getCPUtemperature())
             if (temp > self.start_temp):
+                print "temp"
                 fan_value = (temp - self.start_temp) / (85.0 - self.start_temp) * (self.max_value - self.start_value) + self.start_value
                 if (temp > self.warning_limit_temp and not self.warning_temp_sendt):
+                    print "send message"
                     self.autoTTCommunication.message("The CPU temperatur is over %f C." % (self.warning_limit_temp))
+                    time.sleep(0.1) # to make sure not several warning messages is sendt at the same time
                     self.warning_temp_sendt = True
                 self.arduino.analogWrite(self.fan_pin, fan_value)
+                print "fan value" + str(fan_value)
             elif (temp < self.stop_temp):
+                print "stop"
                 self.warning_temp_sendt = False
                 self.arduino.analogWrite(self.fan_pin, 0)
             motor_battery_volt = self.status.getMotorBatteryVolt()
             if (motor_battery_volt < self.warning_limit_motor_battery_volt and not self.warning_motor_battery_volt_sendt):
                 self.autoTTCommunication.message("The voltage on the battery driving the motors is under %.2f V" % (self.warning_limit_motor_battery_volt))
+                time.sleep(0.1) # to make sure not several warning messages is sendt at the same time
                 self.warning_motor_battery_volt_sendt = True
             raspberry_pi_battery_volt = self.status.getRaspberryPiBatteryVolt()
             if (raspberry_pi_battery_volt < self.warning_limit_raspberry_pi_battery_volt and not self.warning_raspberry_pi_battery_volt_sendt):
                 self.autoTTCommunication.message("The voltage on the battery driving the raspberry pi is under %.2f V" % (self.warning_limit_raspberry_pi_battery_volt))
                 self.warning_raspberry_pi_battery_volt_sendt = True
-            time.sleep(3)
