@@ -128,12 +128,12 @@ class Cameras:
                 self.autoTTCommunication.send_message("VideoStreamRefresh", "")
                 
     def start_video_stream(self):
+        self.opening_video_stream = True
+        print "True"
         if (not self.camera_1_on):
             self.start_camera_1()
         self.have_yield = False
         self.stream_on = True
-        self.opening_video_stream = True
-        print "True"
         self.autoTTCommunication.send_message("VideoStreamRefresh", "")
         time.sleep(0.1)
         self.autoTTCommunication.send_message("VideoStreamRefresh", "")
