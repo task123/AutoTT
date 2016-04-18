@@ -87,8 +87,8 @@ class Status:
 class FanController:
     def __init__(self, motors, status, autoTTCommunication):
         self.start_temp = 45.0 #70.0
-        self.stop_temp = 50.0 #65.0
-        self.warning_limit_temp = 80.0
+        self.stop_temp = 40.0 #65.0
+        self.warning_limit_temp = 55.0
         self.warning_temp_sendt = False
         self.start_value = 100
         self.max_value = 400
