@@ -129,7 +129,7 @@ class Cameras:
             elif (message == "Low"):
                 self.fps = 15
                 self.frame_height = 300
-                self.frame_width = 500
+                self.frame_width = 560
                 self.jpeg_quality = 95
                 if (self.video_1 != None):
                     # self.video_1.set(cv2.CAP_PROP_FPS, self.fps)
