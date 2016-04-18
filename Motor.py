@@ -83,14 +83,22 @@ class Motor:
             proportional_term_in_PID = 0.12, derivative_term_in_PID = 0.001):
         self.trip_meter = trip_meter
         try:
-            self.connection = SerialManager(device='/dev/ttyACM0')
+            self.connection = SerialManager(device='/dev/ttyACM2')
             self.arduino = ArduinoApi(connection=self.connection)
         except:
             try:
-                self.connection = SerialManager(device='/dev/ttyACM1')
+                self.connection = SerialManager(device='/dev/ttyACM0')
                 self.arduino = ArduinoApi(connection=self.connection)
             except:
-                print "Could not connect to the arduino using /dev/ttyACM0 or /dev/ttyACM1"
+                try:
+                    self.connection = SerialManager(device='/dev/ttyACM1')
+                    self.arduino = ArduinoApi(connection=self.connection)
+                except:
+                    try:
+                        self.connection = SerialManager(device='/dev/ttyACM3')
+                        self.arduino = ArduinoApi(connection=self.connection)
+                    except:
+                        print "Could not connect to the arduino using /dev/ttyACM0, /dev/ttyACM1, /dev/ttyACM2 or /dev/ttyACM3"
     
         self.pin_right_forward = pin_right_forward
         self.pin_right_backward = pin_right_backward
