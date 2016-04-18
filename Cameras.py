@@ -151,6 +151,11 @@ class Cameras:
         self.stream_on = False
         time.sleep(0.05)
         self.conditionally_stop_camera_1()
+        if (self.connection_test != None):
+            self.connection_test.time_of_last_connection = time.time()
+        else:
+            print "Cameras does not have a 'connection_test' to update time_of_last_connection after opening video stream"
+        self.opening_video_stream = False
     
     def conditionally_stop_camera_1(self):
         if (not self.stream_on):
