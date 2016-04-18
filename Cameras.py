@@ -133,6 +133,7 @@ class Cameras:
         self.have_yield = False
         self.stream_on = True
         self.opening_video_stream = True
+        print "True"
         self.autoTTCommunication.send_message("VideoStreamRefresh", "")
         time.sleep(0.1)
         self.autoTTCommunication.send_message("VideoStreamRefresh", "")
