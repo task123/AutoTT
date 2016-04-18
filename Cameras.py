@@ -97,6 +97,7 @@ class Cameras:
             elif (message == "Off"):
                 self.stop_video_stream()
         if (type == "VideoQuality"):
+            print "VideoQuality"
             if (message == "High"):
                 self.fps = 15
                 self.frame_height = 720
@@ -128,7 +129,7 @@ class Cameras:
             elif (message == "Low"):
                 self.fps = 15
                 self.frame_height = 100
-                self.frame_width = 560
+                self.frame_width = 600
                 self.jpeg_quality = 95
                 if (self.video_1 != None):
                     # self.video_1.set(cv2.CAP_PROP_FPS, self.fps)
