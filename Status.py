@@ -122,7 +122,6 @@ class FanController:
             if (temp > self.start_temp):
                 fan_value = (temp - self.start_temp) / (85.0 - self.start_temp) * (self.max_value - self.start_value) + self.start_value
                 if (temp > self.warning_limit_temp and not self.warning_temp_sendt):
-                    print "send message"
                     self.autoTTCommunication.message("The CPU temperatur is over %f C." % (self.warning_limit_temp))
                     time.sleep(0.1) # to make sure not several warning messages is sendt at the same time
                     self.warning_temp_sendt = True
