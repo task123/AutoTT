@@ -33,7 +33,7 @@ try:
     
     while True:
         if (not cameras.opening_video_stream): 
-            print str(connection_test.is_connection_good()):
+            print str(connection_test.is_connection_good())
         time.sleep(0.3)
 
 except:
