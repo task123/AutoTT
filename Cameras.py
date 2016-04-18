@@ -127,7 +127,7 @@ class Cameras:
                 self.autoTTCommunication.send_message("VideoStreamRefresh", "")
             elif (message == "Low"):
                 self.fps = 15
-                self.frame_height = 360
+                self.frame_height = 300
                 self.frame_width = 700
                 self.jpeg_quality = 95
                 if (self.video_1 != None):
