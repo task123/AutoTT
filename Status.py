@@ -123,10 +123,10 @@ class FanController:
                 self.arduino.analogWrite(self.fan_pin, 0)
             motor_battery_volt = self.status.getMotorBatteryVolt()
             if (motor_battery_volt < self.warning_limit_motor_battery_volt and not self.warning_motor_battery_volt_sendt):
-                self.autoTTCommunication.message("The voltage on the battery driving the motors is under %.2f V" % (warning_limit_motor_battery_volt))
+                self.autoTTCommunication.message("The voltage on the battery driving the motors is under %.2f V" % (self.warning_limit_motor_battery_volt))
                 self.warning_motor_battery_volt_sendt = True
             raspberry_pi_battery_volt = self.status.getRaspberryPiBatteryVolt()
             if (raspberry_pi_battery_volt < self.warning_limit_raspberry_pi_battery_volt and not self.warning_raspberry_pi_battery_volt_sendt):
-                self.autoTTCommunication.message("The voltage on the battery driving the raspberry pi is under %.2f V" % (warning_limit_raspberry_pi_battery_volt))
+                self.autoTTCommunication.message("The voltage on the battery driving the raspberry pi is under %.2f V" % (self.warning_limit_raspberry_pi_battery_volt))
                 self.warning_raspberry_pi_battery_volt_sendt = True
             time.sleep(3)
