@@ -109,7 +109,7 @@ class Cameras:
                     self.video_2.set(cv2.CAP_PROP_FPS, self.fps)
                     self.video_2.set(cv2.CAP_PROP_FRAME_HEIGHT, self.frame_height)
                     self.video_2.set(cv2.CAP_PROP_FRAME_WIDTH, self.frame_width)
-                time.sleep(0.1) # wait to make sure the stream is running with new settings
+                # time.sleep(0.1) # wait to make sure the stream is running with new settings
                 self.autoTTCommunication.send_message("VideoStreamRefresh", "")
             elif (message == "Medium"):
                 self.fps = 15
@@ -124,7 +124,7 @@ class Cameras:
                     self.video_2.set(cv2.CAP_PROP_FPS, self.fps)
                     self.video_2.set(cv2.CAP_PROP_FRAME_HEIGHT, self.frame_height)
                     self.video_2.set(cv2.CAP_PROP_FRAME_WIDTH, self.frame_width)
-                time.sleep(0.1) # wait to make sure the stream is running with new settings
+                # time.sleep(0.1) # wait to make sure the stream is running with new settings
                 self.autoTTCommunication.send_message("VideoStreamRefresh", "")
             elif (message == "Low"):
                 self.fps = 15
@@ -139,14 +139,14 @@ class Cameras:
                     self.video_2.set(cv2.CAP_PROP_FPS, self.fps)
                     self.video_2.set(cv2.CAP_PROP_FRAME_HEIGHT, self.frame_height)
                     self.video_2.set(cv2.CAP_PROP_FRAME_WIDTH, self.frame_width)
-                time.sleep(0.1) # wait to make sure the stream is running with new settings
+                # time.sleep(0.1) # wait to make sure the stream is running with new settings
                 self.autoTTCommunication.send_message("VideoStreamRefresh", "")
                 
     def start_video_stream(self):
         if (not self.camera_1_on):
             self.start_camera_1()
         self.stream_on = True
-        time.sleep(0.5) # wait to make sure the stream is running
+        # time.sleep(0.5) # wait to make sure the stream is running
         self.autoTTCommunication.send_message("VideoStreamRefresh", "")
         
 
