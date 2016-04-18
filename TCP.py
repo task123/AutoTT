@@ -171,8 +171,8 @@ class ConnectionTest:
             os.system("sudo shutdown now")
 
     def is_connection_good(self):
-        if (self.good_connection):
-            self.good_connection = (time.time() - self.time_of_last_connection < 100 * self.intervall)
+        if (self.good_connection and not self.cameras.opening_video_stream):
+            self.good_connection = (time.time() - self.time_of_last_connection < 10 * self.intervall)
             if (self.good_connection):
                 return True
             else:
