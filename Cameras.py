@@ -142,10 +142,14 @@ class Cameras:
     def start_video_stream(self):
         if (not self.camera_1_on):
             self.start_camera_1()
+        self.have_yield = False
         self.stream_on = True
         self.autoTTCommunication.send_message("VideoStreamRefresh", "")
         time.sleep(0.1)
         self.autoTTCommunication.send_message("VideoStreamRefresh", "")
+        while (not self.have_yield):
+            time.sleep(0.1)
+        print "YIELD"
         
 
     def stop_video_stream(self):
@@ -172,6 +176,7 @@ class Cameras:
                 self.new_stream_image = False
                 yield (b'--frame\r\n'
                     b'Content-Type: image/jpeg\r\n\r\n' + self.stream_image_jpeg.tostring() + b'\r\n\r\n')
+                self.have_yield = True
                 
 
         @flaskApp.route('/video_feed')
