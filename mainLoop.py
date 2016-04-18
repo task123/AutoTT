@@ -18,7 +18,7 @@ try:
     autoTTCommunication = TCP.AutoTTCommunication(port, ip_address = ip_address)
     steering = Steering.SteeringWithIOSGyro(motors, autoTTCommunication = autoTTCommunication)
     modes = Steering.Modes(autoTTCommunication, steering)
-    cameras = Cameras.Cameras(motors, streaming_port = port + 1)
+    cameras = Cameras.Cameras(motors, autoTTCommunication, streaming_port = port + 1)
     status = Status.Status(autoTTCommunication, motors)
     #fan_controller = Statur.FanController(motors, status, autoTTCommunication)
     #connection_test = TCP.ConnectionTest(autoTTCommunication, motors, cameras)
