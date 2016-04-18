@@ -106,8 +106,9 @@ class FanController:
         
         print "here"
         self.fan_control_thread = threading.Thread(target = self.fan_controller_loop)
-        self.fan_control_thread.setDaemon(True)
-        self.fan_control_thread.start()
+        print "hei"
+        #self.fan_control_thread.setDaemon(True)
+        #self.fan_control_thread.start()
         
     def fan_controller_loop(self):
         while True:
