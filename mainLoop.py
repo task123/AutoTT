@@ -31,7 +31,7 @@ try:
     connection_test.set_intervall(0.05)
     modes.send_modes_and_info_modes()
     
-    while True: #connection_test.is_connection_good():
+    while connection_test.is_connection_good():
         time.sleep(0.3)
 
 except:
