@@ -113,6 +113,7 @@ class FanController:
         self.run_loop = False
         time.sleep(0.001) # just to make sure the fan doesn't get set after the next line
         self.arduino.analogWrite(self.fan_pin, 0)
+        print "turn off"
 
     def fan_controller_loop(self):
         self.arduino.analogWrite(self.fan_pin, 0)
@@ -120,7 +121,6 @@ class FanController:
             time.sleep(3)
             temp = float(self.status.getCPUtemperature())
             if (temp > self.start_temp):
-                print "temp"
                 fan_value = (temp - self.start_temp) / (85.0 - self.start_temp) * (self.max_value - self.start_value) + self.start_value
                 if (temp > self.warning_limit_temp and not self.warning_temp_sendt):
                     print "send message"
@@ -128,9 +128,7 @@ class FanController:
                     time.sleep(0.1) # to make sure not several warning messages is sendt at the same time
                     self.warning_temp_sendt = True
                 self.arduino.analogWrite(self.fan_pin, fan_value)
-                print "fan value" + str(fan_value)
             elif (temp < self.stop_temp):
-                print "stop"
                 self.warning_temp_sendt = False
                 self.arduino.analogWrite(self.fan_pin, 0)
             motor_battery_volt = self.status.getMotorBatteryVolt()
