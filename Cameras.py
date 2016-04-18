@@ -28,6 +28,7 @@ class Cameras:
         self.camera_2_on = False
         self.video_1 = None
         self.video_2 = None
+        self.connection_test = None
         
         self.camera_thread = threading.Thread(target = self.camera_loop)
         self.camera_thread.setDaemon(True)
@@ -139,6 +140,10 @@ class Cameras:
         while (not self.have_yield):
             time.sleep(0.1)
         self.autoTTCommunication.send_message("VideoStreamStarted", "")
+        if (self.connection_test != None):
+            self.connection_test.time_of_last_connection = time.time()
+        else:
+            print "Cameras does not have a 'connection_test' to update time_of_last_connection after opening video stream"
         self.opening_video_stream = False
 
 
