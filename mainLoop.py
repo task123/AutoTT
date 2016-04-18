@@ -34,7 +34,7 @@ try:
     good_connection = True
     while good_connection:
         if (not cameras.opening_video_stream): 
-           good_connection = connection_test.is_connection_good()
+           print good_connection = connection_test.is_connection_good()
         time.sleep(0.3)
 
 except:
