@@ -14,7 +14,7 @@ class Cameras:
         self.pin_battery_camera_1 = pin_battery_camera_1
         self.pin_battery_camera_2 = pin_battery_camera_2
         
-        self.opening_video_strem = False
+        self.opening_video_stream = False
         
         self.arduino.pinMode(self.pin_battery_camera_1, self.arduino.OUTPUT)
         self.arduino.pinMode(self.pin_battery_camera_2, self.arduino.OUTPUT)
