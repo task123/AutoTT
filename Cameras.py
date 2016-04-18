@@ -42,7 +42,6 @@ class Cameras:
         self.arduino.digitalWrite(self.pin_battery_camera_1, 1) # activ high
         time.sleep(5)
         self.video_1 = cv2.VideoCapture(0)
-        #self.video_1.set(cv2.CAP_PROP_FPS, self.fps)
         self.video_1.set(cv2.CAP_PROP_FRAME_HEIGHT, self.frame_height)
         self.video_1.set(cv2.CAP_PROP_FRAME_WIDTH, self.frame_width)
         self.camera_1_on = True
@@ -57,7 +56,6 @@ class Cameras:
         self.arduino.digitalWrite(self.pin_battery_camera_2, 0) # activ low
         time.sleep(5)
         self.video_2 = cv2.VideoCapture(1)
-        #self.video_2.set(cv2.CAP_PROP_FPS, self.fps)
         self.video_2.set(cv2.CAP_PROP_FRAME_HEIGHT, self.frame_height)
         self.video_2.set(cv2.CAP_PROP_FRAME_WIDTH, self.frame_width)
         self.camera_2_on = True
@@ -94,44 +92,35 @@ class Cameras:
                 self.stop_video_stream()
         if (type == "VideoQuality"):
             if (message == "High"):
-                self.fps = 15
-                self.frame_height = 720
-                self.frame_width = 1280
-                self.jpeg_quality = 95
-                if (self.video_1 != None):
-                    # self.video_1.set(cv2.CAP_PROP_FPS, self.fps)
-                    self.video_1.set(cv2.CAP_PROP_FRAME_HEIGHT, self.frame_height)
-                    self.video_1.set(cv2.CAP_PROP_FRAME_WIDTH, self.frame_width)
-                if (self.video_2 != None):
-                    # self.video_2.set(cv2.CAP_PROP_FPS, self.fps)
-                    self.video_2.set(cv2.CAP_PROP_FRAME_HEIGHT, self.frame_height)
-                    self.video_2.set(cv2.CAP_PROP_FRAME_WIDTH, self.frame_width)
-                self.autoTTCommunication.send_message("VideoStreamRefresh", "")
-            elif (message == "Medium"):
-                self.fps = 15
                 self.frame_height = 460
                 self.frame_width = 600
                 self.jpeg_quality = 95
                 if (self.video_1 != None):
-                    # self.video_1.set(cv2.CAP_PROP_FPS, self.fps)
                     self.video_1.set(cv2.CAP_PROP_FRAME_HEIGHT, self.frame_height)
                     self.video_1.set(cv2.CAP_PROP_FRAME_WIDTH, self.frame_width)
                 if (self.video_2 != None):
-                    # self.video_2.set(cv2.CAP_PROP_FPS, self.fps)
                     self.video_2.set(cv2.CAP_PROP_FRAME_HEIGHT, self.frame_height)
                     self.video_2.set(cv2.CAP_PROP_FRAME_WIDTH, self.frame_width)
                 self.autoTTCommunication.send_message("VideoStreamRefresh", "")
-            elif (message == "Low"):
-                self.fps = 15
+            elif (message == "Medium"):
                 self.frame_height = 300
                 self.frame_width = 568
                 self.jpeg_quality = 95
                 if (self.video_1 != None):
-                    # self.video_1.set(cv2.CAP_PROP_FPS, self.fps)
                     self.video_1.set(cv2.CAP_PROP_FRAME_HEIGHT, self.frame_height)
                     self.video_1.set(cv2.CAP_PROP_FRAME_WIDTH, self.frame_width)
                 if (self.video_2 != None):
-                    # self.video_2.set(cv2.CAP_PROP_FPS, self.fps)
+                    self.video_2.set(cv2.CAP_PROP_FRAME_HEIGHT, self.frame_height)
+                    self.video_2.set(cv2.CAP_PROP_FRAME_WIDTH, self.frame_width)
+                self.autoTTCommunication.send_message("VideoStreamRefresh", "")
+            elif (message == "Low"):
+                self.frame_height = 320
+                self.frame_width = 480
+                self.jpeg_quality = 95
+                if (self.video_1 != None):
+                    self.video_1.set(cv2.CAP_PROP_FRAME_HEIGHT, self.frame_height)
+                    self.video_1.set(cv2.CAP_PROP_FRAME_WIDTH, self.frame_width)
+                if (self.video_2 != None):
                     self.video_2.set(cv2.CAP_PROP_FRAME_HEIGHT, self.frame_height)
                     self.video_2.set(cv2.CAP_PROP_FRAME_WIDTH, self.frame_width)
                 self.autoTTCommunication.send_message("VideoStreamRefresh", "")
