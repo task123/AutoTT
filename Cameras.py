@@ -47,7 +47,7 @@ class Cameras:
         self.video_1 = cv2.VideoCapture(0)
         #self.video_1.set(cv2.CAP_PROP_FPS, self.fps)
         self.video_1.set(cv2.CAP_PROP_FRAME_HEIGHT, self.frame_height)
-        #self.video_1.set(cv2.CAP_PROP_FRAME_WIDTH, self.frame_width)
+        self.video_1.set(cv2.CAP_PROP_FRAME_WIDTH, self.frame_width)
         self.camera_1_on = True
         
     def stop_camera_1(self):
@@ -63,7 +63,7 @@ class Cameras:
         self.video_2 = cv2.VideoCapture(1)
         #self.video_2.set(cv2.CAP_PROP_FPS, self.fps)
         self.video_2.set(cv2.CAP_PROP_FRAME_HEIGHT, self.frame_height)
-        #self.video_2.set(cv2.CAP_PROP_FRAME_WIDTH, self.frame_width)
+        self.video_2.set(cv2.CAP_PROP_FRAME_WIDTH, self.frame_width)
         self.camera_2_on = True
         
     def stop_camera_2(self):
@@ -105,11 +105,11 @@ class Cameras:
                 if (self.video_1 != None):
                     # self.video_1.set(cv2.CAP_PROP_FPS, self.fps)
                     self.video_1.set(cv2.CAP_PROP_FRAME_HEIGHT, self.frame_height)
-                    #self.video_1.set(cv2.CAP_PROP_FRAME_WIDTH, self.frame_width)
+                    self.video_1.set(cv2.CAP_PROP_FRAME_WIDTH, self.frame_width)
                 if (self.video_2 != None):
                     # self.video_2.set(cv2.CAP_PROP_FPS, self.fps)
                     self.video_2.set(cv2.CAP_PROP_FRAME_HEIGHT, self.frame_height)
-                    #self.video_2.set(cv2.CAP_PROP_FRAME_WIDTH, self.frame_width)
+                    self.video_2.set(cv2.CAP_PROP_FRAME_WIDTH, self.frame_width)
                 self.autoTTCommunication.send_message("VideoStreamRefresh", "")
             elif (message == "Medium"):
                 self.fps = 15
@@ -119,15 +119,15 @@ class Cameras:
                 if (self.video_1 != None):
                     # self.video_1.set(cv2.CAP_PROP_FPS, self.fps)
                     self.video_1.set(cv2.CAP_PROP_FRAME_HEIGHT, self.frame_height)
-                    #self.video_1.set(cv2.CAP_PROP_FRAME_WIDTH, self.frame_width)
+                    self.video_1.set(cv2.CAP_PROP_FRAME_WIDTH, self.frame_width)
                 if (self.video_2 != None):
                     # self.video_2.set(cv2.CAP_PROP_FPS, self.fps)
                     self.video_2.set(cv2.CAP_PROP_FRAME_HEIGHT, self.frame_height)
-                    #self.video_2.set(cv2.CAP_PROP_FRAME_WIDTH, self.frame_width)
+                    self.video_2.set(cv2.CAP_PROP_FRAME_WIDTH, self.frame_width)
                 self.autoTTCommunication.send_message("VideoStreamRefresh", "")
             elif (message == "Low"):
                 self.fps = 15
-                self.frame_height = 300
+                self.frame_height = 100
                 self.frame_width = 700
                 self.jpeg_quality = 95
                 if (self.video_1 != None):
