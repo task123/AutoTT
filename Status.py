@@ -95,7 +95,7 @@ class FanController:
         self.warning_message_motor_battery_volt = 6.0
         self.warning_message_motor_battery_volt_sendt = False
         self.warning_message_raspberry_pi_battery_volt = 4.9
-        self.warning_message_motor_battery_volt_sendt = False
+        self.warning_message_raspberry_pi_volt_sendt = False
         
         self.arduino = motors.arduino
         self.status = status
