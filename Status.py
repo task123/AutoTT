@@ -105,9 +105,9 @@ class FanController:
         
         arduino.pinMode(self.fan_pin, arduino.OUTPUT)
         
-        self.fan_control_thread = threading.Thread(target = self.fan_controller_loop)
-        self.fan_control_thread.setDaemon(True)
-        self.fan_control_thread.start()
+        #self.fan_control_thread = threading.Thread(target = self.fan_controller_loop)
+        #self.fan_control_thread.setDaemon(True)
+        #self.fan_control_thread.start()
         
     def fan_controller_loop(self):
         self.arduino.analogWrite(self.fan_pin, 0)
