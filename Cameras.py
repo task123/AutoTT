@@ -102,11 +102,11 @@ class Cameras:
                 self.frame_width = 1280
                 self.jpeg_quality = 20
                 if (self.video_1 != None):
-                    self.video_1.set(cv2.CAP_PROP_FPS, self.fps)
+                    # self.video_1.set(cv2.CAP_PROP_FPS, self.fps)
                     self.video_1.set(cv2.CAP_PROP_FRAME_HEIGHT, self.frame_height)
                     self.video_1.set(cv2.CAP_PROP_FRAME_WIDTH, self.frame_width)
                 if (self.video_2 != None):
-                    self.video_2.set(cv2.CAP_PROP_FPS, self.fps)
+                    # self.video_2.set(cv2.CAP_PROP_FPS, self.fps)
                     self.video_2.set(cv2.CAP_PROP_FRAME_HEIGHT, self.frame_height)
                     self.video_2.set(cv2.CAP_PROP_FRAME_WIDTH, self.frame_width)
                 self.autoTTCommunication.send_message("VideoStreamRefresh", "")
@@ -116,11 +116,11 @@ class Cameras:
                 self.frame_width = 800
                 self.jpeg_quality = 95
                 if (self.video_1 != None):
-                    self.video_1.set(cv2.CAP_PROP_FPS, self.fps)
+                    # self.video_1.set(cv2.CAP_PROP_FPS, self.fps)
                     self.video_1.set(cv2.CAP_PROP_FRAME_HEIGHT, self.frame_height)
                     self.video_1.set(cv2.CAP_PROP_FRAME_WIDTH, self.frame_width)
                 if (self.video_2 != None):
-                    self.video_2.set(cv2.CAP_PROP_FPS, self.fps)
+                    # self.video_2.set(cv2.CAP_PROP_FPS, self.fps)
                     self.video_2.set(cv2.CAP_PROP_FRAME_HEIGHT, self.frame_height)
                     self.video_2.set(cv2.CAP_PROP_FRAME_WIDTH, self.frame_width)
                 self.autoTTCommunication.send_message("VideoStreamRefresh", "")
@@ -130,11 +130,11 @@ class Cameras:
                 self.frame_width = 600
                 self.jpeg_quality = 50
                 if (self.video_1 != None):
-                    self.video_1.set(cv2.CAP_PROP_FPS, self.fps)
+                    # self.video_1.set(cv2.CAP_PROP_FPS, self.fps)
                     self.video_1.set(cv2.CAP_PROP_FRAME_HEIGHT, self.frame_height)
                     self.video_1.set(cv2.CAP_PROP_FRAME_WIDTH, self.frame_width)
                 if (self.video_2 != None):
-                    self.video_2.set(cv2.CAP_PROP_FPS, self.fps)
+                    # self.video_2.set(cv2.CAP_PROP_FPS, self.fps)
                     self.video_2.set(cv2.CAP_PROP_FRAME_HEIGHT, self.frame_height)
                     self.video_2.set(cv2.CAP_PROP_FRAME_WIDTH, self.frame_width)
                 self.autoTTCommunication.send_message("VideoStreamRefresh", "")
