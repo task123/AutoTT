@@ -116,6 +116,7 @@ class FanController:
 
     def fan_controller_loop(self):
         self.arduino.analogWrite(self.fan_pin, 0)
+        last_fan_value = 0
         while self.run_loop:
             time.sleep(3)
             temp = float(self.status.getCPUtemperature())
@@ -125,8 +126,11 @@ class FanController:
                     self.autoTTCommunication.message("The CPU temperatur is over %f C." % (self.warning_limit_temp))
                     time.sleep(0.1) # to make sure not several warning messages is sendt at the same time
                     self.warning_temp_sendt = True
-                self.arduino.analogWrite(self.fan_pin, fan_value)
+                if (fan_value > last_fan_value):
+                    self.arduino.analogWrite(self.fan_pin, fan_value)
+                    last_fan_value = fan_value
             elif (temp < self.stop_temp):
+                last_fan_value = 0
                 self.warning_temp_sendt = False
                 self.arduino.analogWrite(self.fan_pin, 0)
             motor_battery_volt = self.status.getMotorBatteryVolt()
