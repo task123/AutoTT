@@ -114,7 +114,7 @@ class FanController:
             temp = float(self.status.getCPUtemperature())
             if (temp > self.start_temp):
                 fan_value = (temp - self.start_temp) / (85.0 - self.start_temp) * (self.max_value - self.start_value) + self.start_value
-                if (temp > warning_limit_temp and not self.warning_temp_sendt):
+                if (temp > self.warning_limit_temp and not self.warning_temp_sendt):
                     self.autoTTCommunication.message("The CPU temperatur is over %f C." % (self.warning_limit_temp))
                     self.warning_temp_sendt = True
                 self.arduino.analogWrite(self.fan_pin, fan_value)
