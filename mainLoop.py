@@ -11,6 +11,7 @@ ip_address = "10.22.7.247"
 
 motors = None
 cameras = None
+fan_controller = None
 connection_test = None
 try:
     trip_meter = Motor.TripMeter()
@@ -38,6 +39,8 @@ except:
         motors.turn_off()
     if (cameras != None):
         cameras.turn_off()
+    if (fan_controller != None):
+        fan_controller.turn_off()
     if (connection_test != None):
         connection_test.disconnect()
     
