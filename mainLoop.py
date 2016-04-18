@@ -33,7 +33,7 @@ try:
     
     while not cameras.opening_video_stream and connection_test.is_connection_good():
         time.sleep(0.3)
-        print "opening" + str(camera.opening_video_stream)
+        print "opening" + str(cameras.opening_video_stream)
 
 except:
     if (motors != None):
