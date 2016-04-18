@@ -96,7 +96,7 @@ class FanController:
         self.warning_limit_motor_battery_volt = 6.0
         self.warning_motor_battery_volt_sendt = False
         self.warning_limit_raspberry_pi_battery_volt = 4.9
-        self.warning_raspberry_pi_volt_sendt = False
+        self.warning_raspberry_pi_battery_volt_sendt = False
         
         self.arduino = motors.arduino
         self.status = status
@@ -104,13 +104,19 @@ class FanController:
         
         self.arduino.pinMode(self.fan_pin, self.arduino.OUTPUT)
         
+        self.run_loop = True
         self.fan_control_thread = threading.Thread(target = self.fan_controller_loop)
         self.fan_control_thread.setDaemon(True)
         self.fan_control_thread.start()
         
+    def turn_off(self):
+        self.run_loop = False
+        time.sleep(0.001) # just to make sure the fan doesn't get set after the next line
+        self.arduino.analogWrite(self.fan_pin, 0)
+
     def fan_controller_loop(self):
         self.arduino.analogWrite(self.fan_pin, 0)
-        while True:
+        while self.run_loop:
             temp = float(self.status.getCPUtemperature())
             if (temp > self.start_temp):
                 fan_value = (temp - self.start_temp) / (85.0 - self.start_temp) * (self.max_value - self.start_value) + self.start_value
