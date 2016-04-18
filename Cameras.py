@@ -144,7 +144,7 @@ class Cameras:
             self.start_camera_1()
         self.stream_on = True
         self.autoTTCommunication.send_message("VideoStreamRefresh", "")
-        time.sleep(0.1)
+        time.sleep(1)
         self.autoTTCommunication.send_message("VideoStreamRefresh", "")
         
 
