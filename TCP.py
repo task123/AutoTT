@@ -147,7 +147,7 @@ class AutoTTCommunication:
     def message(self, message):
         self.send_message("Message",message)
 
-class ConnectionTest:
+class Disconnect:
     def __init__(self, autoTTCommunication, motors, cameras, fan_controller):
         self.autoTTCommunication = autoTTCommunication
         self.motors = motors
@@ -155,32 +155,13 @@ class ConnectionTest:
         self.fan_controller = fan_controller
         self.good_connection = True
         self.time_of_last_connection = time.time()
-    
-    def set_intervall(self, intervall):
-        self.intervall = intervall
-        self.autoTTCommunication.send_message("ConnectionTest", str(self.intervall))
                                          
     def receive_message(self, type, message):
-        if (type == "ConnectionTest"):
-            self.time_of_last_connection = time.time()
-            print time.time()
-        elif (type == "Disconnect"):
+        if (type == "Disconnect"):
             self.disconnect()
         elif (type == "Shutdown"):
             self.disconnect()
             os.system("sudo shutdown now")
-
-    def is_connection_good(self):
-        if (self.good_connection):
-            self.good_connection = (time.time() - self.time_of_last_connection < 10 * self.intervall)
-            if (self.good_connection):
-                return True
-            else:
-                self.disconnect()
-                print "Lost connection!"
-                return False
-        else:
-            return False
 
     def disconnect(self):
         self.motors.turn_off()
