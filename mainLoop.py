@@ -12,7 +12,7 @@ ip_address = "10.22.7.247"
 motors = None
 cameras = None
 fan_controller = None
-connection_test = None
+disconnect = None
 try:
     trip_meter = Motor.TripMeter()
     motors = Motor.Motor(trip_meter)
@@ -22,22 +22,16 @@ try:
     cameras = Cameras.Cameras(motors, autoTTCommunication, streaming_port = port + 1)
     status = Status.Status(autoTTCommunication, motors)
     fan_controller = Status.FanController(motors, status, autoTTCommunication)
-    connection_test = TCP.ConnectionTest(autoTTCommunication, motors, cameras, fan_controller)
-    cameras.connection_test = connection_test
+    disconnect = TCP.Disconnect(autoTTCommunication, motors, cameras, fan_controller)
     autoTTCommunication.set_receivers(gyro_recv = steering, mode_recv = modes, status_recv = status, stop_cont_recv = steering, 
             disconnect_recv = connection_test, shut_down_recv = connection_test, connection_test_recv = connection_test, 
             video_recv = cameras)
     time.sleep(0.5) # wait for AutoTT iOS app to start the gyro class
     autoTTCommunication.start_gyro_with_update_intervall(1.0/60.0)
-    connection_test.set_intervall(0.05)
     modes.send_modes_and_info_modes()
     
-    good_connection = True
-    while good_connection:
-        if (not cameras.opening_video_stream): 
-           good_connection = connection_test.is_connection_good()
-           print good_connection
-        time.sleep(0.3)
+    while True:
+        time.sleep(10)
 
 except:
     if (motors != None):
@@ -46,7 +40,7 @@ except:
         cameras.turn_off()
     if (fan_controller != None):
         fan_controller.turn_off()
-    if (connection_test != None):
-        connection_test.disconnect()
+    if (disconnect != None):
+        disconnect.disconnect()
     
 #os.system("./restart_mainLoop.sh")
