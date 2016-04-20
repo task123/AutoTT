@@ -1,2 +1,2 @@
-sleep 1
+sleep 10
 python mainLoop.py
