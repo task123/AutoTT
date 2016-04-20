@@ -1,15 +1,12 @@
 import os
 import time
-import signal
 
-def killstuff():
+while True:
   file = open("pidMainLoop.txt")
   pid = file.readline()
   file.close()
-  os.kill(pid, 2)
-  
-signal.signal(2, killstuff)
-
-while True:
-  time.sleep(10)
+  print pid
+  if (pid != ''):
+    os.kill(int(pid), 2)
+  time.sleep(0.3)
   
