@@ -8,6 +8,9 @@ while True:
   file = open("pidMainLoop.txt")
   pid = file.readline()
   file.close()
+  print pid != ''
+  print pid != '\n'
+  print "mellomrom"
   if (pid != '\n' and pid != ''):
     print "kill"
     os.kill(int(pid), 2)
