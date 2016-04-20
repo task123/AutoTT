@@ -55,4 +55,4 @@ except:
         disconnect.disconnect()
 
 print "restart"
-os.system("./restart_mainLoop.sh")
+os.popen("./restart_mainLoop.sh")
