@@ -43,4 +43,4 @@ except:
     if (disconnect != None):
         disconnect.disconnect()
     
-#os.system("./restart_mainLoop.sh")
+os.system("./restart_mainLoop.sh")
