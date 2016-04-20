@@ -5,6 +5,7 @@ import Status
 import time
 import os
 import Cameras
+import subprocess
 
 port = 12345 
 ip_address = "10.22.7.247"
@@ -55,4 +56,4 @@ except:
         disconnect.disconnect()
 
 print "restart"
-os.popen("./restart_mainLoop.sh")
+subprocess.popen("./restart_mainLoop.sh")
