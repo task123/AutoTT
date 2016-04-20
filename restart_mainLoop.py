@@ -8,5 +8,7 @@ while True:
   print pid
   if (pid != '\n'):
     os.kill(int(pid), 2)
+    file = open("pidMainLoop.txt", "w")
+    file.close()
   time.sleep(0.3)
   
