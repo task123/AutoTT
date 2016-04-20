@@ -1,3 +1,3 @@
-echo in shell script
-sleep 10
+sleep 5
+kill $1
 python mainLoop.py
