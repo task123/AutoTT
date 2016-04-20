@@ -1,3 +1,6 @@
+# hack to avoid the waiting time after the connection with the app is closed 
+# (before it can connect again on the same port)
+
 import os
 import time
 import subprocess
