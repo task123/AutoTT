@@ -57,5 +57,5 @@ except:
         disconnect.disconnect()
 
 print "restart"
-subprocess.Popen(["/bin/sh", "restart_mainLoop.sh"])
-sys.exit(0)
+pid = os.getpid()
+subprocess.Popen(["/bin/sh", "restart_mainLoop.sh", str(pid)])
