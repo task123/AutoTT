@@ -12,7 +12,8 @@ while True:
     os.kill(int(pid), 2)
     file = open("pidMainLoop.txt", "w")
     file.close()
-    time.sleep(0.01) #make sure mainLoop.py is stopped
+    time.sleep(1) #make sure mainLoop.py is stopped
+    print "restart mainLoop"
     os.system("python mainLoop.py")
   time.sleep(0.3)
   
