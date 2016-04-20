@@ -3,6 +3,7 @@
 import math
 import time
 import os
+from nanpy import ArduinoApi
 
 """React to gyroscopic and stop/continue data sendt from AutoTTCommunication and control a class 'motors', which steers the motors.
 Remember to start the gyro with autoTTCommunication.start_gyro_with_update_intervall(gyro_update_intervall)
@@ -88,6 +89,72 @@ class SteeringWithIOSButtons:
             self.motors.right_speed(0.0)
         elif (type == "Continue"):
             self.stop = False
+
+class FollowLine:
+    def __init__(self, motors, autoTTCommunication = None, pin_photo_diode_power = 7, pin_left_photo_diode = 18, pin_right_photo_diode = 19, proportional_term_in_PID = 1, derivative_term_in_PID = 1, target_value_left_photo_diode = 300, target_value_right_photo_diode = 500, correction_interval = 0.01):
+        self.motors = motors
+        self.autoTTCommunication = autoTTCommunication
+        self.arduino = motors.arduino
+        self.pin_photo_diode_power = pin_photo_diode_power
+        self.pin_left_photo_diode = pin_left_photo_diode
+        self.pin_right_photo_diode = pin_right_photo_diode
+        self.proportional_term_in_PID = proportional_term_in_PID
+        self.derivative_term_in_PID = derivative_term_in_PID
+        self.target_value_left_photo_diode = target_value_left_photo_diode
+        self.target_value_right_photo_diode = target_value_right_photo_diode
+        self.correction_interval = correction_interval
+        
+        self.target_speed = 0
+        self.new_left_speed = 0
+        self.new_right_speed = 0
+        self.left_error = 0
+        self.right_error = 0
+        self.previous_left_error = 0
+        self.previous_right_error = 0
+        
+        self.stopped = True #Need this to have an absolute stop, implement a if/else in PID loop
+    
+        self.arduino.pinMode(self.pin_photo_diode_power,self.arduino.OUTPUT)
+        self.arduino.pinMode(self.pin_left_photo_diode, self.arduino.INPUT)
+        self.arduino.pinMode(self.pin_right_photo_diode, self.arduino.INPUT)
+    
+        self.arduino.digitalWrite(self.pin_photo_diode_power, 0)
+    
+
+    def set_speed(self, target_speed)
+        self.target_speed = int(target_speed)
+        if (self.target_speed > 100):
+            self.target_speed = 100
+        if (self.target_speed < -100):
+            self.target_speed = -100
+        
+        self.stopped = False
+        self.previous_left_error = self.arduino.analogRead(self.pin_left_photo_diode) - self.target_value_left_photo_diode
+        self.previous_right_error = self.arduino.alalogRead(self.pin_right_photo_diode) - self.target_value_right_photo_diode
+        
+        while True:
+            if (self.stopped):
+                self.motors.stop()
+            else:
+                self.left_error = self.arduino.analogRead(self.pin_left_photo_diode) - self.target_value_left_photo_diode
+                self.right_error = self.arduino.analogRead(self.pin_right_photo_diode) - self.target_value_right_photo_diode
+                
+                self.new_left_speed = self.target_speed + self.left_error*self.proportional_term_in_PID + (self.left_error - self.previous_left_error)*self.derivative_term_in_PID/self.correction_interval
+                self.new_right_speed = self.target_speed + self.right_error*self.proportional_term_in_PID + (self.right_error - self.previous_right_error)*self.derivative_term_in_PID/self.correction_interval
+
+                self.motors.set_left_speed(self.new_left_speed)
+                self.motors.set_right_speed(self.new_right_speed)
+
+                self.previous_left_error = self.left_error
+                self.previous_right_error = self.right_error
+
+                time.sleep(self.correction_interval)
+
+    def stop(self)
+        self.stopped = True
+
+
+
 
 class Modes:
     list_of_modes = ["Tilt Steering", "Tilt with AOA", "Button Steering", "Button with AOA", "Follow line", "Stop sign", "Traffic light", "Self steering"] # AOA - Automated Object Avoidence
