@@ -59,3 +59,4 @@ except:
 print "restart"
 pid = os.getpid()
 subprocess.Popen(["/bin/sh", "restart_mainLoop.sh", str(pid)])
+time.sleep(5)
