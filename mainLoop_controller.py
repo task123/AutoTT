@@ -2,6 +2,7 @@ import os
 import time
 
 file = open("pidMainLoop.txt", "w")
+file.write("")
 file.close()
 os.system("python mainLoop.py")
 while True:
