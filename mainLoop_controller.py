@@ -4,7 +4,6 @@ import subprocess
 import sys
 
 file = open("pidMainLoop.txt", "w")
-file.write("")
 file.close()
 subprocess.Popen([sys.executable, "mainLoop.py"])
 while True:
@@ -20,7 +19,6 @@ while True:
     os.kill(int(pid), 2)
     file = open("pidMainLoop.txt", "w")
     print "1"
-    file.write("")
     print "2"
     file.close()
     time.sleep(1) #make sure mainLoop.py is stopped
