@@ -164,7 +164,6 @@ class Disconnect:
             os.system("sudo shutdown now")
 
     def disconnect(self):
-        print "disconnect"
         self.motors.turn_off()
         self.cameras.turn_off()
         self.fan_controller.turn_off()
