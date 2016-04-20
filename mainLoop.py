@@ -42,8 +42,12 @@ try:
     modes.send_modes_and_info_modes()
     print "10"
     
-    while disconnect.good_connection:
+    while True:
         time.sleep(0.3)
+        if (not disconnect.good_connection):
+            pid = os.getpid()
+            subprocess.Popen(["/bin/sh", "restart_mainLoop.sh", str(pid)])
+            
 
 except:
     print "exception"
@@ -57,6 +61,3 @@ except:
         disconnect.disconnect()
 
 print "restart"
-pid = os.getpid()
-subprocess.Popen(["/bin/sh", "restart_mainLoop.sh", str(pid)])
-time.sleep(5)
