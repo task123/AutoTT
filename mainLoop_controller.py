@@ -6,6 +6,7 @@ file = open("pidMainLoop.txt", "w")
 file.close()
 subprocess.Popen([sys.executable, "mainLoop.py"])
 while True:
+  print "start"
   file = open("pidMainLoop.txt")
   pid = file.readline()
   file.close()
