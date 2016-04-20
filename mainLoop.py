@@ -4,6 +4,7 @@ import Steering
 import Status
 import time
 import os
+import sys
 import Cameras
 import subprocess
 
@@ -56,4 +57,5 @@ except:
         disconnect.disconnect()
 
 print "restart"
-#subprocess.Popen(["/bin/sh", "restart_mainLoop.sh"])
+subprocess.Popen(["/bin/sh", "restart_mainLoop.sh"])
+sys.exit(0)
