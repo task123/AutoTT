@@ -1,6 +1,8 @@
 import os
 import time
 
+file = open("pidMainLoop.txt", "w")
+file.close()
 while True:
   file = open("pidMainLoop.txt")
   pid = file.readline()
