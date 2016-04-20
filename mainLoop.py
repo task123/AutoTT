@@ -45,8 +45,8 @@ try:
     while True:
         time.sleep(0.3)
         if (not disconnect.good_connection):
-            pid = os.getpid()
-            subprocess.Popen(["/bin/sh", "restart_mainLoop.sh", str(pid)])
+            #pid = os.getpid()
+            #subprocess.Popen(["/bin/sh", "restart_mainLoop.sh", str(pid)])
             
 
 except:
