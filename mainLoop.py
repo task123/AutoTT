@@ -42,5 +42,6 @@ except:
         fan_controller.turn_off()
     if (disconnect != None):
         disconnect.disconnect()
-    
+
+print "restart"
 os.system("./restart_mainLoop.sh")
