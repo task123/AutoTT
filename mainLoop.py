@@ -56,4 +56,4 @@ except:
         disconnect.disconnect()
 
 print "restart"
-subprocess.popen("./restart_mainLoop.sh")
+subprocess.Popen("./restart_mainLoop.sh")
