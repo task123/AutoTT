@@ -30,7 +30,7 @@ try:
     autoTTCommunication.start_gyro_with_update_intervall(1.0/60.0)
     modes.send_modes_and_info_modes()
     
-    while True:
+    while disconnect.good_connection:
         time.sleep(10)
 
 except:
