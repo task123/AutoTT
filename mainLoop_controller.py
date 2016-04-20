@@ -1,10 +1,12 @@
 import os
 import time
+import subprocess
+import sys
 
 file = open("pidMainLoop.txt", "w")
 file.write("")
 file.close()
-os.system("python mainLoop.py")
+subprocess.Popen([sys.executable, "mainLoop.py"])
 while True:
   print "start"
   file = open("pidMainLoop.txt")
