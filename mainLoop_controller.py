@@ -6,6 +6,7 @@ file.write("")
 file.close()
 os.system("python mainLoop.py")
 while True:
+  print "start"
   file = open("pidMainLoop.txt")
   pid = file.readline()
   file.close()
