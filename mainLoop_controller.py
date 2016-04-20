@@ -25,6 +25,6 @@ while True:
     file.close()
     time.sleep(1) #make sure mainLoop.py is stopped
     print "restart mainLoop"
-    os.system("python mainLoop.py")
+    subprocess.Popen([sys.executable, "mainLoop.py"])
   time.sleep(0.3)
   
