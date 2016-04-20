@@ -10,6 +10,7 @@ while True:
   pid = file.readline()
   file.close()
   if (pid != '\n' and pid != ''):
+    print "kill"
     os.kill(int(pid), 2)
     file = open("pidMainLoop.txt", "w")
     file.close()
