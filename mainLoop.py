@@ -34,7 +34,6 @@ try:
         time.sleep(0.3)
 
 except:
-    print "exception"
     if (motors != None):
         motors.turn_off()
     if (cameras != None):
