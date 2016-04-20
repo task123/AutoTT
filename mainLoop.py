@@ -31,9 +31,10 @@ try:
     modes.send_modes_and_info_modes()
     
     while disconnect.good_connection:
-        time.sleep(10)
+        time.sleep(0.3)
 
 except:
+    print "exception"
     if (motors != None):
         motors.turn_off()
     if (cameras != None):
