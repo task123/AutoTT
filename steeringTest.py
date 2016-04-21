@@ -23,13 +23,10 @@ motors = Motor.Motor(trip_meter)
 steering = Steering.SteeringWithIOSGyro(motors)
 autoTTCommunication.gyro_recv = steering
 autoTTCommunication.stop_cont_recv = steering
-print "hei"
 autoTTCommunication.send_message("Gyro", "0.2")
 time.sleep(2)
 autoTTCommunication.send_message("Gyro", "0.2")
 autoTTCommunication.send_message("Gyro", "0.2")
-print "printa Gyro"
-
 
 while True:
     time.sleep(5)
