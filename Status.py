@@ -17,7 +17,7 @@ class Status:
     def  __init__(self, autoTTCommunication, motors):
         #this values might need to be adjusted
         self.arduino_max_voltage_analog_read = 5.01
-        # this values might change 
+        # these values might change 
         self.pin_motor_battery = 15
         self.pin_raspberry_pi_battery = 14
         ##################################################
@@ -92,7 +92,7 @@ class Status:
 
 class FanController:
     def __init__(self, motors, status, autoTTCommunication):
-        # this values might need to be adjusted
+        # these values might need to be adjusted
         self.start_temp = 70.0
         self.stop_temp = 65.0
         self.start_value = 100
