@@ -8,7 +8,7 @@ from flask import Flask, render_template, Response
 class Cameras:
     # streaming_port on AutoTT iOS app is by default port + 1
     def __init__(self, motors, autoTTCommunication, streaming_port):
-        # this values might change
+        # these values might change
         self.pin_battery_camera_1 = 13
         self.pin_battery_camera_2 = 9
         ##################################################
