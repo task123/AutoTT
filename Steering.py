@@ -13,7 +13,7 @@ Sends messages set_right_speed('speed') and set_left_speed('speed') to 'motors'.
 """
 class SteeringWithIOSGyro:
     def __init__(self, motors, autoTTCommunication = None):
-        # this values might need to be adjusted
+        # these values might need to be adjusted
         self.min_roll = 3.5 * 3.14 / 180.0
         self.max_roll = 45.0 * 3.14 / 180.0
         self.max_pitch = 80.0 * 3.14 / 180.0
