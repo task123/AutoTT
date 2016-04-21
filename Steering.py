@@ -74,8 +74,15 @@ Sends messages set_right_speed('speed') and set_left_speed('speed') to 'motors'.
 """
 class SteeringWithIOSButtons:
     max_speed = 100.0
-    def __init__(self, motors, autoTTCommunication = None, gyro_update_intervall = 1.0/60.0):
+    def __init__(self, motors, autoTTCommunication = None):
+        # this values might need to be adjusted
+        gyro_update_intervall = 1.0/60.0
+        ##################################################
+        # Values after this should not need to be changed.
+        ##################################################
+        
         self.motors = motors
+        
         self.stop = True
         if (autoTTCommunication != None):
             autoTTCommunication.start_gyro_with_update_intervall(gyro_update_intervall)
@@ -98,19 +105,25 @@ class SteeringWithIOSButtons:
             self.stop = False
 
 class FollowLine:
-    def __init__(self, motors, autoTTCommunication = None, pin_photo_diode_power = 7, pin_left_photo_diode = 18, pin_right_photo_diode = 19, proportional_term_in_PID = 1, derivative_term_in_PID = 1, target_value_left_photo_diode = 300, target_value_right_photo_diode = 500, correction_interval = 0.01):
+    def __init__(self, motors, autoTTCommunication = None):
+        # this values might need to be adjusted
+        self.proportional_term_in_PID = 1
+        self.derivative_term_in_PID = 1
+        self.target_value_left_photo_diode = 300
+        self.target_value_right_photo_diode = 500
+        self.correction_interval = 0.01
+        # this values might change
+        self.pin_photo_diode_power = 7
+        self.pin_left_photo_diode = 18
+        self.pin_right_photo_diode = 19
+        ##################################################
+        # Values after this should not need to be changed.
+        ##################################################
+
         self.motors = motors
         self.autoTTCommunication = autoTTCommunication
         self.arduino = motors.arduino
-        self.pin_photo_diode_power = pin_photo_diode_power
-        self.pin_left_photo_diode = pin_left_photo_diode
-        self.pin_right_photo_diode = pin_right_photo_diode
-        self.proportional_term_in_PID = proportional_term_in_PID
-        self.derivative_term_in_PID = derivative_term_in_PID
-        self.target_value_left_photo_diode = target_value_left_photo_diode
-        self.target_value_right_photo_diode = target_value_right_photo_diode
-        self.correction_interval = correction_interval
-        
+
         self.target_speed = 0
         self.new_left_speed = 0
         self.new_right_speed = 0
@@ -126,9 +139,12 @@ class FollowLine:
         self.arduino.pinMode(self.pin_right_photo_diode, self.arduino.INPUT)
     
         self.arduino.digitalWrite(self.pin_photo_diode_power, 0)
-    
+     
+        self.follow_line_thread = threading.Thread(target = self.follow_line_loop)
+        self.follow_line_thread.setDaemon(True)
+        self.follow_line_thread.start()
 
-    def set_speed(self, target_speed)
+    def set_speed(self, target_speed):
         self.target_speed = int(target_speed)
         if (self.target_speed > 100):
             self.target_speed = 100
@@ -138,7 +154,8 @@ class FollowLine:
         self.stopped = False
         self.previous_left_error = self.arduino.analogRead(self.pin_left_photo_diode) - self.target_value_left_photo_diode
         self.previous_right_error = self.arduino.alalogRead(self.pin_right_photo_diode) - self.target_value_right_photo_diode
-        
+ 
+     def follow_line_loop(self):
         while True:
             if (self.stopped):
                 self.motors.stop()
@@ -155,12 +172,14 @@ class FollowLine:
                 self.previous_left_error = self.left_error
                 self.previous_right_error = self.right_error
 
-                time.sleep(self.correction_interval)
+            time.sleep(self.correction_interval)
 
-    def stop(self)
+    def stop(self):
         self.stopped = True
 
-
+    def find_line(self):
+        # add function
+        a = 2
 
 
 class Modes:
