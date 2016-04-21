@@ -7,12 +7,17 @@ from flask import Flask, render_template, Response
 
 class Cameras:
     # streaming_port on AutoTT iOS app is by default port + 1
-    def __init__(self, motors, autoTTCommunication, streaming_port, pin_battery_camera_1 = 13, pin_battery_camera_2 = 9):
+    def __init__(self, motors, autoTTCommunication, streaming_port):
+        # this values might change
+        self.pin_battery_camera_1 = 13
+        self.pin_battery_camera_2 = 9
+        ##################################################
+        # Values after this should not need to be changed.
+        ##################################################
+        
         self.arduino = motors.arduino
         self.autoTTCommunication = autoTTCommunication
         self.streaming_port = streaming_port
-        self.pin_battery_camera_1 = pin_battery_camera_1
-        self.pin_battery_camera_2 = pin_battery_camera_2
         
         self.arduino.pinMode(self.pin_battery_camera_1, self.arduino.OUTPUT)
         self.arduino.pinMode(self.pin_battery_camera_2, self.arduino.OUTPUT)
