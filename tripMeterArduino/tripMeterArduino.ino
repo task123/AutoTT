@@ -6,10 +6,11 @@ int rp_left_pin = 10;
 int right_value = 0;
 int left_value = 0;
 
+// sensor max value ~4.3, min value ~2.0
 int right_high_limit = 750; // 3.67 / 5.0 * 1023;
 int right_low_limit = 610; // 2.98 / 5.0 * 1023;
-int left_high_limit = 635; // 3.67 / 5.0 * 1023;
-int left_low_limit = 495; // 2.98 / 5.0 * 1023;
+int left_high_limit = 635; // 3.10 / 5.0 * 1023;
+int left_low_limit = 495; // 2.42 / 5.0 * 1023;
 
 bool right_prev_high = false;
 bool left_prev_high = false;
