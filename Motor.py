@@ -8,13 +8,16 @@ import time
 import RPi.GPIO as GPIO
 
 class TripMeter:
-    #change default notches
-    #sensor max value ~4.3, min value ~2.0
-    def __init__(self, number_of_notches = 75.0, wheel_diameter = 0.0694, right_pin = 2, left_pin = 3):
-        self.number_of_notches = number_of_notches
-        self.wheel_diameter = wheel_diameter
-        self.right_pin = right_pin
-        self.left_pin = left_pin
+    def __init__(self):
+        # this values might change
+        self.right_pin = 2
+        self.left_pin = 3
+        # this values might change in a different application
+        self.number_of_notches = 75.0
+        self.wheel_diameter = 0.0694
+        ##################################################
+        # Values after this should not need to be changed.
+        ##################################################
         
         self.right_count = 0
         self.left_count = 0
@@ -78,10 +81,26 @@ class TripMeter:
 
 class Motor:
     # correct max speed, min voltage
-    def __init__(self, trip_meter,  pin_right_forward = 6, pin_right_backward = 11, pin_left_forward = 5, pin_left_backward = 10, 
-            pin_motor_battery = 8, max_speed = 0.55, min_voltage = 1.0, correction_interval = 0.01, 
-            proportional_term_in_PID = 0.12, derivative_term_in_PID = 0.001):
+    def __init__(self, trip_meter):
+        # this values might need to be adjusted
+        self.max_speed  = 0.55
+        min_voltage = 1.0
+        self.correction_interval = 0.01
+        self.proportional_term_in_PID = 0.12
+        self.derivative_term_in_PID = 0.001
+        # this values might change
+        self.pin_right_forward = 6
+        self.pin_right_backward = 11
+        self.pin_left_forward = 5
+        self.pin_left_backward = 10
+        self.pin_motor_battery = 8
+        ##################################################
+        # Values after this should not need to be changed.
+        ##################################################
+        self.min_value = math.floor(min_voltage / 5.0 * 255)
+        
         self.trip_meter = trip_meter
+        
         try:
             self.connection = SerialManager(device='/dev/ttyACM2')
             self.arduino = ArduinoApi(connection=self.connection)
@@ -99,18 +118,6 @@ class Motor:
                         self.arduino = ArduinoApi(connection=self.connection)
                     except:
                         print "Could not connect to the arduino using /dev/ttyACM0, /dev/ttyACM1, /dev/ttyACM2 or /dev/ttyACM3"
-    
-        self.pin_right_forward = pin_right_forward
-        self.pin_right_backward = pin_right_backward
-        self.pin_left_forward = pin_left_forward
-        self.pin_left_backward = pin_left_backward
-        self.pin_motor_battery = pin_motor_battery
-        
-        self.max_speed  = max_speed
-        self.min_value = math.floor(min_voltage / 5.0 * 255)
-        self.correction_interval = correction_interval
-        self.proportional_term_in_PID = proportional_term_in_PID
-        self.derivative_term_in_PID = derivative_term_in_PID
                             
         self.arduino.pinMode(pin_right_forward, self.arduino.OUTPUT)
         self.arduino.pinMode(pin_right_backward, self.arduino.OUTPUT)
