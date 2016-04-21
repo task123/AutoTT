@@ -106,13 +106,13 @@ class SteeringWithIOSButtons:
 
 class FollowLine:
     def __init__(self, motors, autoTTCommunication = None):
-        # this values might need to be adjusted
+        # these values might need to be adjusted
         self.proportional_term_in_PID = 1
         self.derivative_term_in_PID = 1
         self.target_value_left_photo_diode = 300
         self.target_value_right_photo_diode = 500
         self.correction_interval = 0.01
-        # this values might change
+        # these values might change
         self.pin_photo_diode_power = 7
         self.pin_left_photo_diode = 18
         self.pin_right_photo_diode = 19
