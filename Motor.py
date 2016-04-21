@@ -144,11 +144,11 @@ class Motor:
         self.left_speed = 0.0
         self.stopped = True
     
-        self.motor_control_thread = threading.Thread(target = self.motor_control)
+        self.motor_control_thread = threading.Thread(target = self.motor_control_loop)
         self.motor_control_thread.setDaemon(True)
         self.motor_control_thread.start()
         
-    def motor_control(self):
+    def motor_control_loop(self):
         while True:
             self.true_right_speed = self.trip_meter.get_right_speed() * 100.0 / self.max_speed
             self.true_left_speed = self.trip_meter.get_left_speed() * 100.0 / self.max_speed
