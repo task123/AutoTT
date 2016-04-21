@@ -9,10 +9,10 @@ import RPi.GPIO as GPIO
 
 class TripMeter:
     def __init__(self):
-        # this values might change
+        # these values might change
         self.right_pin = 2
         self.left_pin = 3
-        # this values might change in a different application
+        # these values might change in a different application
         self.number_of_notches = 75.0
         self.wheel_diameter = 0.0694
         ##################################################
@@ -81,13 +81,13 @@ class TripMeter:
 
 class Motor:
     def __init__(self, trip_meter):
-        # this values might need to be adjusted
+        # these values might need to be adjusted
         self.max_speed  = 0.55
         min_voltage = 1.0
         self.correction_interval = 0.01
         self.proportional_term_in_PID = 0.12
         self.derivative_term_in_PID = 0.001
-        # this values might change
+        # these values might change
         self.pin_right_forward = 6
         self.pin_right_backward = 11
         self.pin_left_forward = 5
