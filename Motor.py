@@ -80,7 +80,6 @@ class TripMeter:
         self.right_count = 0
 
 class Motor:
-    # correct max speed, min voltage
     def __init__(self, trip_meter):
         # this values might need to be adjusted
         self.max_speed  = 0.55
