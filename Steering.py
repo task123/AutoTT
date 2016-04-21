@@ -104,8 +104,14 @@ class SteeringWithIOSButtons:
         elif (type == "Continue"):
             self.stop = False
 
+"""
+Follows a line on the ground and can make turns at junctions.
+
+The car must start off the line, such that it will cross it when driving straight ahead.
+"""
+# It is adjusted to work for a line of black electrical tape on a grey speckled floor.
 class FollowLine:
-    def __init__(self, motors, autoTTCommunication = None):
+    def __init__(self, motors, start_speed = 30):
         # these values might need to be adjusted
         self.proportional_term_in_PID = 1
         self.derivative_term_in_PID = 1
@@ -121,10 +127,10 @@ class FollowLine:
         ##################################################
 
         self.motors = motors
-        self.autoTTCommunication = autoTTCommunication
         self.arduino = motors.arduino
+        
+        self.set_speed(start_speed)
 
-        self.target_speed = 0
         self.new_left_speed = 0
         self.new_right_speed = 0
         self.left_error = 0
@@ -137,9 +143,12 @@ class FollowLine:
         self.arduino.pinMode(self.pin_photo_diode_power,self.arduino.OUTPUT)
         self.arduino.pinMode(self.pin_left_photo_diode, self.arduino.INPUT)
         self.arduino.pinMode(self.pin_right_photo_diode, self.arduino.INPUT)
-    
+        
         self.arduino.digitalWrite(self.pin_photo_diode_power, 0)
-     
+        
+        self.find_line()
+        
+    def start_following_line(self):
         self.follow_line_thread = threading.Thread(target = self.follow_line_loop)
         self.follow_line_thread.setDaemon(True)
         self.follow_line_thread.start()
@@ -153,7 +162,7 @@ class FollowLine:
         
         self.stopped = False
         self.previous_left_error = self.arduino.analogRead(self.pin_left_photo_diode) - self.target_value_left_photo_diode
-        self.previous_right_error = self.arduino.alalogRead(self.pin_right_photo_diode) - self.target_value_right_photo_diode
+        self.previous_right_error = self.arduino.analogRead(self.pin_right_photo_diode) - self.target_value_right_photo_diode
  
      def follow_line_loop(self):
         while True:
@@ -178,8 +187,10 @@ class FollowLine:
         self.stopped = True
 
     def find_line(self):
-        # add function
-        a = 2
+        line_found = False
+        while not line_found:
+            self.arduino.analogRead(self.pin_left_photo_diode)
+            self.arduino.analogRead(self.pin_right_photo_diode)
 
 
 class Modes:
