@@ -14,13 +14,19 @@ import threading
 class Status:
     # need the 'trip_meter' to get the arduino connection
     # change pin_motor_battery and pin_raspberry_pi
-    def  __init__(self, autoTTCommunication, motors, pin_motor_battery = 15, pin_raspberry_pi_battery = 14, arduino_max_voltage_analog_read = 5.01):
+    def  __init__(self, autoTTCommunication, motors):
+        #this values might need to be adjusted
+        self.arduino_max_voltage_analog_read = 5.01
+        # this values might change 
+        self.pin_motor_battery = 15
+        self.pin_raspberry_pi_battery = 14
+        ##################################################
+        # Values after this should not need to be changed.
+        ##################################################
+        
         self.autoTTCommunication = autoTTCommunication
         self.arduino = motors.arduino
-        self.pin_motor_battery = pin_motor_battery
-        self.pin_raspberry_pi_battery = pin_raspberry_pi_battery
-        self.arduino_max_voltage_analog_read = arduino_max_voltage_analog_read
-    
+
         self.arduino.pinMode(pin_motor_battery, self.arduino.INPUT)
         self.arduino.pinMode(pin_raspberry_pi_battery, self.arduino.INPUT)
 
@@ -86,21 +92,27 @@ class Status:
 
 class FanController:
     def __init__(self, motors, status, autoTTCommunication):
+        # this values might need to be adjusted
         self.start_temp = 70.0
         self.stop_temp = 65.0
-        self.warning_limit_temp = 80.0
-        self.warning_temp_sendt = False
         self.start_value = 100
         self.max_value = 400
-        self.fan_pin = 3
+        self.warning_limit_temp = 80.0
         self.warning_limit_motor_battery_volt = 6.0
-        self.warning_motor_battery_volt_sendt = False
         self.warning_limit_raspberry_pi_battery_volt = 4.9
-        self.warning_raspberry_pi_battery_volt_sendt = False
+        # this values might change
+        self.fan_pin = 3
+        ##################################################
+        # Values after this should not need to be changed.
+        ##################################################
         
         self.arduino = motors.arduino
         self.status = status
         self.autoTTCommunication = autoTTCommunication
+        
+        self.warning_temp_sendt = False
+        self.warning_motor_battery_volt_sendt = False
+        self.warning_raspberry_pi_battery_volt_sendt = False
         
         self.arduino.pinMode(self.fan_pin, self.arduino.OUTPUT)
         
