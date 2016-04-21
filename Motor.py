@@ -96,10 +96,11 @@ class Motor:
         ##################################################
         # Values after this should not need to be changed.
         ##################################################
-        self.min_value = math.floor(min_voltage / 5.0 * 255)
         
         self.trip_meter = trip_meter
         
+        self.min_value = math.floor(min_voltage / 5.0 * 255)
+
         try:
             self.connection = SerialManager(device='/dev/ttyACM2')
             self.arduino = ArduinoApi(connection=self.connection)
