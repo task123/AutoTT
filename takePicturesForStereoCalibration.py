@@ -39,5 +39,5 @@ while (True):
      ret, left_image  = left_camera.read()
      if (right_image == None or left_image == None):
           print "right_image or left_image is equal to None"
-     cv2.imwrite("chess_images/chessboard_r_" + str(i) + ".png", right_image)
-     cv2.imwrite("chess_images/chessboard_l_" + str(i) + ".png", left_image)
+     cv2.imwrite("chess_images/chessboard_right_" + str(i) + ".png", right_image)
+     cv2.imwrite("chess_images/chessboard_left_" + str(i) + ".png", left_image)
