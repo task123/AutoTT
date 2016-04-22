@@ -27,6 +27,8 @@ arduino.digitalWrite(13, 1)
 arduino.pinMode(9, arduino.OUTPUT)
 arduino.digitalWrite(9, 0)
 
+time.sleep(5)
+
 right_camera = cv2.VideoCapture(1)
 left_camera = cv2.VideoCapture(0)
 
