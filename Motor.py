@@ -122,8 +122,10 @@ class Motor:
                     except:
                         print "Could not connect to the arduino using /dev/ttyACM0, /dev/ttyACM1, /dev/ttyACM2 or /dev/ttyACM3"
             
-        print "m3"                
+        print self.arduino
+        print "m3"      
         self.arduino.pinMode(pin_right_forward, self.arduino.OUTPUT)
+        print "m3.5"
         self.arduino.pinMode(pin_right_backward, self.arduino.OUTPUT)
         self.arduino.pinMode(pin_left_forward, self.arduino.OUTPUT)
         self.arduino.pinMode(pin_left_backward, self.arduino.OUTPUT)
