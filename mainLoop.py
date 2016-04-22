@@ -16,10 +16,13 @@ cameras = None
 fan_controller = None
 disconnect = None
 try:
+    print "1"
     trip_meter = Motor.TripMeter()
+    print "2"
     motors = Motor.Motor(trip_meter)
     print "Ready to login"
     autoTTCommunication = TCP.AutoTTCommunication(port, ip_address = ip_address)
+    print "3"
     steering = Steering.SteeringWithIOSGyro(motors, autoTTCommunication = autoTTCommunication)
     modes = Steering.Modes(autoTTCommunication, steering)
     cameras = Cameras.Cameras(motors, autoTTCommunication, streaming_port = port + 1)
