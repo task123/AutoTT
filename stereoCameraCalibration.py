@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 from nanpy import ArduinoApi
 from nanpy import SerialManager
+import time
 
 
 
@@ -27,6 +28,8 @@ arduino.pinMode(13, arduino.OUTPUT)
 arduino.digitalWrite(13, 0)
 arduino.pinMode(9, arduino.OUTPUT)
 arduino.digitalWrite(9, 1)
+
+time.sleep(5)
 
 num_of_pictures = 10
 
