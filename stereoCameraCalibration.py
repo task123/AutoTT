@@ -1,6 +1,9 @@
 import cv2
 import numpy as np
 
+num_of_pictures = 10
+
+dims = (8, )
 
 objpts=[] 
 objPoints = []
@@ -22,7 +25,7 @@ imagePoints1 = []
 webCamHndlr_r = cv2.VideoCapture(0)
 webCamHndlr_l = cv2.VideoCapture(1)
 
-while ((len(imagePoints1) < hor*ver) and (len(imagePoints2)< hor*ver)):
+while ((len(imagePoints1) < num_of_pictures) and (len(imagePoints2)< num_of_pictures)):
 
      ret,imgr  = webCamHndlr_r.read(0)
      ret,imgl  = webCamHndlr_l.read(1)
@@ -35,7 +38,7 @@ while ((len(imagePoints1) < hor*ver) and (len(imagePoints2)< hor*ver)):
      cv2.imshow("chessboard", grey_imgr)
      cv2.imshow("chessboard1", grey_imgl)
 
-     objPoints = np.zeros((hor*ver,3), np.float32)
+     objPoints = np.zeros((num_of_pictures,3), np.float32)
      objPoints[:,:2] = np.mgrid[0:hor,0:ver].T.reshape(-1,2)
 
      if cv.WaitKey(-1) == 32:
