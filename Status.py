@@ -94,7 +94,7 @@ class FanController:
     def __init__(self, motors, status, autoTTCommunication):
         # these values might need to be adjusted
         self.start_temp = 70.0
-        self.stop_temp = 65.0
+        self.stop_temp = 60.0
         self.start_value = 100
         self.max_value = 400
         self.warning_limit_temp = 80.0
