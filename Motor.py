@@ -103,6 +103,7 @@ class Motor:
         self.min_value = math.floor(min_voltage / 5.0 * 255)
         
         print "m2"
+        self.arduino = None
         try:
             self.connection = SerialManager(device='/dev/ttyACM2')
             self.arduino = ArduinoApi(connection=self.connection)
