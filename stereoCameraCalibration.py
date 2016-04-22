@@ -25,9 +25,9 @@ except:
                     print "Could not connect to the arduino using /dev/ttyACM0, /dev/ttyACM1, /dev/ttyACM2 or /dev/ttyACM3"
             
 arduino.pinMode(13, arduino.OUTPUT)
-arduino.digitalWrite(13, 0)
+arduino.digitalWrite(13, 1)
 arduino.pinMode(9, arduino.OUTPUT)
-arduino.digitalWrite(9, 1)
+arduino.digitalWrite(9, 0)
 
 time.sleep(5)
 
