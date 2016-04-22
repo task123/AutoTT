@@ -27,8 +27,8 @@ class Status:
         self.autoTTCommunication = autoTTCommunication
         self.arduino = motors.arduino
 
-        self.arduino.pinMode(pin_motor_battery, self.arduino.INPUT)
-        self.arduino.pinMode(pin_raspberry_pi_battery, self.arduino.INPUT)
+        self.arduino.pinMode(self.pin_motor_battery, self.arduino.INPUT)
+        self.arduino.pinMode(self.pin_raspberry_pi_battery, self.arduino.INPUT)
 
     def receive_message(self, type, message):
         if (type == "Status"):
