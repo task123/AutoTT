@@ -6,27 +6,27 @@ from nanpy import SerialManager
 
 
 try:
-     self.connection = SerialManager(device='/dev/ttyACM2')
-     self.arduino = ArduinoApi(connection=self.connection)
+     connection = SerialManager(device='/dev/ttyACM2')
+     arduino = ArduinoApi(connection=connection)
 except:
      try:
-          self.connection = SerialManager(device='/dev/ttyACM0')
-          self.arduino = ArduinoApi(connection=self.connection)
+          connection = SerialManager(device='/dev/ttyACM0')
+          arduino = ArduinoApi(connection=connection)
      except:
           try:
-               self.connection = SerialManager(device='/dev/ttyACM1')
-               self.arduino = ArduinoApi(connection=self.connection)
+               connection = SerialManager(device='/dev/ttyACM1')
+               arduino = ArduinoApi(connection=connection)
           except:
                try:
-                    self.connection = SerialManager(device='/dev/ttyACM3')
-                    self.arduino = ArduinoApi(connection=self.connection)
+                    connection = SerialManager(device='/dev/ttyACM3')
+                    arduino = ArduinoApi(connection=connection)
                except:
                     print "Could not connect to the arduino using /dev/ttyACM0, /dev/ttyACM1, /dev/ttyACM2 or /dev/ttyACM3"
             
-self.arduino.pinMode(13, self.arduino.OUTPUT)
-self.arduino.digitalWrite(13, 0)
-self.arduino.pinMode(9, self.arduino.OUTPUT)
-self.arduino.digitalWrite(9, 1)
+arduino.pinMode(13, arduino.OUTPUT)
+arduino.digitalWrite(13, 0)
+arduino.pinMode(9, arduino.OUTPUT)
+arduino.digitalWrite(9, 1)
 
 num_of_pictures = 10
 
