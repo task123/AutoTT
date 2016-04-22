@@ -103,7 +103,6 @@ class Motor:
         self.min_value = math.floor(min_voltage / 5.0 * 255)
         
         print "m2"
-        self.arduino = None
         try:
             self.connection = SerialManager(device='/dev/ttyACM2')
             self.arduino = ArduinoApi(connection=self.connection)
@@ -124,17 +123,17 @@ class Motor:
             
         print self.arduino
         print "m3"      
-        self.arduino.pinMode(pin_right_forward, self.arduino.OUTPUT)
+        self.arduino.pinMode(self.pin_right_forward, self.arduino.OUTPUT)
         print "m3.5"
-        self.arduino.pinMode(pin_right_backward, self.arduino.OUTPUT)
-        self.arduino.pinMode(pin_left_forward, self.arduino.OUTPUT)
-        self.arduino.pinMode(pin_left_backward, self.arduino.OUTPUT)
-        self.arduino.pinMode(pin_motor_battery, self.arduino.OUTPUT)
+        self.arduino.pinMode(self.pin_right_backward, self.arduino.OUTPUT)
+        self.arduino.pinMode(self.pin_left_forward, self.arduino.OUTPUT)
+        self.arduino.pinMode(self.pin_left_backward, self.arduino.OUTPUT)
+        self.arduino.pinMode(self.pin_motor_battery, self.arduino.OUTPUT)
         
         self.arduino.pinMode(13, self.arduino.OUTPUT)
         self.arduino.digitalWrite(13, 1)
 
-        self.arduino.digitalWrite(pin_motor_battery, 0)
+        self.arduino.digitalWrite(self.pin_motor_battery, 0)
         
         print "m4"
         self.power = 0.0
