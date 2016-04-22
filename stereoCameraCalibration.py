@@ -1,6 +1,31 @@
 import cv2
 import numpy as np
 
+
+
+try:
+     self.connection = SerialManager(device='/dev/ttyACM2')
+     self.arduino = ArduinoApi(connection=self.connection)
+except:
+     try:
+          self.connection = SerialManager(device='/dev/ttyACM0')
+          self.arduino = ArduinoApi(connection=self.connection)
+     except:
+          try:
+               self.connection = SerialManager(device='/dev/ttyACM1')
+               self.arduino = ArduinoApi(connection=self.connection)
+          except:
+               try:
+                    self.connection = SerialManager(device='/dev/ttyACM3')
+                    self.arduino = ArduinoApi(connection=self.connection)
+               except:
+                    print "Could not connect to the arduino using /dev/ttyACM0, /dev/ttyACM1, /dev/ttyACM2 or /dev/ttyACM3"
+            
+self.arduino.pinMode(13, self.arduino.OUTPUT)
+self.arduino.digitalWrite(13, 0)
+self.arduino.pinMode(9, self.arduino.OUTPUT)
+self.arduino.digitalWrite(9, 1)
+
 num_of_pictures = 10
 
 dims = (8, 8)
