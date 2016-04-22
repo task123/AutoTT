@@ -7,7 +7,7 @@ dims = (8, 8)
 
 objpts=[] 
 objPoints = []
-pointCounts = hor*ver 
+pointCounts = num_of_pictures 
 R = [8]
 T = [8]
 E=[]
