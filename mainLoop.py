@@ -9,6 +9,7 @@ import Cameras
 import subprocess
 
 port = 12345 
+ip_address = "10.22.4.124"
 
 motors = None
 cameras = None
@@ -18,7 +19,7 @@ try:
     trip_meter = Motor.TripMeter()
     motors = Motor.Motor(trip_meter)
     print "Ready to login"
-    autoTTCommunication = TCP.AutoTTCommunication(port)
+    autoTTCommunication = TCP.AutoTTCommunication(port, ip_address = ip_address)
     steering = Steering.SteeringWithIOSGyro(motors, autoTTCommunication = autoTTCommunication)
     modes = Steering.Modes(autoTTCommunication, steering)
     cameras = Cameras.Cameras(motors, autoTTCommunication, streaming_port = port + 1)
