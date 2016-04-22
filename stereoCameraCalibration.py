@@ -22,13 +22,13 @@ imgPoints2 = []
 imagePoints2 = [] 
 imagePoints1 = []
 
-webCamHndlr_r = cv2.VideoCapture(0)
-webCamHndlr_l = cv2.VideoCapture(1)
+webCamHndlr_r = cv2.VideoCapture(1)
+webCamHndlr_l = cv2.VideoCapture(0)
 
 while ((len(imagePoints1) < num_of_pictures) and (len(imagePoints2)< num_of_pictures)):
 
-     ret,imgr  = webCamHndlr_r.read(0)
-     ret,imgl  = webCamHndlr_l.read(1)
+     ret,imgr  = webCamHndlr_r.read()
+     ret,imgl  = webCamHndlr_l.read()
      grey_imgr = cv2.cvtColor(imgr, cv.CV_BGR2GRAY)
      grey_imgl = cv2.cvtColor(imgl, cv.CV_BGR2GRAY)
      ret, cornersr =cv2.findChessboardCorners(grey_imgr,dims)
