@@ -67,8 +67,8 @@ while ((len(imagePoints1) < num_of_pictures) and (len(imagePoints2)< num_of_pict
      cv2.drawChessboardCorners(grey_imgr,dims,cornersr,0)
      ret, cornersl =cv2.findChessboardCorners(grey_imgl,dims)
      cv2.drawChessboardCorners(grey_imgl,dims,cornersl,0)
-     cv2.imshow("chessboard", grey_imgr)
-     cv2.imshow("chessboard1", grey_imgl)
+     #cv2.imshow("chessboard", grey_imgr)
+     #cv2.imshow("chessboard1", grey_imgl)
 
      objPoints = np.zeros((num_of_pictures,3), np.float32)
      objPoints[:,:2] = np.mgrid[0:hor,0:ver].T.reshape(-1,2)
