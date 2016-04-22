@@ -31,13 +31,14 @@ arduino.digitalWrite(9, 0)
 
 time.sleep(5)
 
-num_of_pictures = 10
+hor = 8
+ver = 8
 
-dims = (8, 8)
+dims = (hor, ver)
 
 objpts=[] 
 objPoints = []
-pointCounts = num_of_pictures 
+pointCounts = hor*ver
 R = [8]
 T = [8]
 E=[]
@@ -55,7 +56,7 @@ imagePoints1 = []
 webCamHndlr_r = cv2.VideoCapture(1)
 webCamHndlr_l = cv2.VideoCapture(0)
 
-while ((len(imagePoints1) < num_of_pictures) and (len(imagePoints2)< num_of_pictures)):
+while ((len(imagePoints1) < hor*ver) and (len(imagePoints2)< hor*ver)):
 
      ret,imgr  = webCamHndlr_r.read()
      ret,imgl  = webCamHndlr_l.read()
@@ -70,7 +71,7 @@ while ((len(imagePoints1) < num_of_pictures) and (len(imagePoints2)< num_of_pict
      #cv2.imshow("chessboard", grey_imgr)
      #cv2.imshow("chessboard1", grey_imgl)
 
-     objPoints = np.zeros((num_of_pictures,3), np.float32)
+     objPoints = np.zeros((hor*ver,3), np.float32)
      objPoints[:,:2] = np.mgrid[0:hor,0:ver].T.reshape(-1,2)
 
      if cv.WaitKey(-1) == 32:
