@@ -31,8 +31,8 @@ arduino.digitalWrite(9, 0)
 
 time.sleep(5)
 
-hor = 8
-ver = 8
+hor = 7
+ver = 7
 
 dims = (hor, ver)
 
@@ -56,8 +56,11 @@ imagePoints1 = []
 webCamHndlr_r = cv2.VideoCapture(1)
 webCamHndlr_l = cv2.VideoCapture(0)
 
+i = 0
 while ((len(imagePoints1) < hor*ver) and (len(imagePoints2)< hor*ver)):
-
+     print "press key to take picture number" + str(i)
+     i += 1
+     cv2.waitKey()
      ret,imgr  = webCamHndlr_r.read()
      ret,imgl  = webCamHndlr_l.read()
      if (imgl == None or imgr == None):
@@ -65,28 +68,16 @@ while ((len(imagePoints1) < hor*ver) and (len(imagePoints2)< hor*ver)):
      grey_imgr = cv2.cvtColor(imgr, cv2.COLOR_BGR2GRAY)
      grey_imgl = cv2.cvtColor(imgl, cv2.COLOR_BGR2GRAY)
      ret, cornersr =cv2.findChessboardCorners(grey_imgr,dims)
-     cv2.drawChessboardCorners(grey_imgr,dims,cornersr,0)
+     cv2.drawChessboardCorners(imgr,dims,cornersr,0)
      ret, cornersl =cv2.findChessboardCorners(grey_imgl,dims)
-     cv2.drawChessboardCorners(grey_imgl,dims,cornersl,0)
-     #cv2.imshow("chessboard", grey_imgr)
-     #cv2.imshow("chessboard1", grey_imgl)
+     cv2.drawChessboardCorners(imgl,dims,cornersl,0)
+     cv2.imwrite("chessboard_r_" + str(i), grey_imgr)
+     cv2.imshow("chessboard_l_" + str(i), grey_imgl)
 
      objPoints = np.zeros((hor*ver,3), np.float32)
      objPoints[:,:2] = np.mgrid[0:hor,0:ver].T.reshape(-1,2)
 
-     if cv2.waitKey(-1) == 32:
-
-          imagePoints1.append(cornersl)
-          imagePoints2.append(cornersr)
-          print len(imagePoints1)
-          objectPoints.append(objPoints)
-          cv2.imwrite("./test_images/img_r"+str(i)+".jpg",imgr)
-          cv2.imwrite("./test_images/img_l"+str(i)+".jpg",imgl)
-          i = i+1;
-
-
-          if cv2.waitKey(10) == 27:
-               break
+     
 objectPoints = [np.asarray(x) for x in objectPoints]
 imagePoints1 = [np.asarray(x) for x in imagePoints1]
 imagePoints2 = [np.asarray(x) for x in imagePoints2]
