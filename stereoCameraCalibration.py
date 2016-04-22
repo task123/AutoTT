@@ -74,7 +74,7 @@ while ((len(imagePoints1) < hor*ver) and (len(imagePoints2)< hor*ver)):
      objPoints = np.zeros((hor*ver,3), np.float32)
      objPoints[:,:2] = np.mgrid[0:hor,0:ver].T.reshape(-1,2)
 
-     if cv.WaitKey(-1) == 32:
+     if cv2.WaitKey(-1) == 32:
 
           imagePoints1.append(cornersl)
           imagePoints2.append(cornersr)
