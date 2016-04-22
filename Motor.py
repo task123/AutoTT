@@ -97,10 +97,12 @@ class Motor:
         # Values after this should not need to be changed.
         ##################################################
         
+        print "m1"
         self.trip_meter = trip_meter
         
         self.min_value = math.floor(min_voltage / 5.0 * 255)
-
+        
+        print "m2"
         try:
             self.connection = SerialManager(device='/dev/ttyACM2')
             self.arduino = ArduinoApi(connection=self.connection)
@@ -118,7 +120,8 @@ class Motor:
                         self.arduino = ArduinoApi(connection=self.connection)
                     except:
                         print "Could not connect to the arduino using /dev/ttyACM0, /dev/ttyACM1, /dev/ttyACM2 or /dev/ttyACM3"
-                            
+            
+        print "m3"                
         self.arduino.pinMode(pin_right_forward, self.arduino.OUTPUT)
         self.arduino.pinMode(pin_right_backward, self.arduino.OUTPUT)
         self.arduino.pinMode(pin_left_forward, self.arduino.OUTPUT)
@@ -130,6 +133,7 @@ class Motor:
 
         self.arduino.digitalWrite(pin_motor_battery, 0)
         
+        print "m4"
         self.power = 0.0
         self.turn = 0.0
         self.right_forward_value = 0
@@ -144,9 +148,11 @@ class Motor:
         self.left_speed = 0.0
         self.stopped = True
     
+        print "m5"
         self.motor_control_thread = threading.Thread(target = self.motor_control_loop)
         self.motor_control_thread.setDaemon(True)
         self.motor_control_thread.start()
+        print "m6"
         
     def motor_control_loop(self):
         while True:
