@@ -36,6 +36,7 @@ i = 0
 while (True):
      print "press key to take picture number" + str(i+1)
      i += 1
+     time.sleep(2)
      cv2.waitKey(0)
      ret, right_image  = right_camera.read()
      ret, left_image  = left_camera.read()
