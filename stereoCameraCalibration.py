@@ -3,7 +3,7 @@ import numpy as np
 
 num_of_pictures = 10
 
-dims = (8, )
+dims = (8, 8)
 
 objpts=[] 
 objPoints = []
@@ -60,7 +60,7 @@ imagePoints2 = [np.asarray(x) for x in imagePoints2]
 
 if( len(imagePoints1[0])== len(imagePoints2[0]) == len(objectPoints[0]) == len(objectPoints)== len(imagePoints2) == len(imagePoints1) ) : print len(imagePoints1[0])
 
-       retval, cameraMatrix1, distCoeffs1, cameraMatrix2, distCoeffs2, R, T, E, F = cv2.stereoCalibrate(objectPoints, imagePoints1, imagePoints2, (320,240))
+       retval, cameraMatrix1, distCoeffs1, cameraMatrix2, distCoeffs2, R, T, E, F = cv2.stereoCalibrate(objectPoints, imagePoints1, imagePoints2, (imgr.width,imgr.height)) # (320,240))
        print R
 
        cv.StereoRectify(cameraMatrix1, cameraMatrix2, distCoeffs1, distCoeffs2,(imgr.width,imgr.height), R, T, R1, R2, P1, P2, Q, CV_CALIB_ZERO_DISPARITY, -1, (0, 0))
