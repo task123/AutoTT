@@ -29,6 +29,8 @@ while ((len(imagePoints1) < num_of_pictures) and (len(imagePoints2)< num_of_pict
 
      ret,imgr  = webCamHndlr_r.read()
      ret,imgl  = webCamHndlr_l.read()
+     if (imgl == None or imgr == None):
+          print "imgl or imgr is equal to None"
      grey_imgr = cv2.cvtColor(imgr, cv2.COLOR_BGR2GRAY)
      grey_imgl = cv2.cvtColor(imgl, cv2.COLOR_BGR2GRAY)
      ret, cornersr =cv2.findChessboardCorners(grey_imgr,dims)
