@@ -165,23 +165,23 @@ class FollowLine:
         self.previous_right_error = self.arduino.analogRead(self.pin_right_photo_diode) - self.target_value_right_photo_diode
  
      def follow_line_loop(self):
-        while True:
-            if (self.stopped):
-                self.motors.stop()
-            else:
-                self.left_error = self.arduino.analogRead(self.pin_left_photo_diode) - self.target_value_left_photo_diode
-                self.right_error = self.arduino.analogRead(self.pin_right_photo_diode) - self.target_value_right_photo_diode
-                
-                self.new_left_speed = self.target_speed + self.left_error*self.proportional_term_in_PID + (self.left_error - self.previous_left_error)*self.derivative_term_in_PID/self.correction_interval
-                self.new_right_speed = self.target_speed + self.right_error*self.proportional_term_in_PID + (self.right_error - self.previous_right_error)*self.derivative_term_in_PID/self.correction_interval
+         while True:
+             if (self.stopped):
+                 self.motors.stop()
+             else:
+                 self.left_error = self.arduino.analogRead(self.pin_left_photo_diode) - self.target_value_left_photo_diode
+                 self.right_error = self.arduino.analogRead(self.pin_right_photo_diode) - self.target_value_right_photo_diode
+                 
+                 self.new_left_speed = self.target_speed + self.left_error*self.proportional_term_in_PID + (self.left_error - self.previous_left_error)*self.derivative_term_in_PID/self.correction_interval
+                 self.new_right_speed = self.target_speed + self.right_error*self.proportional_term_in_PID + (self.right_error - self.previous_right_error)*self.derivative_term_in_PID/self.correction_interval
 
-                self.motors.set_left_speed(self.new_left_speed)
-                self.motors.set_right_speed(self.new_right_speed)
+                 self.motors.set_left_speed(self.new_left_speed)
+                 self.motors.set_right_speed(self.new_right_speed)
 
-                self.previous_left_error = self.left_error
-                self.previous_right_error = self.right_error
+                 self.previous_left_error = self.left_error
+                 self.previous_right_error = self.right_error
 
-            time.sleep(self.correction_interval)
+             time.sleep(self.correction_interval)
 
     def stop(self):
         self.stopped = True
