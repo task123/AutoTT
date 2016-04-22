@@ -22,7 +22,7 @@ class Cameras:
         self.arduino.pinMode(self.pin_battery_camera_1, self.arduino.OUTPUT)
         self.arduino.pinMode(self.pin_battery_camera_2, self.arduino.OUTPUT)
         self.arduino.digitalWrite(self.pin_battery_camera_1, 0) # activ high
-        self.arduino.digitalWrite(self.pin_battery_camera_2, 1) # activ low
+        self.arduino.digitalWrite(self.pin_battery_camera_2, 0) # activ low
         
         self.jpeg_quality = 95
         self.stream_on = False
