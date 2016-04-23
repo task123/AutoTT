@@ -26,6 +26,10 @@ for i in [1,2,3,4,5,6,11]:
                corner_points.append((v*width_of_squares, h*width_of_squares, 0))
      objectPoints.append(corner_points)
      
+     print objectPoints
+     print rightImagePoints
+     print leftImagePoints
+     print right_image.size()
      retval, cameraMatrix1, distCoeffs1, cameraMatrix2, distCoeffs2, R, T, E, F = cv2.stereoCalibrate(objectPoints, rightImagePoints, leftImagePoints, right_image.size())
      R1 = []
      R2 = []
