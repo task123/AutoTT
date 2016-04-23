@@ -20,7 +20,7 @@ for i in [1,2,3,4,5,6,11]:
      rightImagePoints.append(right_corners)
      ret, left_corners = cv2.findChessboardCorners(left_gray, (num_of_vertical_crosses_on_chessboard, num_of_horizontal_crosses_on_chessboard))
      leftImagePoints.append(left_corners)
-     corner_point = []
+     corner_points = []
      for h in range(0, num_of_horizontal_crosses_on_chessboard):
           for v in range(0, num_of_vertical_crosses_on_chessboard):
                corner_points.append((v*width_of_squares, h*width_of_squares, 0))
