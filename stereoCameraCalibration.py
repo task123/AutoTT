@@ -30,6 +30,7 @@ for i in [1,2,3,4,5,6,11]:
      print rightImagePoints
      print leftImagePoints
      print right_image.shape[:2]
+     distCoeffs1 = None
      retval, cameraMatrix1, distCoeffs1, cameraMatrix2, distCoeffs2, R, T, E, F = cv2.stereoCalibrate(objectPoints, rightImagePoints, leftImagePoints, right_image.shape[:2])
      R1 = []
      R2 = []
