@@ -24,7 +24,8 @@ for i in [1,2,3,4,5,6,11]:
      for h in range(0, num_of_horizontal_crosses_on_chessboard):
           for v in range(0, num_of_vertical_crosses_on_chessboard):
                corner_points.append((v*width_of_squares, h*width_of_squares, 0))
-     objectPoints.append(corner_points)
+     objectPoints = []
+     objectPoints = np.append(objectPointscorner_points)
      
      print objectPoints
      print rightImagePoints
