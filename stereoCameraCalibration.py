@@ -30,13 +30,13 @@ for i in [1,2,3,4,5,6,11]:
      print rightImagePoints
      print leftImagePoints
      print [right_image.size()]
-     retval, cameraMatrix1, distCoeffs1, cameraMatrix2, distCoeffs2, R, T, E, F = cv2.stereoCalibrate(objectPoints, rightImagePoints, leftImagePoints, [right_image.size()])
+     retval, cameraMatrix1, distCoeffs1, cameraMatrix2, distCoeffs2, R, T, E, F = cv2.stereoCalibrate(objectPoints, rightImagePoints, leftImagePoints, (right_image.height, right_image.width))
      R1 = []
      R2 = []
      P1 = []
      P2 = []
      Q = []
-     (roi1, roi2) = cv2.StereoRectify(cameraMatrix1, cameraMatrix2, distCoeffs1, distCoeffs2,right_image.size(), R, T, R1, R2, P1, P2, Q, CALIB_ZERO_DISPARITY, -1, (0, 0))
+     (roi1, roi2) = cv2.StereoRectify(cameraMatrix1, cameraMatrix2, distCoeffs1, distCoeffs2,(right_image.height, right_image.widht), R, T, R1, R2, P1, P2, Q, CALIB_ZERO_DISPARITY, -1, (0, 0))
      print "roi1" 
      print roi1
      print "roi2"
