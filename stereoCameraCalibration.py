@@ -13,8 +13,8 @@ leftImagePoints = []
 
 j = 0
 for i in [1,2,3,4,5,6,11]:
-     right_image = imread("chess_images/chessboard_right_" + str(i) + ".png")
-     left_image = imread("chess_images/chessboard_left_" + str(i) + ".png")
+     right_image = cv2.imread("chess_images/chessboard_right_" + str(i) + ".png")
+     left_image = cv2.imread("chess_images/chessboard_left_" + str(i) + ".png")
      right_gray = cv2.cvtColor(right_image, cv2.COLOR_BGR2GRAY)
      left_gray = cv2.cvtColor(left_image, cv2.COLOR_BGR2GRAY)
      ret, right_corners = cv2.findChessboardCorners(right_gray, (num_of_vertical_crosses_on_chessboard, num_of_horizontal_crosses_on_chessboard))
