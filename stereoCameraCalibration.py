@@ -25,6 +25,7 @@ for i in [1,2,3,4,5,6,11]:
           for v in range(0, num_of_vertical_crosses_on_chessboard):
                corner_points.append((v*width_of_squares, h*width_of_squares, 0))
      objectPoints = np.append(objectPoints, corner_points)
+     objectPointsArray = np.asarray(objectPoints)
      
      print objectPoints
      print rightImagePoints
@@ -34,7 +35,7 @@ for i in [1,2,3,4,5,6,11]:
      distCoeffs1= []
      cameraMatrix2= []
      distCoeffs2=[]
-     retval, cameraMatrix1, distCoeffs1, cameraMatrix2, distCoeffs2, R, T, E, F = cv2.stereoCalibrate(objectPoints, rightImagePoints, leftImagePoints, cameraMatrix1,distCoeffs1, cameraMatrix2, distCoeffs2, right_image.shape[:2], )
+     retval, cameraMatrix1, distCoeffs1, cameraMatrix2, distCoeffs2, R, T, E, F = cv2.stereoCalibrate(objectPointsArray, rightImagePoints, leftImagePoints, cameraMatrix1,distCoeffs1, cameraMatrix2, distCoeffs2, right_image.shape[:2], )
      R1 = []
      R2 = []
      P1 = []
