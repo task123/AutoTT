@@ -11,21 +11,20 @@ objectPoints = []
 rightImagePoints = []
 leftImagePoints = []
 
-j = 0
 for i in [1,2,3,4,5,6,11]:
      right_image = cv2.imread("chess_images/chessboard_right_" + str(i) + ".png")
      left_image = cv2.imread("chess_images/chessboard_left_" + str(i) + ".png")
      right_gray = cv2.cvtColor(right_image, cv2.COLOR_BGR2GRAY)
      left_gray = cv2.cvtColor(left_image, cv2.COLOR_BGR2GRAY)
      ret, right_corners = cv2.findChessboardCorners(right_gray, (num_of_vertical_crosses_on_chessboard, num_of_horizontal_crosses_on_chessboard))
-     rightImagePoints[j] = right_corners
+     rightImagePoints.append(right_corners)
      ret, left_corners = cv2.findChessboardCorners(left_gray, (num_of_vertical_crosses_on_chessboard, num_of_horizontal_crosses_on_chessboard))
-     leftImagePoints[j] = left_corners
+     leftImagePoints.append(left_corners)
      corner_point = []
      for h in range(0, num_of_horizontal_crosses_on_chessboard):
           for v in range(0, num_of_vertical_crosses_on_chessboard):
                corner_points.append((v*width_of_squares, h*width_of_squares, 0))
-     objectPoints[j] = corner_points
+     objectPoints.append(corner_points)
      
      retval, cameraMatrix1, distCoeffs1, cameraMatrix2, distCoeffs2, R, T, E, F = cv2.stereoCalibrate(objectPoints, imagePoints1, imagePoints2, right_image.size())
      R1 = []
