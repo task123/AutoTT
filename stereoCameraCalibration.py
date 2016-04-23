@@ -29,8 +29,8 @@ for i in [1,2,3,4,5,6,11]:
      print objectPoints
      print rightImagePoints
      print leftImagePoints
-     print right_image.size()
-     retval, cameraMatrix1, distCoeffs1, cameraMatrix2, distCoeffs2, R, T, E, F = cv2.stereoCalibrate(objectPoints, rightImagePoints, leftImagePoints, right_image.size())
+     print [right_image.size()]
+     retval, cameraMatrix1, distCoeffs1, cameraMatrix2, distCoeffs2, R, T, E, F = cv2.stereoCalibrate(objectPoints, rightImagePoints, leftImagePoints, [right_image.size()])
      R1 = []
      R2 = []
      P1 = []
