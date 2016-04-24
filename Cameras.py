@@ -53,6 +53,9 @@ class Cameras:
         self.draw_rectangles = False
         self.write_distances = False
         self.write_type_of_objects = False
+        
+        self.knn = cv2.ml.KNearest_create()
+        self.knn_initialized = False
     
         self.ok_to_send_messages = True
 
@@ -286,10 +289,61 @@ class Cameras:
                                         self.ok_to_send_messages = False
 
                 #Looking for speed signs
+                take_median_of_speed_signs = 15
+                result_list_speed_signs = []
                 if(self.look_for_speed_sign):
+                    if (!self.knn_initialized):
+                        with np.load('knn_data.npz') as data:
+                            train = data['train']
+                            train_labels = data['train_labels']
+                        knn.train(train,cv2.ml.ROW_SAMPLE,train_labels)
+                    
                     red_circles = cv2.HoughCircles(red_mask,cv2.HOUGH_GRADIENT,1,100000,param1=50,param2=40,minRadius=3,maxRadius=70)
                     if circles is not None:
                         red_circles = np.uint16(np.around(red_circles))
+                        (rows,columns,channels) = self.image_1.shape
+                        sign_area = np.zeros((rows,columns), dtype=np.uint8)
+                        cv2.ellipse(sign_area,(red_circles[0,:][i][0],red_circles[0,:][i][1]),(red_circles[0,:][i][2],red_circles[0,:][i][2]), 90,0,180,(255,255,255),-1,8,0)
+                        hsv_half_sign_image = cv2.bitwise_and(self.image_1, self.image_1, mask=sign_area )
+                        _,sign_mask = cv2.threshold(hsv_half_sign_image[:,:,2], 150, 255, cv2.THRESH_BINARY_INV)
+
+                        sign_center_x = red_circles[0,:][i][0]
+                        sign_center_y = red_circles[0,:][i][1]
+                        sign_radius = red_circles[0,:][i][2]
+                        x_start =int(sign_center_x-sign_radius*0.8)
+                        x_end = sign_center_x
+                        y_start =int(sign_center_y-sign_radius*0.5)
+                        y_end =int(sign_center_y+sign_radius*0.5)
+
+                        temporary_ROI = sign_mask[y_start:y_end,x_start:x_end]
+                        cv2.imshow("number",temporary_ROI)
+                        resized_ROI = [cv2.resize(temporary_ROI,(20,20),interpolation=cv2.INTER_LINEAR)]
+
+                        resized_ROI_array = np.array(resized_ROI[0])
+                        temporary_array = resized_ROI_array.astype(np.uint8)  # No idea whatsoever why you have to do this
+                        prepeared_array = temporary_array.reshape(-1,400).astype(np.float32)
+                        _,result,neighbours,dist = knn.findNearest(prepeared_number,k=10)
+                        result_list_speed_signs.append(result)
+                        if (len(result_list_speed_signs) > take_median_of_speed_signs):
+                            result_list_speed_signs.pop(0)
+                        copy_result_list = list(result_list_speed_signs)
+                        copy_result_list.sort()
+                        speed_sign_value = copy_result_list.pop(int(len(copy_result_list)/2))[0][0]
+
+                        if(self.draw_rectangles):
+                            #draw rectangles
+                            cv2.rectangle(self.image_1, (sign_center_x-sign_radius,sign_center_y-sign_radius), (sign_center_x+sign_radius,sign_center_y+sign_radius), (0,0,155),3)
+                        if(self.write_type_of_objects):
+                            #write objects
+                            cv2.putText(self.image_1, "Speed limit: %d" % speed_sign_value, (sign_center_x-sign_radius,sign_center_y-sign_radius-7), font, font_size, (0,0,200),font_thickness)
+                        if(self.ok_to_send_messages):
+                            #Send message
+    #must make a better timing scheme!
+                            self.ok_to_send_messages = False
+
+
+
+
 
 
 
