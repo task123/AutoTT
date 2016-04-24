@@ -13,7 +13,6 @@ import TCP
 import Motor
 import time
 import threading
-import common
 
 class Status:
     # need the 'trip_meter' to get the arduino connection
