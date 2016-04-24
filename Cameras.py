@@ -98,7 +98,7 @@ class Cameras:
                 self.stop_video_stream()
         if (type == "VideoQuality"):
             if (message == "High"):
-                self.frame_height = 440
+                self.frame_height = 460
                 self.frame_width = 780
                 self.jpeg_quality = 95
                 self.reduse_stream_fps_by_a_factor = 1
