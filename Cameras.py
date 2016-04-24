@@ -97,8 +97,8 @@ class Cameras:
                 self.stop_video_stream()
         if (type == "VideoQuality"):
             if (message == "High"):
-                self.frame_height = 460
-                self.frame_width = 600
+                self.frame_height = 571
+                self.frame_width = 798
                 self.jpeg_quality = 95
                 if (self.video_1 != None):
                     self.video_1.set(cv2.CAP_PROP_FRAME_HEIGHT, self.frame_height)
