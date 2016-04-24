@@ -6,7 +6,7 @@ Thanks to PhJulien for making his code avalible.
 import os
 from nanpy import ArduinoApi
 from nanpy import SerialManager
-from nanpy import Vcc
+from nanpy.vcc import Vcc
 import TCP
 import Motor
 import time
