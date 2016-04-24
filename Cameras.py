@@ -40,6 +40,14 @@ class Cameras:
         self.video_stream_thread = threading.Thread(target = self.video_stream_loop)
         self.video_stream_thread.setDaemon(True)
         self.video_stream_thread.start()
+    
+        self.look_for_stop_sign = False
+        self.look_for_speed_sign = False
+        self.look_for_traffic_light = False
+        
+        self.draw_rectangles = False
+        self.write_distances = False
+        self.write_type_of_objects = False
 
     def is_camera_1_on(self):
         return self.camera_1_on

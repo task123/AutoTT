@@ -1,4 +1,5 @@
 #!/bin/sh
+# autoTTrpi
 
 SUBJ="IP Address of RPi"
 EMAIL="autoTTcar@gmail.com"
@@ -7,7 +8,7 @@ ip1=""
 ip2=""
 
 read ip1 < ip.txt
-ip2=$(wget -qO- ifconfig.me/ip)
+ip2=$(wget -qO- ifconfig.me/ip)w
 
 if [ "$ip1" = "$ip2" ]
 then
