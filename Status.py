@@ -38,7 +38,8 @@ class Status:
         b = Vcc(a)
         print a
         print b
-        print b.read()
+        c = b.read()
+        print c
         """
     
         a = ArduinoTree()
