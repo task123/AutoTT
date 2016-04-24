@@ -29,6 +29,7 @@ class Status:
 
         self.arduino.pinMode(self.pin_motor_battery, self.arduino.INPUT)
         self.arduino.pinMode(self.pin_raspberry_pi_battery, self.arduino.INPUT)
+        self.arduino.analogReference(self.arduino.INTERNAL)
 
     def receive_message(self, type, message):
         if (type == "Status"):
@@ -44,10 +45,10 @@ class Status:
             self.autoTTCommunication.status(list_of_status)
 
     def getMotorBatteryVolt(self):
-        return (99.2 + 99.7) / 99.7 * self.arduino.analogRead(self.pin_motor_battery) / 1023.0 * self.arduino.readVcc() # self.arduino_max_voltage_analog_read
+        return (99.2 + 12.0) / 12.0 * self.arduino.analogRead(self.pin_motor_battery) / 1023.0 * 1.1 # self.arduino_max_voltage_analog_read
     
     def getRaspberryPiBatteryVolt(self):
-        return (223.1 + 99.7) / 223.1 * self.arduino.analogRead(self.pin_raspberry_pi_battery) / 1023.0 * self.arduino.readVcc() # self.arduino_max_voltage_analog_read
+        return (22.0 + 99.7) / 22.0 * self.arduino.analogRead(self.pin_raspberry_pi_battery) / 1023.0 * 1.1 # self.arduino_max_voltage_analog_read
 
     # Return CPU temperature as a character string
     def getCPUtemperature(self):
