@@ -13,6 +13,7 @@ import TCP
 import Motor
 import time
 import threading
+import common
 
 class Status:
     # need the 'trip_meter' to get the arduino connection
@@ -34,10 +35,12 @@ class Status:
         self.arduino.pinMode(self.pin_raspberry_pi_battery, self.arduino.INPUT)
         #self.arduino.analogReference(self.arduino.INTERNAL)
         #selv.arduinoVcc = Vcc(RegisterFeature())
+        common.setup()
+        print "common"
         a = motors.connection
         b = ArduinoTree(connection = a)
         print b
-        c = b.vcc.read()
+        c = b.vcc().read()
         print c 
         
         #b.vcc.read()
