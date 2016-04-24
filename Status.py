@@ -34,9 +34,11 @@ class Status:
         self.arduino.pinMode(self.pin_raspberry_pi_battery, self.arduino.INPUT)
         #self.arduino.analogReference(self.arduino.INTERNAL)
         #selv.arduinoVcc = Vcc(RegisterFeature())
+        """
         a = ArduinoTree()
         print a
         print a.vcc.read()
+        """
 
     def receive_message(self, type, message):
         if (type == "Status"):
