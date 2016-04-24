@@ -6,6 +6,7 @@ Thanks to PhJulien for making his code avalible.
 import os
 from nanpy import ArduinoApi
 from nanpy import SerialManager
+from nanpy.arduinotree import ArduinoTree
 from nanpy.vcc import Vcc
 from nanpy.register import RegisterFeature
 import TCP
@@ -33,7 +34,9 @@ class Status:
         self.arduino.pinMode(self.pin_raspberry_pi_battery, self.arduino.INPUT)
         #self.arduino.analogReference(self.arduino.INTERNAL)
         #selv.arduinoVcc = Vcc(RegisterFeature())
-        print RegisterFeature()
+        a = ArduinoTree()
+        print a
+        print a.vcc.read()
 
     def receive_message(self, type, message):
         if (type == "Status"):
