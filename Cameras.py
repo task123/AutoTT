@@ -99,7 +99,7 @@ class Cameras:
         if (type == "VideoQuality"):
             if (message == "High"):
                 self.frame_height = 460
-                self.frame_width = 780
+                self.frame_width = 720
                 self.jpeg_quality = 95
                 self.reduse_stream_fps_by_a_factor = 1
                 if (self.video_1 != None):
