@@ -6,9 +6,9 @@ Thanks to PhJulien for making his code avalible.
 import os
 from nanpy import ArduinoApi
 from nanpy import SerialManager
-from nanpy.arduinotree import ArduinoTree
-from nanpy.vcc import Vcc
-from nanpy.register import RegisterFeature
+#from nanpy.arduinotree import ArduinoTree
+#from nanpy.vcc import Vcc
+#from nanpy.register import RegisterFeature
 import TCP
 import Motor
 import time
