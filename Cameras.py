@@ -99,7 +99,7 @@ class Cameras:
         if (type == "VideoQuality"):
             if (message == "High"):
                 self.frame_height = 460
-                self.frame_width = 790
+                self.frame_width = 780
                 self.jpeg_quality = 95
                 self.reduse_stream_fps_by_a_factor = 1
                 if (self.video_1 != None):
@@ -111,7 +111,7 @@ class Cameras:
                 self.autoTTCommunication.send_message("VideoStreamRefresh", "")
             elif (message == "Medium"):
                 self.frame_height = 300
-                self.frame_width = 568
+                self.frame_width = 558
                 self.jpeg_quality = 95
                 self.reduse_stream_fps_by_a_factor = 1
                 if (self.video_1 != None):
@@ -122,7 +122,7 @@ class Cameras:
                     self.video_2.set(cv2.CAP_PROP_FRAME_WIDTH, self.frame_width)
                 self.autoTTCommunication.send_message("VideoStreamRefresh", "")
             elif (message == "Low"):
-                self.frame_height = 300
+                self.frame_height = 290
                 self.frame_width = 568
                 self.jpeg_quality = 20
                 self.reduse_stream_fps_by_a_factor = 1
