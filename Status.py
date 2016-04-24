@@ -6,7 +6,7 @@ Thanks to PhJulien for making his code avalible.
 import os
 from nanpy import ArduinoApi
 from nanpy import SerialManager
-#from nanpy.arduinotree import ArduinoTree
+from nanpy.arduinotree import ArduinoTree
 from nanpy.vcc import Vcc
 from nanpy.register import RegisterFeature
 import TCP
@@ -35,13 +35,7 @@ class Status:
         #self.arduino.analogReference(self.arduino.INTERNAL)
         #selv.arduinoVcc = Vcc(RegisterFeature())
         d = motors.connection
-        print d
-        a = RegisterFeature(d)
-        b = Vcc(a)
-        print a
-        print b
-        c = b.read()
-        print c
+    
         """
     
         a = ArduinoTree()
