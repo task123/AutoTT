@@ -34,7 +34,10 @@ class Status:
         self.arduino.pinMode(self.pin_raspberry_pi_battery, self.arduino.INPUT)
         #self.arduino.analogReference(self.arduino.INTERNAL)
         #selv.arduinoVcc = Vcc(RegisterFeature())
-        d = motors.connection
+        a = motors.connection
+        b = ArduinoTree(connection = a)
+        print b
+        #b.vcc.read()
     
         """
     
