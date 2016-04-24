@@ -37,6 +37,9 @@ class Status:
         a = motors.connection
         b = ArduinoTree(connection = a)
         print b
+        c = b.vcc()
+        print c 
+        
         #b.vcc.read()
     
         """
