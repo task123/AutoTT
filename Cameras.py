@@ -101,7 +101,7 @@ class Cameras:
                 self.frame_height = 460
                 self.frame_width = 790
                 self.jpeg_quality = 35
-                self.reduse_stream_fps_by_a_factor = 30
+                self.reduse_stream_fps_by_a_factor = 2
                 if (self.video_1 != None):
                     self.video_1.set(cv2.CAP_PROP_FRAME_HEIGHT, self.frame_height)
                     self.video_1.set(cv2.CAP_PROP_FRAME_WIDTH, self.frame_width)
@@ -125,7 +125,7 @@ class Cameras:
                 self.frame_height = 300
                 self.frame_width = 568
                 self.jpeg_quality = 20
-                self.reduse_stream_fps_by_a_factor = 10
+                self.reduse_stream_fps_by_a_factor = 1
                 if (self.video_1 != None):
                     self.video_1.set(cv2.CAP_PROP_FRAME_HEIGHT, self.frame_height)
                     self.video_1.set(cv2.CAP_PROP_FRAME_WIDTH, self.frame_width)
