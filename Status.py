@@ -29,7 +29,7 @@ class Status:
 
         self.arduino.pinMode(self.pin_motor_battery, self.arduino.INPUT)
         self.arduino.pinMode(self.pin_raspberry_pi_battery, self.arduino.INPUT)
-        self.arduino.analogReference(self.arduino.INTERNAL)
+        #self.arduino.analogReference(self.arduino.INTERNAL)
 
     def receive_message(self, type, message):
         if (type == "Status"):
