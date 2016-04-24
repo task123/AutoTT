@@ -35,8 +35,11 @@ class Status:
         #self.arduino.analogReference(self.arduino.INTERNAL)
         #selv.arduinoVcc = Vcc(RegisterFeature())
         a = RegisterFeature()
+        b = Vcc(a)
         print a
+        print b
         """
+    
         a = ArduinoTree()
         print a
         print a.vcc.read()
