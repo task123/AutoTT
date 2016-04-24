@@ -26,7 +26,7 @@ class Cameras:
         
         self.jpeg_quality = 95
         self.stream_on = False
-        self.half_stream_fps = False
+        self.reduse_stream_fps_by_a_factor = 1
         self.new_stream_image = False
         self.camera_1_on = False
         self.camera_2_on = False
@@ -101,8 +101,7 @@ class Cameras:
                 self.frame_height = 460
                 self.frame_width = 790
                 self.jpeg_quality = 35
-                self.half_stream_fps = True
-                self.skip_frame = False
+                self.reduse_stream_fps_by_a_factor = 30
                 if (self.video_1 != None):
                     self.video_1.set(cv2.CAP_PROP_FRAME_HEIGHT, self.frame_height)
                     self.video_1.set(cv2.CAP_PROP_FRAME_WIDTH, self.frame_width)
@@ -114,8 +113,7 @@ class Cameras:
                 self.frame_height = 300
                 self.frame_width = 568
                 self.jpeg_quality = 95
-                self.half_stream_fps = False
-                self.skip_frame = False
+                self.reduse_stream_fps_by_a_factor = 1
                 if (self.video_1 != None):
                     self.video_1.set(cv2.CAP_PROP_FRAME_HEIGHT, self.frame_height)
                     self.video_1.set(cv2.CAP_PROP_FRAME_WIDTH, self.frame_width)
@@ -127,8 +125,7 @@ class Cameras:
                 self.frame_height = 300
                 self.frame_width = 568
                 self.jpeg_quality = 20
-                self.half_stream_fps = True
-                self.skip_frame = False
+                self.reduse_stream_fps_by_a_factor = 10
                 if (self.video_1 != None):
                     self.video_1.set(cv2.CAP_PROP_FRAME_HEIGHT, self.frame_height)
                     self.video_1.set(cv2.CAP_PROP_FRAME_WIDTH, self.frame_width)
@@ -168,17 +165,16 @@ class Cameras:
             return render_template('index.html')
     
         def gen():
-            self.skip_frame = False
+            self.frame_count = 0
             while (self.stream_on):
                 while (not self.new_stream_image):
                     time.sleep(0.001)
                 self.new_stream_image = False
-                if (not self.skip_frame):
+                if (self.frame_count % self.reduse_stream_fps_by_a_factor == 0):
                     yield (b'--frame\r\n'
                         b'Content-Type: image/jpeg\r\n\r\n' + self.stream_image_jpeg.tostring() + b'\r\n\r\n')
                     self.have_yield = True
-                if (self.half_stream_fps):
-                    self.skip_frame = not self.skip_frame
+                self.frame_count += 1
                 
 
         @flaskApp.route('/video_feed')
