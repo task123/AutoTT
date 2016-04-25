@@ -248,102 +248,168 @@ class Cameras:
         return self.ok_to_send_messages
 
     def detect_signs_and_lights(self):
-            hsv_image_1 = cv2.cvtColor(self.image_1, cv2.COLOR_BGR2HSV)
-            font = cv2.FONT_HERSHEY_PLAIN
-            font_size = 1.5
-            font_thickness
+        hsv_image_1 = cv2.cvtColor(self.image_1, cv2.COLOR_BGR2HSV)
+        font = cv2.FONT_HERSHEY_PLAIN
+        font_size = 1.5
+        font_thickness = 2
+    
+        red_mask_low = cv2.inRange(hsv_image_1,np.array((0,100,100), dtype = "uint8"),np.array((7, 255, 255), dtype = "uint8"))
+        red_mask_high = cv2.inRange(hsv_image_1,np.array((160,100,100), dtype = "uint8"),np.array((179, 255, 255), dtype = "uint8"))
+        red_mask = cv2.addWeighted(red_mask_low,1.0, red_mask_high,1.0, 0.0)
+        red_mask = cv2.GaussianBlur(red_mask,(5,5),0)
+
+        #Looking for stop signs
+        if (self.look_for_stop_sign):
+            red_edges = cv2.Canny(red_mask,100,50)
+            _, red_contours, hierarchy = cv2.findContours(red_edges, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
+            if contours is not None:
+                for i in range(0,len(contours)):
+                    peripheral = cv2.arcLength(red_contours[i], True)
+                    approximate_polygon = cv2.approxPolyDP(red_contours[i], 0.03 * peripheral, True)
+                    if (len(approximate_polygon) == 8 and cv2.isContourConvex(approximate_polygon) and cv2.contourArea(approximate_polygon) > 300):
+                        x,y,w,h = cv2.boundingRect(approximate_polygon)
+                        stop_sign = redMaskCopy[y:(y+h),x:(x+w)]
+                        sign_rows,sign_cols = stop_sign.shape
+                        average_intensity=0
+                        for row in range(0,sign_rows):
+                            for col in range(0,sign_cols):
+                                average_intensity = average_intensity + stop_sign[row,col]
+                        average_intensity = average_intensity/stop_sign.size
+                        if (average_intensity > 90):
+                            # We have now found a stop sign
+                            if (self.draw_rectangles):
+                                cv2.rectangle(self.image_1, (x,y), (x+w,y+h), (0,0,155),3)
+                            if (write_type_of_objects):
+                                cv2.putText(self.image_1, "Stop", (x,y-7), font, font_size, (0,0,200),font_thickness)
+                            if (cv2.contourArea(approximate_polygon) > 3000 and cv2.contourArea(approximate_polygon) > 2000 and self.ok_to_send_messages):
+                                # Here we send a message to stop the car. We have to ajust the parameter so that we enter this if at the correct distance.
+
+                                self.ok_to_send_messages = False
+
+        #Looking for speed signs
+        take_median_of_speed_signs = 15
+        result_list_speed_signs = []
+        if(self.look_for_speed_sign):
+            if (!self.knn_initialized):
+                with np.load('knn_data.npz') as data:
+                    train = data['train']
+                    train_labels = data['train_labels']
+                knn.train(train,cv2.ml.ROW_SAMPLE,train_labels)
             
-            # Looking for stop signs and speed signs
-            if (self.look_for_speed_sign or self.look_for_stop_sign):
-                red_mask_low = cv2.inRange(hsv_image_1,np.array((0,100,100), dtype = "uint8"),np.array((7, 255, 255), dtype = "uint8"))
-                red_mask_high = cv2.inRange(hsv_image_1,np.array((160,100,100), dtype = "uint8"),np.array((179, 255, 255), dtype = "uint8"))
-                red_mask = cv2.addWeighted(red_mask_low,1.0, red_mask_high,1.0, 0.0)
-                red_mask = cv2.GaussianBlur(red_mask,(5,5),0)
+            red_circles = cv2.HoughCircles(red_mask,cv2.HOUGH_GRADIENT,1,100000,param1=50,param2=40,minRadius=3,maxRadius=70)
+            if circles is not None:
+                red_circles = np.uint16(np.around(red_circles))
+                (rows,columns,channels) = self.image_1.shape
+                sign_area = np.zeros((rows,columns), dtype=np.uint8)
+                cv2.ellipse(sign_area,(red_circles[0,:][i][0],red_circles[0,:][i][1]),(red_circles[0,:][i][2],red_circles[0,:][i][2]), 90,0,180,(255,255,255),-1,8,0)
+                hsv_half_sign_image = cv2.bitwise_and(self.image_1, self.image_1, mask=sign_area )
+                _,sign_mask = cv2.threshold(hsv_half_sign_image[:,:,2], 150, 255, cv2.THRESH_BINARY_INV)
 
-                #Looking for stop signs
-                if (self.look_for_stop_sign):
-                    red_edges = cv2.Canny(red_mask,100,50)
-                    _, red_contours, hierarchy = cv2.findContours(red_edges, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
-                    if contours is not None:
-                        for i in range(0,len(contours)):
-                            peripheral = cv2.arcLength(red_contours[i], True)
-                            approximate_polygon = cv2.approxPolyDP(red_contours[i], 0.03 * peripheral, True)
-                            if (len(approximate_polygon) == 8 and cv2.isContourConvex(approximate_polygon) and cv2.contourArea(approximate_polygon) > 300):
-                                x,y,w,h = cv2.boundingRect(approximate_polygon)
-                                stop_sign = redMaskCopy[y:(y+h),x:(x+w)]
-                                sign_rows,sign_cols = stop_sign.shape
-                                average_intensity=0
-                                for row in range(0,sign_rows):
-                                    for col in range(0,sign_cols):
-                                        average_intensity = average_intensity + stop_sign[row,col]
-                                average_intensity = average_intensity/stop_sign.size
-                                if (average_intensity > 90):
-                                    # We have now found a stop sign
-                                    if (self.draw_rectangles):
-                                        cv2.rectangle(self.image_1, (x,y), (x+w,y+h), (0,0,155),3)
-                                    if (write_type_of_objects):
-                                        cv2.putText(self.image_1, "Stop", (x,y-7), font, font_size, (0,0,200),font_thickness)
-                                    if (cv2.contourArea(approximate_polygon) > 3000 and cv2.contourArea(approximate_polygon) > 2000 and self.ok_to_send_messages):
-                                        # Here we send a message to stop the car. We have to ajust the parameter so that we enter this if at the correct distance.
+                sign_center_x = red_circles[0,:][i][0]
+                sign_center_y = red_circles[0,:][i][1]
+                sign_radius = red_circles[0,:][i][2]
+                x_start =int(sign_center_x-sign_radius*0.8)
+                x_end = sign_center_x
+                y_start =int(sign_center_y-sign_radius*0.5)
+                y_end =int(sign_center_y+sign_radius*0.5)
 
-                                        self.ok_to_send_messages = False
+                temporary_ROI = sign_mask[y_start:y_end,x_start:x_end]
+                cv2.imshow("number",temporary_ROI)
+                resized_ROI = [cv2.resize(temporary_ROI,(20,20),interpolation=cv2.INTER_LINEAR)]
 
-                #Looking for speed signs
-                take_median_of_speed_signs = 15
-                result_list_speed_signs = []
-                if(self.look_for_speed_sign):
-                    if (!self.knn_initialized):
-                        with np.load('knn_data.npz') as data:
-                            train = data['train']
-                            train_labels = data['train_labels']
-                        knn.train(train,cv2.ml.ROW_SAMPLE,train_labels)
-                    
-                    red_circles = cv2.HoughCircles(red_mask,cv2.HOUGH_GRADIENT,1,100000,param1=50,param2=40,minRadius=3,maxRadius=70)
-                    if circles is not None:
-                        red_circles = np.uint16(np.around(red_circles))
-                        (rows,columns,channels) = self.image_1.shape
-                        sign_area = np.zeros((rows,columns), dtype=np.uint8)
-                        cv2.ellipse(sign_area,(red_circles[0,:][i][0],red_circles[0,:][i][1]),(red_circles[0,:][i][2],red_circles[0,:][i][2]), 90,0,180,(255,255,255),-1,8,0)
-                        hsv_half_sign_image = cv2.bitwise_and(self.image_1, self.image_1, mask=sign_area )
-                        _,sign_mask = cv2.threshold(hsv_half_sign_image[:,:,2], 150, 255, cv2.THRESH_BINARY_INV)
+                resized_ROI_array = np.array(resized_ROI[0])
+                temporary_array = resized_ROI_array.astype(np.uint8)  # No idea whatsoever why you have to do this
+                prepeared_array = temporary_array.reshape(-1,400).astype(np.float32)
+                _,result,neighbours,dist = knn.findNearest(prepeared_number,k=10)
+                result_list_speed_signs.append(result)
+                if (len(result_list_speed_signs) > take_median_of_speed_signs):
+                    result_list_speed_signs.pop(0)
+                copy_result_list = list(result_list_speed_signs)
+                copy_result_list.sort()
+                speed_sign_value = copy_result_list.pop(int(len(copy_result_list)/2))[0][0]
 
-                        sign_center_x = red_circles[0,:][i][0]
-                        sign_center_y = red_circles[0,:][i][1]
-                        sign_radius = red_circles[0,:][i][2]
-                        x_start =int(sign_center_x-sign_radius*0.8)
-                        x_end = sign_center_x
-                        y_start =int(sign_center_y-sign_radius*0.5)
-                        y_end =int(sign_center_y+sign_radius*0.5)
+                if(self.draw_rectangles):
+                    #draw rectangles
+                    cv2.rectangle(self.image_1, (sign_center_x-sign_radius,sign_center_y-sign_radius), (sign_center_x+sign_radius,sign_center_y+sign_radius), (0,0,155),3)
+                if(self.write_type_of_objects):
+                    #write objects
+                    cv2.putText(self.image_1, "Speed limit: %d" % speed_sign_value, (sign_center_x-sign_radius,sign_center_y-sign_radius-7), font, font_size, (0,0,200),font_thickness)
+                if(self.ok_to_send_messages):
+                    #Send message
+#must make a better timing scheme! sort a list and take the smallest radius? Or check if it includes red, and then have two different cases?
+                    self.ok_to_send_messages = False
 
-                        temporary_ROI = sign_mask[y_start:y_end,x_start:x_end]
-                        cv2.imshow("number",temporary_ROI)
-                        resized_ROI = [cv2.resize(temporary_ROI,(20,20),interpolation=cv2.INTER_LINEAR)]
+        #Looking for traffic lights
+        if(self.look_for_traffic_light):
+            green_mask = cv2.inRange(self.hsv_image_1,np.array((80,100,50), dtype = "uint8"),np.array((90, 255, 255), dtype = "uint8"))
+            yellow_mask = cv2.inRange(self.hsv_image_1,np.array((20,50,100), dtype = "uint8"),np.array((30, 255, 255), dtype = "uint8"))
 
-                        resized_ROI_array = np.array(resized_ROI[0])
-                        temporary_array = resized_ROI_array.astype(np.uint8)  # No idea whatsoever why you have to do this
-                        prepeared_array = temporary_array.reshape(-1,400).astype(np.float32)
-                        _,result,neighbours,dist = knn.findNearest(prepeared_number,k=10)
-                        result_list_speed_signs.append(result)
-                        if (len(result_list_speed_signs) > take_median_of_speed_signs):
-                            result_list_speed_signs.pop(0)
-                        copy_result_list = list(result_list_speed_signs)
-                        copy_result_list.sort()
-                        speed_sign_value = copy_result_list.pop(int(len(copy_result_list)/2))[0][0]
+            green_circles = cv2.HoughCircles(green_mask,cv2.HOUGH_GRADIENT,1,15, param1=100,param2=10,minRadius=1,maxRadius=30)
+            yellow_circles = cv2.HoughCircles(yellow_mask,cv2.HOUGH_GRADIENT,1,15, param1=100,param2=7,minRadius=1,maxRadius=20)
+            red_circles = cv2.HoughCircles(red_mask,cv2.HOUGH_GRADIENT,1,15,param1=100,param2=10,minRadius=1,maxRadius=20)
 
-                        if(self.draw_rectangles):
-                            #draw rectangles
-                            cv2.rectangle(self.image_1, (sign_center_x-sign_radius,sign_center_y-sign_radius), (sign_center_x+sign_radius,sign_center_y+sign_radius), (0,0,155),3)
-                        if(self.write_type_of_objects):
-                            #write objects
-                            cv2.putText(self.image_1, "Speed limit: %d" % speed_sign_value, (sign_center_x-sign_radius,sign_center_y-sign_radius-7), font, font_size, (0,0,200),font_thickness)
-                        if(self.ok_to_send_messages):
-                            #Send message
-    #must make a better timing scheme!
-                            self.ok_to_send_messages = False
+            red_light_mask = cv2.inRange(self.hsv_image_1,np.array((0,0,240), dtype = "uint8"),np.array((255, 255, 255), dtype = "uint8"))
+            green_light_mask = cv2.inRange(self.hsv_image_1,np.array((0,0,50), dtype = "uint8"),np.array((70, 200, 255), dtype = "uint8"))
 
 
 
+            if (red_circles is not None and green_circles is not None):
+                for g_circ in range(0,len(green_circles[0,:])):
+                    for r_circ in range(0,len(red_circles[0,:])):
+                        if ( abs(red_circles[0,:][r_circ][0]-green_circles[0,:][g_circ][0]) < 10 and  abs(red_circles[0,:][r_circ][1]-green_circles[0,:][g_circ][1]) < 70):
+                            x_min = int(red_circles[0,:][r_circ][0] - red_circles[0,:][r_circ][2]*3)
+                            x_max = int(red_circles[0,:][r_circ][0] + red_circles[0,:][r_circ][2]*3)
+                            green_minus_red = abs(green_circles[0,:][g_circ][1]-red_circles[0,:][r_circ][1])
+                            y_min = int(red_circles[0,:][r_circ][1] + green_minus_red/2*(1-2))
+                            y_max = int(red_circles[0,:][r_circ][1] + green_minus_red/2*(1+2))
+                            #Finding which color is on
+                            if (yellow_circles is not None):
+                                for y_circ in range(0,len(yellow_circles[0,:])):
+                                    if (abs(yellow_circles[0,:][y_circ][0]-green_circles[0,:][g_circ][0]) < 10  and abs(yellow_circles[0,:][y_circ][1]-green_circles[0,:][g_circ][1]) < 40):
+                                        red_x = red_circles[0,:][r_circ][0]
+                                        red_y = red_circles[0,:][r_circ][1]
+                                        red_r = red_circles[0,:][r_circ][2] *0.50
+                                        
+                                        green_x = green_circles[0,:][g_circ][0]
+                                        green_y = green_circles[0,:][g_circ][1]
+                                        green_r = green_circles[0,:][g_circ][2] *0.50
+                                        
+                                        
+                                        
+                                        red_ROI = red_light_mask[int(red_y-red_r):int(red_y+red_r),int(red_x-red_r):int(red_x+red_r)]
+                                        green_ROI = green_light_mask[int(green_y-green_r):int(green_y+green_r),int(green_x-green_r):int(green_x+green_r)]
+                                        
+                                        red_rows,red_cols = red_ROI.shape
+                                        red_avg=0
+                                        for row in range(0,red_rows):
+                                            for col in range(0,red_cols):
+                                                red_avg = red_avg + red_ROI[row,col]
+                                        red_avg = red_avg/red_ROI.size
+                                        
+                                        green_rows,green_cols = green_ROI.shape
+                                        green_avg=0
+                                        for row in range(0,green_rows):
+                                            for col in range(0,green_cols):
+                                                green_avg = green_avg + green_ROI[row,col]
+                                        green_avg = green_avg/green_ROI.size
 
+                                        if(red_avg > 150):
+                                            traffic_light_value = 0 # 0 red, 1 yellow, 2 green
+                                            green_light_value = 255
+                                            red_light_value = 0
+                                        elif(green_avg > 100):
+                                            traffic_light_value = 2 # 0 red, 1 yellow, 2 green
+                                            green_light_value = 0
+                                            red_light_value = 255
+
+                                        if (self.draw_rectangles):
+                                            cv2.rectangle(self.image_1, (x_min,y_min), (x_max,y_max), (0,green_light_value,red_light_value),3)
+                                        if (write_type_of_objects):
+                                            cv2.putText(self.image_1, "Traffic light", (x_min,y_min-7), font, font_size, (0,green_light_value,red_light_value),font_thickness)
+                                        if (self.ok_to_send_messages):
+                                            # Here we send a message to stop the car. We have to ajust the parameter so that we enter this if at the correct distance.
+#must make a better timing scheme! sort over correct proportionality, and use distance between green and red circles(?)
+                                            self.ok_to_send_messages = False
 
 
 
