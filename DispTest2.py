@@ -4,10 +4,10 @@ import cv2
 import numpy as np
 import time
 
-cameraMatrix1 = np.savetxt('calibrationMatrices/cameraMatrix1_mat.txt')
-cameraMatrix2 = np.savetxt('calibrationMatrices/cameraMatrix2_mat.txt')
-distCoeffs1 = np.savetxt('calibrationMatrices/distCoeffs1_mat.txt')
-distCoeffs2 = np.savetxt('calibrationMatrices/distCoeffs2_mat.txt')
+cameraMatrix1 = np.loadtxt('calibrationMatrices/cameraMatrix1_mat.txt')
+cameraMatrix2 = np.loadtxt('calibrationMatrices/cameraMatrix2_mat.txt')
+distCoeffs1 = np.loadtxt('calibrationMatrices/distCoeffs1_mat.txt')
+distCoeffs2 = np.loadtxt('calibrationMatrices/distCoeffs2_mat.txt')
 R1 = np.loadtxt('calibrationMatrices/R1_mat.txt')
 R2 = np.loadtxt('calibrationMatrices/R2_mat.txt')
 P1 = np.loadtxt('calibrationMatrices/P1_mat.txt')
