@@ -12,6 +12,7 @@ rightImagePoints = []
 leftImagePoints = []
 
 for i in [1,2,3,4,5,6,11]:
+     print i
      right_image = cv2.imread("chess_images/chessboard_right_" + str(i) + ".png")
      left_image = cv2.imread("chess_images/chessboard_left_" + str(i) + ".png")
      right_gray = cv2.cvtColor(right_image, cv2.COLOR_BGR2GRAY)
