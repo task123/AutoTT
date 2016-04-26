@@ -6,9 +6,6 @@ Thanks to PhJulien for making his code avalible.
 import os
 from nanpy import ArduinoApi
 from nanpy import SerialManager
-from nanpy.arduinotree import ArduinoTree
-from nanpy.vcc import Vcc
-from nanpy.register import RegisterFeature
 import TCP
 import Motor
 import time
@@ -32,22 +29,7 @@ class Status:
 
         self.arduino.pinMode(self.pin_motor_battery, self.arduino.INPUT)
         self.arduino.pinMode(self.pin_raspberry_pi_battery, self.arduino.INPUT)
-        #self.arduino.analogReference(self.arduino.INTERNAL)
-        #selv.arduinoVcc = Vcc(RegisterFeature())
-        a = motors.connection
-        b = RegisterFeature(a)
-        print b
-        #c = b.vcc().read()
-        #print c 
-        
-        #b.vcc.read()
-    
-        """
-    
-        a = ArduinoTree()
-        print a
-        print a.vcc.read()
-        """
+
 
     def receive_message(self, type, message):
         if (type == "Status"):
