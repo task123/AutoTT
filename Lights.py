@@ -12,11 +12,9 @@ class Lights:
     indicator_blink_delay = 0.1
     # these variables might change
     headlight_pin = 9
-    tail_light_pin_1 = 15
-    tail_light_pin_2 = 1
-    tail_light_pin_3 = 4
-    right_indicator_pin  = 0
-    left_indicator_pin = 17
+    tail_light_pin = 17
+    right_indicator_pin = 2
+    left_indicator_pin = 16
     ##################################################
     # Values after this should not need to be changed.
     ##################################################
@@ -24,9 +22,7 @@ class Lights:
     self.arduino = motors.arduino
 
     self.arduino.pinMode(headlight_pin, self.arduino.OUTPUT)
-    self.arduino.pinMode(tail_light_pin_1, self.arduino.OUTPUT)
-    self.arduino.pinMode(tail_light_pin_2, self.arduino.OUTPUT)
-    self.arduino.pinMode(tail_light_pin_3, self.arduino.OUTPUT) 
+    self.arduino.pinMode(tail_light_pin, self.arduino.OUTPUT)
     self.arduino.pinMode(right_indicator_pin, self.arduino.OUTPUT)
     self.arduino.pinMode(left_indicator_pin, self.arduino.OUTPUT)
     
@@ -41,9 +37,7 @@ class Lights:
       self.arduino.analogWrite(headlight_pin, high_beam_value)
     else:
       self.arduino.analogWrite(headlight_pin, low_beam_value)
-    self.arduino.digitalWrite(tail_light_pin_1, 1)
-    self.arduino.digitalWrite(tail_light_pin_2, 1)
-    self.arduino.digitalWrite(tail_light_pin_3, 1)
+    self.arduino.digitalWrite(tail_light_pin, 1)
     
   def lights_off(self):
     self.is_lights_on = False
@@ -51,11 +45,7 @@ class Lights:
     self.is_right_indicator_on = False
     self.is_left_indicator_on = False
     self.arduino.analogWrite(headlight_pin, 0)
-    self.arduino.digitalWrite(tail_light_pin_1, 0)
-    self.arduino.digitalWrite(tail_light_pin_2, 0)
-    self.arduino.digitalWrite(tail_light_pin_3, 0)
-    self.arduino.digitalWrite(right_indicator_pin_2, 0)
-    self.arduino.digitalWrite(left_indicator_pin_3, 0)
+    self.arduino.digitalWrite(tail_light_pin, 0)
 
     
   def high_beam_on(self):
