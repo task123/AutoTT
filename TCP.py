@@ -77,6 +77,8 @@ class AutoTTCommunication:
                     self.mode_recv.receive_message(type, message)
                 elif (type == "ChosenMode" and self.mode_recv is not None):
                     print "chosen"
+                    print message
+                    print self.mode_recv
                     self.mode_recv.receive_message(type, message)
                 elif (type == "Status" and self.status_recv is not None):
                     self.status_recv.receive_message(type, message)
