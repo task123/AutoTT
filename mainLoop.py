@@ -23,7 +23,6 @@ try:
     modes = Steering.Modes(autoTTCommunication, steering)
     cameras = Cameras.Cameras(motors, autoTTCommunication, streaming_port = port + 1)
     status = Status.Status(autoTTCommunication, motors)
-    """
     fan_controller = Status.FanController(motors, status, autoTTCommunication)
     disconnect = TCP.Disconnect(autoTTCommunication, motors, cameras, fan_controller)
     autoTTCommunication.set_receivers(gyro_recv = steering, mode_recv = modes, status_recv = status, stop_cont_recv = steering, 
@@ -32,17 +31,14 @@ try:
     time.sleep(0.5) # wait for AutoTT iOS app to start the gyro class
     autoTTCommunication.start_gyro_with_update_intervall(1.0/60.0)
     modes.send_modes_and_info_modes()
-    """
     
     while True:
         time.sleep(0.3)
-        """
         if (not disconnect.good_connection):
             pid = os.getpid()
             file = open("pidMainLoop.txt", "w")
             file.write(str(pid))
             file.close()
-        """
 
 
 except:
