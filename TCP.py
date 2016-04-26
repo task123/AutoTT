@@ -72,11 +72,11 @@ class AutoTTCommunication:
                 elif (type == "MainView" and self.main_view_recv is not None):
                     self.main_view_recv.receive_message(type, message)
                 elif (type == "Modes" and self.mode_recv is not None):
-                    print "Modes"
                     self.mode_recv.receive_message(type, message)
                 elif (type == "InfoModes" and self.mode_recv is not None):
                     self.mode_recv.receive_message(type, message)
                 elif (type == "ChosenMode" and self.mode_recv is not None):
+                    print "chosen"
                     self.mode_recv.receive_message(type, message)
                 elif (type == "Status" and self.status_recv is not None):
                     self.status_recv.receive_message(type, message)
