@@ -39,10 +39,10 @@ cap = cv2.VideoCapture(0)
 
 #enter = raw_input("To take left picture, press enter.")
 _, imgL = cap.read()
-imgL = cv2.resize(imgL,(640,480))
+imgL = cv2.resize(imgL,(320,240))
 #enter = raw_input("To take right picture 2, press enter")
 _, imgR = cap.read()
-imgR = cv2.resize(imgR,(640,480))
+imgR = cv2.resize(imgR,(320,240))
 
 #window_size = 3
 min_disp = 16
@@ -68,7 +68,9 @@ imgL = cv2.cvtColor(imgL, cv2.COLOR_BGR2GRAY)
 imgR = cv2.cvtColor(imgR, cv2.COLOR_BGR2GRAY)
 disp = stereo.compute(imgL, imgR).astype(np.float32) / 16.0
 print disp
+np.savetxt('disp.txt',disp)
 
+"""
 points = cv2.reprojectImageTo3D(disp, Q)
 print points
 colors = imgL
@@ -78,4 +80,4 @@ out_colors = colors[mask]
     
 #cv2.imshow('left', imgL)
 cv2.imwrite('disparity.jpeg', (disp-min_disp)/num_disp)
-
+"""
