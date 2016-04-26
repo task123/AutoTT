@@ -77,6 +77,7 @@ points = cv2.reprojectImageTo3D(disp, Q)
 print points
 colors = imgL
 mask = disp > disp.min()
+cv2.imwrite('mask.jpg',mask)
 out_points = points[mask]
 out_colors = colors[mask]
     
