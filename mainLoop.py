@@ -3,10 +3,7 @@ import Motor
 import Steering
 import Status
 import time
-import os
-import sys
 import Cameras
-import subprocess
 
 port = 12345 
 
