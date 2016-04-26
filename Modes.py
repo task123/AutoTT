@@ -68,3 +68,13 @@ class Modes:
         self.autoTTCommunication.modes(self.list_of_modes)
         time.sleep(0.01) # wait to make sure AutoTT iOS app receive these as two seperate messages
         self.autoTTCommunication.info_modes(self.list_of_info_modes)
+        print "sendt"
+        time.sleep(0.1)
+        self.autoTTCommunication.modes(self.list_of_modes)
+        time.sleep(0.01) # wait to make sure AutoTT iOS app receive these as two seperate messages
+        self.autoTTCommunication.info_modes(self.list_of_info_modes)
+        print "sendt"
+        time.sleep(0.1)
+        self.autoTTCommunication.modes(self.list_of_modes)
+        time.sleep(0.01) # wait to make sure AutoTT iOS app receive these as two seperate messages
+        self.autoTTCommunication.info_modes(self.list_of_info_modes)
