@@ -244,6 +244,7 @@ class FollowLine:
     def stop(self):
         self.stopped = True
         self.arduino.digitalWrite(self.pin_photo_diode_power, 0)
+        self.motors.turn_off()
 
     def find_line(self, speed):
         self.find_line_thread = threading.Thread(target = self.find_line_loop, args=(speed,))
