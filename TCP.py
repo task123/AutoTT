@@ -94,12 +94,16 @@ class AutoTTCommunication:
                 elif (type == "VideoQuality" and self.video_recv is not None):
                     self.video_recv.receive_message(type, message)
                 elif (type == "LeftButtonTouchDown" and self.button_recv is not None):
+                    print "ld"
                     self.button_recv.receive_message(type, message)
                 elif (type == "RightButtonTouchDown" and self.button_recv is not None):
+                    print "rd"
                     self.button_recv.receive_message(type, message)
                 elif (type == "LeftButtonTouchUp" and self.button_recv is not None):
+                    print "lu"
                     self.button_recv.receive_message(type, message)
                 elif (type == "RightButtonTouchUp" and self.button_recv is not None):
+                    print "ru"
                     self.button_recv.receive_message(type, message)
                 message = next_message
             except:
