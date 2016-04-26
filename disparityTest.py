@@ -66,7 +66,7 @@ stereo = cv2.StereoSGBM_create(minDisparity = 0, numDisparities = 160, blockSize
 print('computing disparity...')
 imgL = cv2.cvtColor(imgL, cv2.COLOR_BGR2GRAY)
 imgR = cv2.cvtColor(imgR, cv2.COLOR_BGR2GRAY)
-disp = stereo.compute(imgL, imgR).astype(np.float32) / 16.0
+disp = stereo.compute(imgL, imgR) #.astype(np.float32) / 16.0
 print disp
 np.savetxt('disp.txt',disp)
 
