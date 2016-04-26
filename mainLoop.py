@@ -31,7 +31,7 @@ try:
     time.sleep(0.5) # wait for AutoTT iOS app to start the gyro class
     autoTTCommunication.start_gyro_with_update_intervall(1.0/60.0)
     modes.send_modes_and_info_modes()
-
+    
     while True:
         time.sleep(0.3)
         if (not disconnect.good_connection):
