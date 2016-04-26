@@ -37,10 +37,10 @@ time.sleep(3)
 
 cap = cv2.VideoCapture(0)
 
-enter = raw_input("To take left picture, press enter.")
+#enter = raw_input("To take left picture, press enter.")
 _, imgL = cap.read()
 imgL = cv2.resize(imgL,(640,480))
-enter = raw_input("To take right picture 2, press enter")
+#enter = raw_input("To take right picture 2, press enter")
 _, imgR = cap.read()
 imgR = cv2.resize(imgR,(640,480))
 
@@ -61,7 +61,7 @@ num_disp = 112-min_disp
     """
 #stereo = cv2.StereoBM(cv2.STEREO_BM_BASIC_PRESET,ndisparities=96, SADWindowSize=25)
 #stereo = cv2.StereoSGBM_create(numDisparities = 96, blockSize = 25 ) #blockSize must be odd
-stereo = cv2.StereoSGBM_create(minDisparity = 0, numDisparities = 16, blockSize = 5 )
+stereo = cv2.StereoSGBM_create(minDisparity = 0, numDisparities = 160, blockSize = 5 )
 
 print('computing disparity...')
 imgL = cv2.cvtColor(imgL, cv2.COLOR_BGR2GRAY)
