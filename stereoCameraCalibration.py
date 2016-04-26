@@ -12,7 +12,6 @@ rightImagePoints = []
 leftImagePoints = []
 
 for i in [1,2,3,4,5,6,11]:
-     print i
      right_image = cv2.imread("chess_images/chessboard_right_" + str(i) + ".png")
      left_image = cv2.imread("chess_images/chessboard_left_" + str(i) + ".png")
      right_gray = cv2.cvtColor(right_image, cv2.COLOR_BGR2GRAY)
@@ -28,10 +27,10 @@ for i in [1,2,3,4,5,6,11]:
      objectPoints = np.append(objectPoints, corner_points)
      objectPointsArray = np.asarray(objectPoints)
      
-    # print objectPoints
-    #    print rightImagePoints
-    #    print leftImagePoints
-    #    print right_image.shape[:2]
+    print len(objectPoints)
+    print len(rightImagePoints)
+    print len(leftImagePoints)
+    print right_image.shape[:2]
      cameraMatrix1 = np.empty(right_image.shape[:2])
      distCoeffs1= np.empty((4,4))
      cameraMatrix2= np.empty(right_image.shape[:2])
