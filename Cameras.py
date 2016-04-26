@@ -241,10 +241,10 @@ class Cameras:
     def get_write_type_of_objects(self):
         return self.write_type_of_objects
     
-    def set_ok_to_send_messages(self, ok_to_send_messages)
+    def set_ok_to_send_messages(self, ok_to_send_messages):
         self.ok_to_send_messages = ok_to_send_messages
 
-    def get_ok_to_send_messages(self)
+    def get_ok_to_send_messages(self):
         return self.ok_to_send_messages
 
     def detect_signs_and_lights(self):
