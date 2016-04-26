@@ -224,6 +224,7 @@ class FollowLine:
         self.previous_right_error = self.arduino.analogRead(self.pin_right_photo_diode) - self.target_value_right_photo_diode
  
     def follow_line_loop(self):
+        print "following line"
         while True:
             if (self.stopped):
                 self.motors.stop()
@@ -252,6 +253,7 @@ class FollowLine:
      
     def find_line_loop(self,speed):
         print speed
+        self.stopped = False
         self.motors.set_left_speed(speed)
         self.motors.set_right_speed(speed)
         print "speed set"
