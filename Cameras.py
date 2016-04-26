@@ -10,7 +10,7 @@ class Cameras:
     def __init__(self, motors, autoTTCommunication, streaming_port):
         # these values might change
         self.pin_battery_camera_1 = 13
-        self.pin_battery_camera_2 = 9
+        self.pin_battery_camera_2 = 8
         ##################################################
         # Values after this should not need to be changed.
         ##################################################
