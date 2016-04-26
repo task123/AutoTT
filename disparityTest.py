@@ -76,5 +76,5 @@ out_points = points[mask]
 out_colors = colors[mask]
     
 #cv2.imshow('left', imgL)
-cv2.imwrite('disparity', (disp-min_disp)/num_disp)
+cv2.imwrite('disparity.jpeg', (disp-min_disp)/num_disp)
 
