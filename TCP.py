@@ -76,6 +76,9 @@ class AutoTTCommunication:
                 elif (type == "InfoModes" and self.mode_recv is not None):
                     self.mode_recv.receive_message(type, message)
                 elif (type == "ChosenMode" and self.mode_recv is not None):
+                    print "chosen"
+                    print message
+                    print self.mode_recv
                     self.mode_recv.receive_message(type, message)
                 elif (type == "Status" and self.status_recv is not None):
                     self.status_recv.receive_message(type, message)
@@ -94,12 +97,16 @@ class AutoTTCommunication:
                 elif (type == "VideoQuality" and self.video_recv is not None):
                     self.video_recv.receive_message(type, message)
                 elif (type == "LeftButtonTouchDown" and self.button_recv is not None):
+                    print "ld"
                     self.button_recv.receive_message(type, message)
                 elif (type == "RightButtonTouchDown" and self.button_recv is not None):
+                    print "rd"
                     self.button_recv.receive_message(type, message)
                 elif (type == "LeftButtonTouchUp" and self.button_recv is not None):
+                    print "lu"
                     self.button_recv.receive_message(type, message)
                 elif (type == "RightButtonTouchUp" and self.button_recv is not None):
+                    print "ru"
                     self.button_recv.receive_message(type, message)
                 message = next_message
             except:
@@ -118,6 +125,7 @@ class AutoTTCommunication:
         self.send_message("Gyro", str(1.0/60.0))
 
     def buttons_on(self):
+        print "button"
         self.send_message("ButtonsOn", "")
 
     def buttons_off(self):

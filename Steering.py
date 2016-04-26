@@ -4,6 +4,7 @@ import math
 import time
 import os
 from nanpy import ArduinoApi
+import threading
 
 """React to gyroscopic and stop/continue data sendt from AutoTTCommunication and control a class 'motors', which steers the motors.
 Remember to start the gyro with autoTTCommunication.start_gyro_with_update_intervall(gyro_update_intervall)
@@ -27,6 +28,13 @@ class SteeringWithIOSGyro:
         self.stop = True
         if (autoTTCommunication != None):
             autoTTCommunication.start_gyro_with_update_intervall(gyro_update_intervall)
+        
+        self.light = None
+        self.is_button_indicator_on = False
+        self.is_left_indicator_on = False
+        self.is_right_indicator_on = False
+        self.is_high_beam_on = False
+
 
     def receive_message(self, type, message):
         if (type == "Gyro" and self.stop == False):
@@ -66,6 +74,54 @@ class SteeringWithIOSGyro:
             self.motors.stop()
         elif (type == "Continue"):
             self.stop = False
+        elif (self.is_button_indicators_on and type == "RightButtonTouchDown"):
+            print "right"
+            if (self.is_left_indicator_on):
+                self.is_left_indicator_on = False
+                if (self.is_high_beam_on):
+                    self.lights.high_beam_off()
+                else:
+                    self.lights.high_beam_on()
+                self.is_high_beam_on = not self.is_high_beam_on
+            else:
+                if (self.is_right_indicator_on):
+                    self.lights.right_indicator_off()
+                else:
+                    self.lights.right_indicator_on()
+                self.is_right_indicator_on = not self.is_right_indicator_on
+        elif (self.is_button_indicators_on and type == "LeftButtonTouchDown"):
+            print "left"
+            if (self.is_right_indicator_on):
+                self.is_right_indicator_on = False
+                if (self.is_high_beam_on):
+                    self.lights.high_beam_off()
+                else:
+                    self.lights.high_beam_on()
+                self.is_high_beam_on = not self.is_high_beam_on
+            else:
+                if (self.is_left_indicator_on):
+                    self.lights.left_indicator_off()
+                else:
+                    self.lights.left_indicator_on()
+                self.is_left_indicator_on = not self.is_left_indicator_on
+        elif (self.is_button_indicators_on and type == "RightButtonTouchUp"):
+            if (self.is_right_indicator_on):
+                self.is_right_indicator_on = False
+                self.lights.right_indicator_off()
+        elif (self.is_button_indicators_on and type == "LeftButtonTouchUp"):
+            if (self.is_left_indicator_on):
+                self.is_left_indicator_on = False
+                self.lights.left_indicator_off()
+            
+    def button_indicators_on(self, lights):
+        self.lights = lights
+        self.is_button_indicators_on = True
+        self.lights.on()
+        
+    def button_indicators_off(self):
+        self.is_button_indicators_on = False
+        if (self.lights != None):
+            self.light.off()
 
 """React to messages from AutoTTCommunication and control a class 'motors', which steers the motors.
     
@@ -114,23 +170,25 @@ class FollowLine:
     def __init__(self, motors, start_speed = 30):
         # these values might need to be adjusted
         self.proportional_term_in_PID = 1
-        self.derivative_term_in_PID = 1
-        self.target_value_left_photo_diode = 300
-        self.target_value_right_photo_diode = 500
+        self.derivative_term_in_PID = 0
+        self.left_photo_diode_found_line_value = 130
+        self.right_photo_diode_found_line_value = 250
+        self.target_value_left_photo_diode = 150
+        self.target_value_right_photo_diode = 270
         self.correction_interval = 0.01
         # these values might change
-        self.pin_photo_diode_power = 7
+        self.pin_photo_diode_power = 12
         self.pin_left_photo_diode = 18
         self.pin_right_photo_diode = 19
         ##################################################
         # Values after this should not need to be changed.
         ##################################################
-
+        
         self.motors = motors
         self.arduino = motors.arduino
         
         self.set_speed(start_speed)
-
+        
         self.new_left_speed = 0
         self.new_right_speed = 0
         self.left_error = 0
@@ -143,10 +201,9 @@ class FollowLine:
         self.arduino.pinMode(self.pin_photo_diode_power,self.arduino.OUTPUT)
         self.arduino.pinMode(self.pin_left_photo_diode, self.arduino.INPUT)
         self.arduino.pinMode(self.pin_right_photo_diode, self.arduino.INPUT)
-        
-        self.arduino.digitalWrite(self.pin_photo_diode_power, 0)
-        
-        self.find_line()
+       
+        self.arduino.digitalWrite(self.pin_photo_diode_power, 1)
+        self.find_line(start_speed)
         
     def start_following_line(self):
         self.follow_line_thread = threading.Thread(target = self.follow_line_loop)
@@ -165,6 +222,7 @@ class FollowLine:
         self.previous_right_error = self.arduino.analogRead(self.pin_right_photo_diode) - self.target_value_right_photo_diode
  
     def follow_line_loop(self):
+        print "following line"
         while True:
             if (self.stopped):
                 self.motors.stop()
@@ -186,51 +244,37 @@ class FollowLine:
     def stop(self):
         self.stopped = True
 
-    def find_line(self):
-        line_found = False
-        while not line_found:
-            self.arduino.analogRead(self.pin_left_photo_diode)
-            self.arduino.analogRead(self.pin_right_photo_diode)
+    def find_line(self, speed):
+        self.find_line_thread = threading.Thread(target = self.find_line_loop, args=(speed,))
+        self.find_line_thread.setDaemon(True)
+        self.find_line_thread.start()
+     
+    def find_line_loop(self,speed):
+        print speed
+        self.stopped = False
+        self.motors.set_left_speed(speed)
+        self.motors.set_right_speed(speed)
+        print "speed set"
+        line_found_left = False
+        line_found_right = False
+        while not line_found_left and not line_found_right:
+            if (self.arduino.analogRead(self.pin_left_photo_diode) < self.left_photo_diode_found_line_value):
+                line_found_left = True
+            elif (self.arduino.analogRead(self.pin_right_photo_diode) < self.right_photo_diode_found_line_value):
+                line_found_right = True
+            time.sleep(self.correction_interval)
+        print "Line found!"
+        while True:
+            if (line_found_left and self.arduino.analogRead(self.pin_left_photo_diode) > self.left_photo_diode_found_line_value):
+                self.start_following_line()
+                print "break"
+                break
+            elif (line_found_right and self.arduino.analogRead(self.pin_right_photo_diode) > self.right_photo_diode_found_line_value):
+                self.start_following_line()
+                print "break"
+                break
+            time.sleep(self.correction_interval)
+        
+            
 
 
-class Modes:
-    list_of_modes = ["Tilt Steering", "Tilt with AOA", "Button Steering", "Button with AOA", "Follow line", "Stop sign", "Traffic light", "Self steering"] # AOA - Automated Object Avoidence
-    
-    list_of_info_modes = ["Control the car by tilting your iOS device.", "Control the car by tilting your iOS device while AOA (Automated Object Avoidence) stops you from crashing into objects.", "Control the car by pushing the right and lift side of the screen.", "Control the car by pushing the right and left side of the screen while AOA (Automated Object Avoidence) stops you from crashing into objects.", "The car tries to follow a line on the ground and stops when objects blocks its way.", "The car tries to follow a line on the ground and stops for stop signs and objects blocking its way.", "The car tries to follow a line on the ground and stops for red traffic lights and objects blocking its way.", "The car tries to follow a line on the ground and stops for stop signs, red traffic lights and objects blocking its way."]
-    
-    def __init__(self, autoTTCommunication, steering):
-        self.autoTTCommunication = autoTTCommunication
-        self.steering = steering
-    
-    def receive_message(self, type, message):
-        if (type == "Modes"):
-            self.autoTTCommunication.modes(self.list_of_modes)
-        elif (type == "InfoModes"):
-            self.autoTTCommunication.info_modes(self.list_of_info_modes)
-        elif (type == "ChosenMode"):
-            if (message == "0"): # Tilt Steering
-                steering = SteeringWithIOSGyro(self.motors, self.autoTTCommunication)
-                autoTTCommunication.set_receivers(gyro_recv = steering, stop_cont_recv = steering)
-            elif (message == "1"): # Tilt with AOA
-                steering = SteeringWithIOSGyro(self.motors, self.autoTTCommunication)
-                autoTTCommunication.set_receivers(gyro_recv = steering, stop_cont_recv = steering)
-            elif (message == "2"): # Button Steering
-                steering = SteeringWithIOSButtons(self.motors, self.autoTTCommunication)
-                autoTTCommunication.set_receivers(gyro_recv = steering, stop_cont_recv = steering)
-            elif (message == "3"): # Button with AOA
-                steering = SteeringWithIOSButtons(self.motors, self.autoTTCommunication)
-                autoTTCommunication.set_receivers(gyro_recv = steering, stop_cont_recv = steering)
-            elif (message == "4"): # Follow line
-                steering
-            elif (message == "5"): # Stop sign
-                steering
-            elif (message == "6"): # Traffic light
-                steering
-            elif (message == "7"): # Self steering
-                steering
-
-    def send_modes_and_info_modes(self):
-        time.sleep(0.01)
-        self.autoTTCommunication.modes(self.list_of_modes)
-        time.sleep(0.01) # wait to make sure AutoTT iOS app receive these as two seperate messages
-        self.autoTTCommunication.info_modes(self.list_of_info_modes)

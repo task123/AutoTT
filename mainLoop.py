@@ -3,10 +3,10 @@ import Motor
 import Steering
 import Status
 import time
-import os
-import sys
 import Cameras
-import subprocess
+import Lights
+import Modes
+import os
 
 port = 12345 
 
@@ -19,8 +19,9 @@ try:
     motors = Motor.Motor(trip_meter)
     print "Ready to login"
     autoTTCommunication = TCP.AutoTTCommunication(port)
+    lights = Lights.Lights(motors)
     steering = Steering.SteeringWithIOSGyro(motors, autoTTCommunication = autoTTCommunication)
-    modes = Steering.Modes(autoTTCommunication, steering)
+    modes = Modes.Modes(autoTTCommunication, steering, lights)
     cameras = Cameras.Cameras(motors, autoTTCommunication, streaming_port = port + 1)
     status = Status.Status(autoTTCommunication, motors)
     fan_controller = Status.FanController(motors, status, autoTTCommunication)
@@ -31,7 +32,7 @@ try:
     time.sleep(0.5) # wait for AutoTT iOS app to start the gyro class
     autoTTCommunication.start_gyro_with_update_intervall(1.0/60.0)
     modes.send_modes_and_info_modes()
-
+    
     while True:
         time.sleep(0.3)
         if (not disconnect.good_connection):
