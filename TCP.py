@@ -168,12 +168,14 @@ class Disconnect:
                                          
     def receive_message(self, type, message):
         if (type == "Disconnect"):
+            print "Dis"
             self.disconnect()
         elif (type == "Shutdown"):
             self.disconnect()
             os.system("sudo shutdown now")
 
     def disconnect(self):
+        print "isc"
         self.motors.turn_off()
         self.cameras.turn_off()
         self.fan_controller.turn_off()
