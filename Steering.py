@@ -173,7 +173,7 @@ class FollowLine:
         self.derivative_term_in_PID = 0
         self.left_photo_diode_found_line_value = 70
         self.right_photo_diode_found_line_value = 140
-        self.target_value_left_photo_diode = 90
+        self.target_value_left_photo_diode = 100
         self.target_value_right_photo_diode = 160
         self.correction_interval = 0.01
         # these values might change
