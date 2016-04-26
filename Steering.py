@@ -244,6 +244,11 @@ class FollowLine:
         self.stopped = True
 
     def find_line(self, speed):
+        self.find_line_thread = threading.Thread(target = self.find_line_loop)
+        self.find_line_thread.setDaemon(True)
+        self.find_line_thread.start()
+     
+    def find_line_loop(self,speed):
         self.motors.set_left_speed(speed)
         self.motors.set_right_speed(speed)
         line_found_left = False
@@ -263,6 +268,7 @@ class FollowLine:
             elif (line_found_right and self.arduino.analogRead(self.pin_right_photo_diode) > self.right_photo_diode_found_line_value):
                 self.motors.set_right_speed(speed)
                 self.motors.set_left_speed(0)
+                break
             time.sleep(self.correction_interval)
         
             
