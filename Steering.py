@@ -4,6 +4,7 @@ import math
 import time
 import os
 from nanpy import ArduinoApi
+import threading
 
 """React to gyroscopic and stop/continue data sendt from AutoTTCommunication and control a class 'motors', which steers the motors.
 Remember to start the gyro with autoTTCommunication.start_gyro_with_update_intervall(gyro_update_intervall)
