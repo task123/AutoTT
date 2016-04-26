@@ -14,10 +14,15 @@ P1 = np.loadtxt('calibrationMatrices/P1_mat.txt')
 P2 = np.loadtxt('calibrationMatrices/P2_mat.txt')
 
 
+
+
 #enter = raw_input("To take left picture, press enter.")
 imgL = cv2.imread('left.jpeg')
 #enter = raw_input("To take right picture 2, press enter")
 imgR = cv2.imread('right.jpeg')
+
+right_maps = cv2.initUndistortRectifyMap(cameraMatrix1, distCoeffs1, R1, P1, (imgR.shape[0], imgR.shape[1]), cv2.CV_16SC2)
+left_maps = cv2.initUndistortRectifyMap(cameraMatrix2, distCoeffs2, R2, P2, (imgR.shape[0], imgR.shape[1]), cv2.CV_16SC2)
 
 #window_size = 3
 min_disp = 16
@@ -45,12 +50,14 @@ disp = stereo.compute(imgL, imgR).astype(np.float32) / 16.0
 print disp
 np.savetxt('disp.txt',disp)
 
+"""
 points = cv2.reprojectImageTo3D(disp, Q)
 print points
 colors = imgL
 mask = disp > disp.min()
 out_points = points[mask]
 out_colors = colors[mask]
+"""
 
 #cv2.imshow('left', imgL)
 cv2.imwrite('disparity.jpeg', (disp-min_disp)/num_disp)
