@@ -22,9 +22,9 @@ try:
     steering = Steering.SteeringWithIOSGyro(motors, autoTTCommunication = autoTTCommunication)
     modes = Steering.Modes(autoTTCommunication, steering)
     cameras = Cameras.Cameras(motors, autoTTCommunication, streaming_port = port + 1)
-    """
     status = Status.Status(autoTTCommunication, motors)
     fan_controller = Status.FanController(motors, status, autoTTCommunication)
+    """
     disconnect = TCP.Disconnect(autoTTCommunication, motors, cameras, fan_controller)
     autoTTCommunication.set_receivers(gyro_recv = steering, mode_recv = modes, status_recv = status, stop_cont_recv = steering, 
             disconnect_recv = disconnect, shut_down_recv = disconnect, 
