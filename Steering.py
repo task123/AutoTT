@@ -186,7 +186,7 @@ class FollowLine:
         self.motors = motors
         self.arduino = motors.arduino
         
-        self.set_speed(speed)
+        self.set_speed(start_speed)
         
         self.new_left_speed = 0
         self.new_right_speed = 0
