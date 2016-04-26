@@ -92,7 +92,7 @@ class Motor:
         self.pin_right_backward = 11
         self.pin_left_forward = 5
         self.pin_left_backward = 10
-        self.pin_motor_battery = 8
+        self.pin_motor_battery = 7
         ##################################################
         # Values after this should not need to be changed.
         ##################################################
