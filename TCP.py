@@ -178,5 +178,4 @@ class Disconnect:
         self.cameras.turn_off()
         self.fan_controller.turn_off()
         self.good_connection = False
-        print self.good_connection
         self.autoTTCommunication.close()
