@@ -30,14 +30,14 @@ class Modes:
         elif (type == "InfoModes"):
             self.autoTTCommunication.info_modes(self.list_of_info_modes)
         elif (type == "ChosenMode"):
-            print "cm"
+            print type(message)
             if (message == "0"): # Tilt Steering
                 steering = SteeringWithIOSGyro(self.motors, self.autoTTCommunication)
                 autoTTCommunication.set_receivers(gyro_recv = steering, stop_cont_recv = steering, button_recv = None)
                 steering.lights_off()
                 autoTTCommunication.buttons_off()
             elif (message == "1"): # Tilt, Lights
-                print "mode"
+                print "yess"
                 steering = SteeringWithIOSGyro(self.motors, self.autoTTCommunication)
                 autoTTCommunication.set_receivers(gyro_recv = steering, stop_cont_recv = steering, button_recv = steering)
                 steering.lights_on(lights)
@@ -61,8 +61,7 @@ class Modes:
                 steering
 
     def send_modes_and_info_modes(self):
-        print "send"
-        time.sleep(0.01)
+        time.sleep(0.1)
         self.autoTTCommunication.modes(self.list_of_modes)
         time.sleep(0.01) # wait to make sure AutoTT iOS app receive these as two seperate messages
         self.autoTTCommunication.info_modes(self.list_of_info_modes)
