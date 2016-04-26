@@ -34,7 +34,8 @@ try:
     
     while True:
         time.sleep(0.3)
-        if (not disconnect.good_connection):
+        if (not disconnect.good_connection
+            print "hei"
             pid = os.getpid()
             file = open("pidMainLoop.txt", "w")
             file.write(str(pid))
