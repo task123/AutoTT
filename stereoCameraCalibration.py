@@ -35,7 +35,7 @@ for i in [1,2,3,4,5,6,11]:
      distCoeffs1= np.empty((4,4))
      cameraMatrix2= np.empty(right_image.shape[:2])
      distCoeffs2= np.empty((4,4))
-     retval, cameraMatrix1, distCoeffs1, cameraMatrix2, distCoeffs2, R, T, E, F = cv2.stereoCalibrate(objectPointsArray, rightImagePoints, leftImagePoints, cameraMatrix1,distCoeffs1, cameraMatrix2, distCoeffs2, right_image.shape[:2], flags=cv2.CALIB_SAME_FOCAL_LENGTH)
+     retval, cameraMatrix1, distCoeffs1, cameraMatrix2, distCoeffs2, R, T, E, F = cv2.stereoCalibrate(objectPointsArray, rightImagePoints, leftImagePoints, cameraMatrix1,distCoeffs1, cameraMatrix2, distCoeffs2, right_image.shape[:2], flags=[cv2.CALIB_SAME_FOCAL_LENGTH, cv2.CALIB_ZERO_TANGENT_DIST])
      R1 = []
      R2 = []
      P1 = []
