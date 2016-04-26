@@ -13,8 +13,8 @@ class Lights:
     # these variables might change
     headlight_pin = 9
     tail_light_pin_1 = 15
-    tail_light_pin_2 = 4
-    tail_light_pin_3 = 
+    tail_light_pin_2 = 1
+    tail_light_pin_3 = 4
     right_indicator_pin  = 0
     left_indicator_pin = 17
     ##################################################
