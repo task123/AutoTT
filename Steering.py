@@ -169,10 +169,10 @@ The car must start off the line, such that it will cross it when driving straigh
 class FollowLine:
     def __init__(self, motors, start_speed = 30):
         # these values might need to be adjusted
-        self.proportional_term_in_PID = 0.5
+        self.proportional_term_in_PID = 0.01
         self.derivative_term_in_PID = 0
-        self.left_photo_diode_found_line_value = 100
-        self.right_photo_diode_found_line_value = 170
+        self.left_photo_diode_found_line_value = 70
+        self.right_photo_diode_found_line_value = 140
         self.target_value_left_photo_diode = 100
         self.target_value_right_photo_diode = 170
         self.correction_interval = 0.01
@@ -262,8 +262,10 @@ class FollowLine:
         while not line_found_left and not line_found_right:
             if (self.arduino.analogRead(self.pin_left_photo_diode) < self.left_photo_diode_found_line_value):
                 line_found_left = True
+                print "left diode triggered low"
             elif (self.arduino.analogRead(self.pin_right_photo_diode) < self.right_photo_diode_found_line_value):
                 line_found_right = True
+                print "right diode triggered low"
             time.sleep(self.correction_interval)
         print "Line found!"
         while True:
