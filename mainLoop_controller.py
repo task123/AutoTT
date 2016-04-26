@@ -12,7 +12,8 @@ subprocess.Popen([sys.executable, "mainLoop.py"])
 while True:
   file = open("pidMainLoop.txt")
   pid = file.readline()
-  print ord(pid)
+  print len(pid)
+  print pid == ''
   file.close()
   if (pid != '\n' and pid != ''):
     print "kill"
