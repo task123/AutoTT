@@ -290,7 +290,7 @@ class Cameras:
         take_median_of_speed_signs = 15
         result_list_speed_signs = []
         if(self.look_for_speed_sign):
-            if (!self.knn_initialized):
+            if (not self.knn_initialized):
                 with np.load('knn_data.npz') as data:
                     train = data['train']
                     train_labels = data['train_labels']
