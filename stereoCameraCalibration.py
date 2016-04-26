@@ -37,13 +37,17 @@ distCoeffs1= np.empty((4,4))
 cameraMatrix2= np.empty(right_image.shape[:2])
 distCoeffs2= np.empty((4,4))
 retval, cameraMatrix1, distCoeffs1, cameraMatrix2, distCoeffs2, R, T, E, F = cv2.stereoCalibrate(objectPoints, rightImagePoints, leftImagePoints, cameraMatrix1,distCoeffs1, cameraMatrix2, distCoeffs2, right_image.shape[:2], flags=cv2.CALIB_SAME_FOCAL_LENGTH | cv2.CALIB_ZERO_TANGENT_DIST)
+
 R1 = np.empty((3,3))
 R2 = np.empty((3,3))
 P1 = np.empty((3,4))
 P2 = np.empty((3,4))
 Q = np.empty((4,4))
-print right_image.shape[0]
-(roi1, roi2, test1, test2,test3,test4,test5) = cv2.stereoRectify(cameraMatrix1, distCoeffs1, cameraMatrix2, distCoeffs2, (right_image.shape[0], right_image.shape[1]), R, T, R1, R2, P1, P2, Q=Q, flags=cv2.CALIB_ZERO_DISPARITY, alpha=-1, newImageSize=(0,0))
+(R1, R2, P1, P2, Q, roi1, roi2) = cv2.stereoRectify(cameraMatrix1, distCoeffs1, cameraMatrix2, distCoeffs2, (right_image.shape[0], right_image.shape[1]), R, T, R1, R2, P1, P2, Q=Q, flags=cv2.CALIB_ZERO_DISPARITY, alpha=-1, newImageSize=(0,0))
+
+right_maps = cv2.initUndistortRectifyMap(cameraMatrix1, distCoeffs1, R1, P1, (right_image.shape[0], left_image.shape[1]), cv2.CV_16SC2)
+
+
 print "roi1" 
 print roi1
 print "roi2"
