@@ -11,20 +11,20 @@ Q = np.loadtxt('Q_mat.txt')
 try:
     connection = SerialManager(device='/dev/ttyACM2')
     arduino = ArduinoApi(connection=connection)
+except:
+    try:
+        connection = SerialManager(device='/dev/ttyACM0')
+        arduino = ArduinoApi(connection=connection)
+    except:
+        try:
+            connection = SerialManager(device='/dev/ttyACM1')
+            arduino = ArduinoApi(connection=connection)
         except:
             try:
-                connection = SerialManager(device='/dev/ttyACM0')
+                connection = SerialManager(device='/dev/ttyACM3')
                 arduino = ArduinoApi(connection=connection)
             except:
-                try:
-                    connection = SerialManager(device='/dev/ttyACM1')
-                    arduino = ArduinoApi(connection=connection)
-                except:
-                    try:
-                        connection = SerialManager(device='/dev/ttyACM3')
-                        arduino = ArduinoApi(connection=connection)
-                    except:
-                        print "Could not connect to the arduino using /dev/ttyACM0, /dev/ttyACM1, /dev/ttyACM2 or /dev/ttyACM3"
+                print "Could not connect to the arduino using /dev/ttyACM0, /dev/ttyACM1, /dev/ttyACM2 or /dev/ttyACM3"
 
 arduino.pinMode(13, arduino.OUTPUT)
 arduino.pinMode(8, arduino.OUTPUT)
