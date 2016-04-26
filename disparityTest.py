@@ -35,8 +35,8 @@ time.sleep(3)
 
 
 
-cap1 = cv2.VideoCapture(0)
-cap2 = cv2.VideoCapture(1)
+cap1 = cv2.VideoCapture(1)
+cap2 = cv2.VideoCapture(0)
 
 #enter = raw_input("To take left picture, press enter.")
 _, imgL = cap1.read()
