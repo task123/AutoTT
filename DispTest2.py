@@ -30,7 +30,7 @@ imgR = cv2.remap(imgR, right_maps[0], right_maps[1], cv2.INTER_LANCZOS4)
 #window_size = 3
 minDisparity = 16
 numDisparities = 96
-blockSize
+blockSize = 5
 
 """
     stereo = cv2.StereoSGBM_create(minDisparity = min_disp,
