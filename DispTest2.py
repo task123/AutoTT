@@ -4,8 +4,14 @@ import cv2
 import numpy as np
 import time
 
-
-Q = np.loadtxt('Q_mat.txt')
+cameraMatrix1 = np.savetxt('calibrationMatrices/cameraMatrix1_mat.txt')
+cameraMatrix2 = np.savetxt('calibrationMatrices/cameraMatrix2_mat.txt')
+distCoeffs1 = np.savetxt('calibrationMatrices/distCoeffs1_mat.txt')
+distCoeffs2 = np.savetxt('calibrationMatrices/distCoeffs2_mat.txt')
+R1 = np.loadtxt('calibrationMatrices/R1_mat.txt')
+R2 = np.loadtxt('calibrationMatrices/R2_mat.txt')
+P1 = np.loadtxt('calibrationMatrices/P1_mat.txt')
+P2 = np.loadtxt('calibrationMatrices/P2_mat.txt')
 
 
 #enter = raw_input("To take left picture, press enter.")
