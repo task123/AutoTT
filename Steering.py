@@ -174,7 +174,7 @@ class FollowLine:
         self.left_photo_diode_found_line_value = 130
         self.right_photo_diode_found_line_value = 250
         self.target_value_left_photo_diode = 100
-        self.target_value_right_photo_diode = 220
+        self.target_value_right_photo_diode = 170
         self.correction_interval = 0.01
         # these values might change
         self.pin_photo_diode_power = 12
