@@ -169,23 +169,25 @@ class FollowLine:
     def __init__(self, motors, start_speed = 30):
         # these values might need to be adjusted
         self.proportional_term_in_PID = 1
-        self.derivative_term_in_PID = 1
-        self.target_value_left_photo_diode = 300
-        self.target_value_right_photo_diode = 500
+        self.derivative_term_in_PID = 0
+        self.left_photo_diode_found_line_value = 130
+        self.right_photo_diode_found_line_value = 250
+        self.target_value_left_photo_diode = 150
+        self.target_value_right_photo_diode = 270
         self.correction_interval = 0.01
         # these values might change
-        self.pin_photo_diode_power = 7
+        self.pin_photo_diode_power = 12
         self.pin_left_photo_diode = 18
         self.pin_right_photo_diode = 19
         ##################################################
         # Values after this should not need to be changed.
         ##################################################
-
+        
         self.motors = motors
         self.arduino = motors.arduino
         
-        self.set_speed(start_speed)
-
+        self.set_speed(speed)
+        
         self.new_left_speed = 0
         self.new_right_speed = 0
         self.left_error = 0
@@ -201,7 +203,7 @@ class FollowLine:
         
         self.arduino.digitalWrite(self.pin_photo_diode_power, 0)
         
-        self.find_line()
+        self.find_line(start_speed)
         
     def start_following_line(self):
         self.follow_line_thread = threading.Thread(target = self.follow_line_loop)
@@ -241,10 +243,28 @@ class FollowLine:
     def stop(self):
         self.stopped = True
 
-    def find_line(self):
-        line_found = False
-        while not line_found:
-            self.arduino.analogRead(self.pin_left_photo_diode)
-            self.arduino.analogRead(self.pin_right_photo_diode)
+    def find_line(self, speed):
+        self.motors.set_left_speed(speed)
+        self.motors.set_right_speed(speed)
+        line_found_left = False
+        line_found_right = False
+        while not line_found_left and not line_found_right:
+            if (self.arduino.analogRead(self.pin_left_photo_diode) < self.left_photo_diode_found_line_value):
+                line_found_left = True
+            elif (self.arduino.analogRead(self.pin_right_photo_diode) < self.right_photo_diode_found_line_value):
+                line_found_right = True
+            time.sleep(self.correction_interval)
+        while True:
+            if (line_found_left and self.arduino.analogRead(self.pin_left_photo_diode) > self.left_photo_diode_found_line_value):
+                self.motors.set_left_speed(speed)
+                self.motors.set_right_speed(0)
+                self.start_following_line()
+                break
+            elif (line_found_right and self.arduino.analogRead(self.pin_right_photo_diode) > self.right_photo_diode_found_line_value):
+                self.motors.set_right_speed(speed)
+                self.motors.set_left_speed(0)
+            time.sleep(self.correction_interval)
+        
+            
 
 
