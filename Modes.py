@@ -31,7 +31,7 @@ class Modes:
         if (type == "Modes"):
             self.autoTTCommunication.modes(self.list_of_modes)
         elif (type == "InfoModes"):
-            self.autoTTCommunication.info_modes(self.list_of_info_modes)
+            self.autoTTCommunication.info_modes(self.list_of_info_modes, int(message))
         elif (type == "ChosenMode"):
             if (message == " 0"): # Tilt Steering
                 steering = SteeringWithIOSGyro(self.motors, self.autoTTCommunication)
