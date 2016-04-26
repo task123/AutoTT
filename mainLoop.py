@@ -38,11 +38,17 @@ try:
         if (not disconnect.good_connection):
             print "hei"
             pid = os.getpid()
+            print "1"
             file = open("pidMainLoop.txt", "w")
+            print "2"
             file.write(str(pid))
+            print "3"
             file.close()
+            print "4"
             file = open("pidMainLoop.txt")
+            print "5"
             line = file.readline()
+            print "6"
             if (line != ''):
                 print "file"
             print line
