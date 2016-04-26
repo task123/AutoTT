@@ -5,6 +5,7 @@ import Status
 import time
 import Cameras
 import Lights
+import Modes
 
 port = 12345 
 
@@ -19,7 +20,7 @@ try:
     autoTTCommunication = TCP.AutoTTCommunication(port)
     lights = Lights.Lights(motors)
     steering = Steering.SteeringWithIOSGyro(motors, autoTTCommunication = autoTTCommunication)
-    modes = Steering.Modes(autoTTCommunication, steering, lights)
+    modes = Modes.Modes(autoTTCommunication, steering, lights)
     cameras = Cameras.Cameras(motors, autoTTCommunication, streaming_port = port + 1)
     status = Status.Status(autoTTCommunication, motors)
     fan_controller = Status.FanController(motors, status, autoTTCommunication)
