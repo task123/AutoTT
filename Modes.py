@@ -24,11 +24,13 @@ class Modes:
         self.lights = lights
     
     def receive_message(self, type, message):
+        print "mode " + message
         if (type == "Modes"):
             self.autoTTCommunication.modes(self.list_of_modes)
         elif (type == "InfoModes"):
             self.autoTTCommunication.info_modes(self.list_of_info_modes)
         elif (type == "ChosenMode"):
+            print "cm"
             if (message == "0"): # Tilt Steering
                 steering = SteeringWithIOSGyro(self.motors, self.autoTTCommunication)
                 autoTTCommunication.set_receivers(gyro_recv = steering, stop_cont_recv = steering, button_recv = None)
