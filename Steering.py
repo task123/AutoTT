@@ -250,8 +250,10 @@ class FollowLine:
         self.find_line_thread.start()
      
     def find_line_loop(self,speed):
+        print speed
         self.motors.set_left_speed(speed)
         self.motors.set_right_speed(speed)
+        print "speed set"
         line_found_left = False
         line_found_right = False
         while not line_found_left and not line_found_right:
