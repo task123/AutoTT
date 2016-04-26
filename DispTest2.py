@@ -63,4 +63,5 @@ out_colors = colors[mask]
 """
 
 #cv2.imshow('left', imgL)
-cv2.imwrite('disparity.jpeg', (disp-min_disp)/num_disp)
+print (disp-min_disp)/num_disp * 255
+cv2.imwrite('disparity.jpeg', (disp-min_disp)/num_disp * 255)
