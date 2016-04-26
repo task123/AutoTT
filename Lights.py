@@ -8,8 +8,8 @@ class Lights:
     # these variables might need to be adjusted
     self.low_beam_value = 5
     self.high_beam_value = 400
-    self.indicator_blink_time = 0.1
-    self.indicator_blink_delay = 0.1
+    self.indicator_blink_time = 0.3
+    self.indicator_blink_delay = 0.3
     # these variables might change
     self.headlight_pin = 9
     self.tail_light_pin = 17
@@ -31,7 +31,7 @@ class Lights:
     self.is_right_indicator_on = False
     self.is_left_indicator_on = False
 
-  def lights_on(self):
+  def on(self):
     self.is_lights_on = True
     if (self.is_high_beam_on):
       self.arduino.analogWrite(self.headlight_pin, self.high_beam_value)
@@ -39,7 +39,7 @@ class Lights:
       self.arduino.analogWrite(self.headlight_pin, self.low_beam_value)
     self.arduino.digitalWrite(self.tail_light_pin, 1)
     
-  def lights_off(self):
+  def off(self):
     self.is_lights_on = False
     self.is_high_beam_on = False
     self.is_right_indicator_on = False
