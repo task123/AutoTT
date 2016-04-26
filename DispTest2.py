@@ -28,8 +28,10 @@ imgL = cv2.remap(imgL, left_maps[0], left_maps[1], cv2.INTER_LANCZOS4)
 imgR = cv2.remap(imgR, right_maps[0], right_maps[1], cv2.INTER_LANCZOS4)
 
 #window_size = 3
-min_disp = 16
-num_disp = 112-min_disp
+minDisparity = 16
+numDisparities = 96
+blockSize
+
 """
     stereo = cv2.StereoSGBM_create(minDisparity = min_disp,
     numDisparities = num_disp,
@@ -44,7 +46,7 @@ num_disp = 112-min_disp
     """
 #stereo = cv2.StereoBM(cv2.STEREO_BM_BASIC_PRESET,ndisparities=96, SADWindowSize=25)
 #stereo = cv2.StereoSGBM_create(numDisparities = 96, blockSize = 25 ) #blockSize must be odd
-stereo = cv2.StereoSGBM_create(minDisparity = 0, numDisparities = 16, blockSize = 5 )
+stereo = cv2.StereoSGBM_create(minDisparity = 0, numDisparities = numDisparities, blockSize = blockSize )
 
 print('computing disparity...')
 imgL = cv2.cvtColor(imgL, cv2.COLOR_BGR2GRAY)
@@ -63,5 +65,5 @@ out_colors = colors[mask]
 """
 
 #cv2.imshow('left', imgL)
-print (disp-min_disp)/num_disp * 255
-cv2.imwrite('disparity.jpeg', (disp-min_disp)/num_disp * 255)
+print (disp-minDisparity)/numDisparities * 255
+cv2.imwrite('disparity.jpeg', (disp-minDisparity)/numDisparities * 255)
