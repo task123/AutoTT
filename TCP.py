@@ -125,6 +125,7 @@ class AutoTTCommunication:
         self.send_message("Gyro", str(1.0/60.0))
 
     def buttons_on(self):
+        print "button"
         self.send_message("ButtonsOn", "")
 
     def buttons_off(self):
