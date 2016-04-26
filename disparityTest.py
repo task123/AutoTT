@@ -2,8 +2,36 @@
 
 import cv2
 import numpy as np
+import time
+from nanpy import ArduinoApi
+from nanpy import SerialManager
 
 Q = np.loadtxt('Q_mat.txt')
+
+try:
+    connection = SerialManager(device='/dev/ttyACM2')
+    arduino = ArduinoApi(connection=connection)
+        except:
+            try:
+                connection = SerialManager(device='/dev/ttyACM0')
+                arduino = ArduinoApi(connection=connection)
+            except:
+                try:
+                    connection = SerialManager(device='/dev/ttyACM1')
+                    arduino = ArduinoApi(connection=connection)
+                except:
+                    try:
+                        connection = SerialManager(device='/dev/ttyACM3')
+                        arduino = ArduinoApi(connection=connection)
+                    except:
+                        print "Could not connect to the arduino using /dev/ttyACM0, /dev/ttyACM1, /dev/ttyACM2 or /dev/ttyACM3"
+
+arduino.pinMode(13, arduino.OUTPUT)
+arduino.pinMode(8, arduino.OUTPUT)
+arduino.digitalWrite(13,1)
+arduino.digitalWrite(8,0)
+
+time.sleep(3)
 
 
 
@@ -40,11 +68,12 @@ imgR = cv2.cvtColor(imgR, cv2.COLOR_BGR2GRAY)
 disp = stereo.compute(imgL, imgR).astype(np.float32) / 16.0
 
 points = cv2.reprojectImageTo3D(disp, Q)
+print points
 colors = imgL
 mask = disp > disp.min()
 out_points = points[mask]
 out_colors = colors[mask]
     
-cv2.imshow('left', imgL)
-cv2.imshow('disparity', (disp-min_disp)/num_disp)
+#cv2.imshow('left', imgL)
+cv2.imwrite('disparity', (disp-min_disp)/num_disp)
 
