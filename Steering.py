@@ -74,6 +74,7 @@ class SteeringWithIOSGyro:
         elif (type == "Continue"):
             self.stop = False
         elif (self.is_button_indicators_on and type == "RightButtonTouchDown"):
+            print "right"
             if (self.is_left_indicator_on):
                 self.is_left_indicator_on = False
                 if (self.is_high_beam_on):
@@ -88,6 +89,7 @@ class SteeringWithIOSGyro:
                     self.lights.right_indicator_on()
                 self.is_right_indicator_on = not self.is_right_indicator_on
         elif (self.is_button_indicators_on and type == "LeftButtonTouchDown"):
+            print "left"
             if (self.is_right_indicator_on):
                 self.is_right_indicator_on = False
                 if (self.is_high_beam_on):
