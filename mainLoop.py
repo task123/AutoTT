@@ -17,9 +17,9 @@ try:
     motors = Motor.Motor(trip_meter)
     print "Ready to login"
     autoTTCommunication = TCP.AutoTTCommunication(port)
-    steering = Steering.SteeringWithIOSGyro(motors, autoTTCommunication = autoTTCommunication)
-    modes = Steering.Modes(autoTTCommunication, steering)
     lights = Lights.Lights(motors)
+    steering = Steering.SteeringWithIOSGyro(motors, autoTTCommunication = autoTTCommunication)
+    modes = Steering.Modes(autoTTCommunication, steering, lights)
     cameras = Cameras.Cameras(motors, autoTTCommunication, streaming_port = port + 1)
     status = Status.Status(autoTTCommunication, motors)
     fan_controller = Status.FanController(motors, status, autoTTCommunication)
