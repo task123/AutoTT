@@ -40,6 +40,8 @@ try:
             file = open("pidMainLoop.txt", "w")
             file.write(str(pid))
             file.close()
+            file = open("pidMainLoop.txt")
+            print file.readline() == ''
 
 
 except:
