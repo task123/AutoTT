@@ -24,6 +24,9 @@ imgR = cv2.imread('right.jpeg')
 right_maps = cv2.initUndistortRectifyMap(cameraMatrix1, distCoeffs1, R1, P1, (imgR.shape[0], imgR.shape[1]), cv2.CV_16SC2)
 left_maps = cv2.initUndistortRectifyMap(cameraMatrix2, distCoeffs2, R2, P2, (imgR.shape[0], imgR.shape[1]), cv2.CV_16SC2)
 
+imgL = cv2.remap(imgL, left_maps[0], left_maps[1], cv2.INTER_LANCZOS4)
+imgR = cv2.remap(imgR, right_maps[0], right_maps[1], cv2.INTER_LANCZOS4)
+
 #window_size = 3
 min_disp = 16
 num_disp = 112-min_disp
