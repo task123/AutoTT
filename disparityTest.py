@@ -35,13 +35,14 @@ time.sleep(3)
 
 
 
-cap = cv2.VideoCapture(0)
+cap1 = cv2.VideoCapture(0)
+cap2 = cv2.VideoCapture(1)
 
 #enter = raw_input("To take left picture, press enter.")
-_, imgL = cap.read()
+_, imgL = cap1.read()
 imgL = cv2.resize(imgL,(320,240))
 #enter = raw_input("To take right picture 2, press enter")
-_, imgR = cap.read()
+_, imgR = cap2.read()
 imgR = cv2.resize(imgR,(320,240))
 
 #window_size = 3
