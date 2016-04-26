@@ -171,8 +171,8 @@ class FollowLine:
         # these values might need to be adjusted
         self.proportional_term_in_PID = 0.5
         self.derivative_term_in_PID = 0
-        self.left_photo_diode_found_line_value = 130
-        self.right_photo_diode_found_line_value = 250
+        self.left_photo_diode_found_line_value = 100
+        self.right_photo_diode_found_line_value = 170
         self.target_value_left_photo_diode = 100
         self.target_value_right_photo_diode = 170
         self.correction_interval = 0.01
