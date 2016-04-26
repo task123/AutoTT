@@ -17,3 +17,4 @@ try:
     time.sleep(10)
 except:
   motors.turn_off()
+  follow_line.stop()
