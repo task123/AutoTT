@@ -139,13 +139,8 @@ class AutoTTCommunication:
             message = message[:-1]
         self.send_message("Modes", message)
 
-    def info_modes(self, list_of_info_modes):
-        message = ""
-        for info_mode in list_of_info_modes:
-            message = message + info_mode + ";"
-        if (len(message) > 0):
-            message = message[:-1]
-        self.send_message("InfoModes", message)
+    def info_modes(self, list_of_info_modes, chosen_info_number):
+        self.send_message("InfoModes", list_of_info_modes[chosen_info_number])
 
     def status(self, list_of_status):
         message = ""
