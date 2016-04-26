@@ -48,6 +48,8 @@ Q = np.empty((4,4))
 right_maps = cv2.initUndistortRectifyMap(cameraMatrix1, distCoeffs1, R1, P1, (right_image.shape[0], right_image.shape[1]), cv2.CV_16SC2)
 left_maps = cv2.initUndistortRectifyMap(cameraMatrix2, distCoeffs2, R2, P2, (right_image.shape[0], right_image.shape[1]), cv2.CV_16SC2)
 
+np.savetxt('right_maps.txt', right_maps)
+
 print right_maps
 
 print right_maps[0]
