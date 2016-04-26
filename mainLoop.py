@@ -41,7 +41,9 @@ try:
             file.write(str(pid))
             file.close()
             file = open("pidMainLoop.txt")
-            print file.readline() == ''
+            if (file.readline() == ''):
+                print "file"
+            file.close()
 
 
 except:
