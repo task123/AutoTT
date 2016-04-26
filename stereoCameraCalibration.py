@@ -45,21 +45,17 @@ P2 = np.empty((3,4))
 Q = np.empty((4,4))
 (R1, R2, P1, P2, Q, roi1, roi2) = cv2.stereoRectify(cameraMatrix1, distCoeffs1, cameraMatrix2, distCoeffs2, (right_image.shape[0], right_image.shape[1]), R, T, R1, R2, P1, P2, Q=Q, flags=cv2.CALIB_ZERO_DISPARITY, alpha=-1, newImageSize=(0,0))
 
-right_maps = cv2.initUndistortRectifyMap(cameraMatrix1, distCoeffs1, R1, P1, (right_image.shape[0], left_image.shape[1]), cv2.CV_16SC2)
+right_maps = cv2.initUndistortRectifyMap(cameraMatrix1, distCoeffs1, R1, P1, (right_image.shape[0], right_image.shape[1]), cv2.CV_16SC2)
+left_maps = cv2.initUndistortRectifyMap(cameraMatrix2, distCoeffs2, R2, P2, (right_image.shape[0], right_image.shape[1]), cv2.CV_16SC2)
 
+print right_maps
 
-print "roi1" 
-print roi1
-print "roi2"
-print roi2
-print"test 1"
-print test1
-print"test 2"
-print test2
-print"test 3"
-print test3
-print"test 4"
-print test4
-print"test 5"
-print test5
+print right_maps[0]
+
+"""
+np.savetxt('R1_mat.txt',R1)
+np.savetxt('R2_mat.txt',R2)
+np.savetxt('P1_mat.txt',P1)
+np.savetxt('P2_mat.txt',P2)
+"""
 np.savetxt('Q_mat.txt',Q)
