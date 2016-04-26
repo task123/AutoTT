@@ -204,6 +204,7 @@ class FollowLine:
         
         self.arduino.digitalWrite(self.pin_photo_diode_power, 0)
         
+        self.arduino.digitalWrite(12,1)
         self.find_line(start_speed)
         
     def start_following_line(self):
