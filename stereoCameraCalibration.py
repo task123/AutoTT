@@ -27,10 +27,10 @@ for i in [1,2,3,4,5,6,11]:
      objectPoints = np.append(objectPoints, corner_points)
      objectPointsArray = np.asarray(objectPoints)
      
-    print len(objectPoints)
-    print len(rightImagePoints)
-    print len(leftImagePoints)
-    print right_image.shape[:2]
+     print len(objectPoints)
+     print len(rightImagePoints)
+     print len(leftImagePoints)
+     print right_image.shape[:2]
      cameraMatrix1 = np.empty(right_image.shape[:2])
      distCoeffs1= np.empty((4,4))
      cameraMatrix2= np.empty(right_image.shape[:2])
