@@ -46,13 +46,13 @@ class Cameras:
         self.video_stream_thread.setDaemon(True)
         self.video_stream_thread.start()
     
-        self.look_for_stop_sign = False
-        self.look_for_speed_sign = False
-        self.look_for_traffic_light = False
+        self.look_for_stop_sign = True
+        self.look_for_speed_sign = True
+        self.look_for_traffic_light = True
         
-        self.draw_rectangles = False
+        self.draw_rectangles = True
         self.write_distances = False
-        self.write_type_of_objects = False
+        self.write_type_of_objects = True
         
         self.knn = cv2.ml.KNearest_create()
         self.knn_initialized = False
@@ -336,7 +336,7 @@ class Cameras:
                     cv2.putText(self.image_1, "Speed limit: %d" % speed_sign_value, (sign_center_x-sign_radius,sign_center_y-sign_radius-7), font, font_size, (0,0,200),font_thickness)
                 if(self.ok_to_send_messages):
                     #Send message
-#must make a better timing scheme! sort a list and take the smallest radius? Or check if it includes red, and then have two different cases?
+                    #must make a better timing scheme! sort a list and take the smallest radius? Or check if it includes red, and then have two different cases?
                     self.ok_to_send_messages = False
 
         #Looking for traffic lights
@@ -362,54 +362,58 @@ class Cameras:
                             green_minus_red = abs(green_circles[0,:][g_circ][1]-red_circles[0,:][r_circ][1])
                             y_min = int(red_circles[0,:][r_circ][1] + green_minus_red/2*(1-2))
                             y_max = int(red_circles[0,:][r_circ][1] + green_minus_red/2*(1+2))
-                            #Finding which color is on
-                            if (yellow_circles is not None):
-                                for y_circ in range(0,len(yellow_circles[0,:])):
-                                    if (abs(yellow_circles[0,:][y_circ][0]-green_circles[0,:][g_circ][0]) < 10  and abs(yellow_circles[0,:][y_circ][1]-green_circles[0,:][g_circ][1]) < 40):
-                                        red_x = red_circles[0,:][r_circ][0]
-                                        red_y = red_circles[0,:][r_circ][1]
-                                        red_r = red_circles[0,:][r_circ][2] *0.50
-                                        
-                                        green_x = green_circles[0,:][g_circ][0]
-                                        green_y = green_circles[0,:][g_circ][1]
-                                        green_r = green_circles[0,:][g_circ][2] *0.50
-                                        
-                                        
-                                        
-                                        red_ROI = red_light_mask[int(red_y-red_r):int(red_y+red_r),int(red_x-red_r):int(red_x+red_r)]
-                                        green_ROI = green_light_mask[int(green_y-green_r):int(green_y+green_r),int(green_x-green_r):int(green_x+green_r)]
-                                        
-                                        red_rows,red_cols = red_ROI.shape
-                                        red_avg=0
-                                        for row in range(0,red_rows):
-                                            for col in range(0,red_cols):
-                                                red_avg = red_avg + red_ROI[row,col]
-                                        red_avg = red_avg/red_ROI.size
-                                        
-                                        green_rows,green_cols = green_ROI.shape
-                                        green_avg=0
-                                        for row in range(0,green_rows):
-                                            for col in range(0,green_cols):
-                                                green_avg = green_avg + green_ROI[row,col]
-                                        green_avg = green_avg/green_ROI.size
+                            
+                            #Checking if it is the correct proportionality and if green is on top
+                            if(green_circles[0,:][g_circ][1]>red_circles[0,:][r_circ][1] and (y_max-y_min)/(x_max-x_min) > 1.8 and (y_max-y_min)/(x_max-x_min) < 2.2):
+                                
+                                #Finding which color is on
+                                if (yellow_circles is not None):
+                                    for y_circ in range(0,len(yellow_circles[0,:])):
+                                        if (abs(yellow_circles[0,:][y_circ][0]-green_circles[0,:][g_circ][0]) < 10  and abs(yellow_circles[0,:][y_circ][1]-green_circles[0,:][g_circ][1]) < 40):
+                                            red_x = red_circles[0,:][r_circ][0]
+                                            red_y = red_circles[0,:][r_circ][1]
+                                            red_r = red_circles[0,:][r_circ][2] *0.50
+                                            
+                                            green_x = green_circles[0,:][g_circ][0]
+                                            green_y = green_circles[0,:][g_circ][1]
+                                            green_r = green_circles[0,:][g_circ][2] *0.50
+                                            
+                                            
+                                            
+                                            red_ROI = red_light_mask[int(red_y-red_r):int(red_y+red_r),int(red_x-red_r):int(red_x+red_r)]
+                                            green_ROI = green_light_mask[int(green_y-green_r):int(green_y+green_r),int(green_x-green_r):int(green_x+green_r)]
+                                            
+                                            red_rows,red_cols = red_ROI.shape
+                                            red_avg=0
+                                            for row in range(0,red_rows):
+                                                for col in range(0,red_cols):
+                                                    red_avg = red_avg + red_ROI[row,col]
+                                            red_avg = red_avg/red_ROI.size
+                                            
+                                            green_rows,green_cols = green_ROI.shape
+                                            green_avg=0
+                                            for row in range(0,green_rows):
+                                                for col in range(0,green_cols):
+                                                    green_avg = green_avg + green_ROI[row,col]
+                                            green_avg = green_avg/green_ROI.size
 
-                                        if(red_avg > 150):
-                                            traffic_light_value = 0 # 0 red, 1 yellow, 2 green
-                                            green_light_value = 255
-                                            red_light_value = 0
-                                        elif(green_avg > 100):
-                                            traffic_light_value = 2 # 0 red, 1 yellow, 2 green
-                                            green_light_value = 0
-                                            red_light_value = 255
+                                            if(red_avg > 150):
+                                                traffic_light_value = 0 # 0 red, 1 yellow, 2 green
+                                                green_light_value = 255
+                                                red_light_value = 0
+                                            elif(green_avg > 100):
+                                                traffic_light_value = 2 # 0 red, 1 yellow, 2 green
+                                                green_light_value = 0
+                                                red_light_value = 255
 
-                                        if (self.draw_rectangles):
-                                            cv2.rectangle(self.image_1, (x_min,y_min), (x_max,y_max), (0,green_light_value,red_light_value),3)
-                                        if (write_type_of_objects):
-                                            cv2.putText(self.image_1, "Traffic light", (x_min,y_min-7), font, font_size, (0,green_light_value,red_light_value),font_thickness)
-                                        if (self.ok_to_send_messages):
-                                            # Here we send a message to stop the car. We have to ajust the parameter so that we enter this if at the correct distance.
-#must make a better timing scheme! sort over correct proportionality, and use distance between green and red circles(?)
-                                            self.ok_to_send_messages = False
+                                            if (self.draw_rectangles):
+                                                cv2.rectangle(self.image_1, (x_min,y_min), (x_max,y_max), (0,green_light_value,red_light_value),3)
+                                            if (write_type_of_objects):
+                                                cv2.putText(self.image_1, "Traffic light", (x_min,y_min-7), font, font_size, (0,green_light_value,red_light_value),font_thickness)
+                                            if (self.ok_to_send_messages):
+                                                # Here we send a message to stop the car. We have to ajust the parameter so that we enter this if at the correct distance.
+                                                #must make a better timing scheme! sort over correct proportionality, and use distance between green and red circles(?)
+                                                self.ok_to_send_messages = False
 
 
 
