@@ -11,7 +11,7 @@ import os
 try:
   trip_meter = Motor.TripMeter()
   motors = Motor.Motor(trip_meter)
-  follow_line = Steering.FollowLine(motors, start_speed = 30)
+  follow_line = Steering.FollowLine(motors, start_speed = 10)
 
   while True:
     time.sleep(10)
