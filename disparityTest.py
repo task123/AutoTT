@@ -45,6 +45,8 @@ imgL = cv2.resize(imgL,(320,240))
 _, imgR = cap2.read()
 imgR = cv2.resize(imgR,(320,240))
 
+cv2.imwrite('left.jpeg', imgL)
+cv2.imwrite('right.jpeg', imgR)
 #window_size = 3
 min_disp = 16
 num_disp = 112-min_disp
