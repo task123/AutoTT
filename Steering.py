@@ -268,6 +268,7 @@ class FollowLine:
             elif (line_found_right and self.arduino.analogRead(self.pin_right_photo_diode) > self.right_photo_diode_found_line_value):
                 self.motors.set_right_speed(speed)
                 self.motors.set_left_speed(0)
+                self.start_following_line()
                 break
             time.sleep(self.correction_interval)
         
