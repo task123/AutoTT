@@ -245,7 +245,7 @@ class FollowLine:
         self.stopped = True
 
     def find_line(self, speed):
-        self.find_line_thread = threading.Thread(target = self.find_line_loop, args=(speed))
+        self.find_line_thread = threading.Thread(target = self.find_line_loop, args=(speed,))
         self.find_line_thread.setDaemon(True)
         self.find_line_thread.start()
      
