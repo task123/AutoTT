@@ -62,7 +62,7 @@ num_disp = 112-min_disp
     """
 #stereo = cv2.StereoBM(cv2.STEREO_BM_BASIC_PRESET,ndisparities=96, SADWindowSize=25)
 #stereo = cv2.StereoSGBM_create(numDisparities = 96, blockSize = 25 ) #blockSize must be odd
-stereo = cv2.StereoSGBM_create(minDisparity = 0, numDisparities = 160, blockSize = 5 )
+stereo = cv2.StereoSGBM_create(minDisparity = 0, numDisparities = 16, blockSize = 5 )
 
 print('computing disparity...')
 imgL = cv2.cvtColor(imgL, cv2.COLOR_BGR2GRAY)
