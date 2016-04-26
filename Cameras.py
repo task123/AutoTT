@@ -37,15 +37,7 @@ class Cameras:
         self.camera_2_on = False
         self.video_1 = None
         self.video_2 = None
-
-        self.camera_thread = threading.Thread(target = self.camera_loop)
-        self.camera_thread.setDaemon(True)
-        self.camera_thread.start()
         
-        self.video_stream_thread = threading.Thread(target = self.video_stream_loop)
-        self.video_stream_thread.setDaemon(True)
-        self.video_stream_thread.start()
-    
         self.look_for_stop_sign = True
         self.look_for_speed_sign = True
         self.look_for_traffic_light = True
@@ -58,6 +50,14 @@ class Cameras:
         self.knn_initialized = False
     
         self.ok_to_send_messages = True
+
+        self.camera_thread = threading.Thread(target = self.camera_loop)
+        self.camera_thread.setDaemon(True)
+        self.camera_thread.start()
+        
+        self.video_stream_thread = threading.Thread(target = self.video_stream_loop)
+        self.video_stream_thread.setDaemon(True)
+        self.video_stream_thread.start()
 
     def is_camera_1_on(self):
         return self.camera_1_on
