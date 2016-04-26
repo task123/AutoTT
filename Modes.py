@@ -35,6 +35,7 @@ class Modes:
                 steering.lights_off()
                 autoTTCommunication.buttons_off()
             elif (message == "1"): # Tilt, Lights
+                print "mode"
                 steering = SteeringWithIOSGyro(self.motors, self.autoTTCommunication)
                 autoTTCommunication.set_receivers(gyro_recv = steering, stop_cont_recv = steering, button_recv = steering)
                 steering.lights_on(lights)
