@@ -7,7 +7,7 @@ class Lights:
   def __init__(self, motors):
     # these variables might need to be adjusted
     low_beam_value = 250
-    high_beam_value = 800
+    high_beam_value = 400
     indicator_blink_time = 0.1
     indicator_blink_delay = 0.1
     # these variables might change
