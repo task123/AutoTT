@@ -201,10 +201,8 @@ class FollowLine:
         self.arduino.pinMode(self.pin_photo_diode_power,self.arduino.OUTPUT)
         self.arduino.pinMode(self.pin_left_photo_diode, self.arduino.INPUT)
         self.arduino.pinMode(self.pin_right_photo_diode, self.arduino.INPUT)
-        
-        self.arduino.digitalWrite(self.pin_photo_diode_power, 0)
-        
-        self.arduino.digitalWrite(12,1)
+       
+        self.arduino.digitalWrite(self.pin_photo_diode_power, 1)
         self.find_line(start_speed)
         
     def start_following_line(self):
@@ -268,14 +266,10 @@ class FollowLine:
         print "Line found!"
         while True:
             if (line_found_left and self.arduino.analogRead(self.pin_left_photo_diode) > self.left_photo_diode_found_line_value):
-                self.motors.set_left_speed(speed)
-                self.motors.set_right_speed(0)
                 self.start_following_line()
                 print "break"
                 break
             elif (line_found_right and self.arduino.analogRead(self.pin_right_photo_diode) > self.right_photo_diode_found_line_value):
-                self.motors.set_right_speed(speed)
-                self.motors.set_left_speed(0)
                 self.start_following_line()
                 print "break"
                 break
