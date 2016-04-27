@@ -402,7 +402,10 @@ class Cameras:
             red_light_mask = cv2.inRange(hsv_image_1,np.array((0,0,240), dtype = "uint8"),np.array((255, 255, 255), dtype = "uint8"))
             green_light_mask = cv2.inRange(hsv_image_1,np.array((0,0,50), dtype = "uint8"),np.array((70, 200, 255), dtype = "uint8"))
 
-
+            if (red_circles is not None):
+                print "we have red circles"
+            if (green_circles is not None):
+                print "we have green circles"
 
             if (red_circles is not None and green_circles is not None):
                 for g_circ in range(0,len(green_circles[0,:])):
