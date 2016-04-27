@@ -335,11 +335,13 @@ class FollowLine:
             time.sleep(self.correction_interval)
         
     def receive_message(self, type, message):
+        print type
         if (type == "Stop"):
             self.stopped = True
             self.traffic_stop = False
-            self.motors.left_speed(0.0)
-            self.motors.right_speed(0.0)
+            self.motors.set_left_speed(0.0)
+            self.motors.set_right_speed(0.0)
+            print "Stop"
         elif (type == "Continue"):
             self.stopped = False
             self.traffic_stop = True
