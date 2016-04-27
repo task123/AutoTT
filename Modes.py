@@ -37,7 +37,6 @@ class Modes:
     
     def receive_message(self, type, message):
         print "mode " + message
-        """
         if (type == "Modes"):
             self.autoTTCommunication.modes(self.list_of_modes)
         elif (type == "InfoModes"):
@@ -90,7 +89,6 @@ class Modes:
                 steering
             elif (message == "8"): # Self steering
                 steering
-        """
 
     def send_modes(self):
         time.sleep(0.01)
