@@ -298,7 +298,7 @@ class Cameras:
             red_edges = cv2.Canny(red_mask,100,50)
             _, red_contours, hierarchy = cv2.findContours(red_edges, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
             if red_contours is not None:
-                for i in range(0,len(contours)):
+                for i in range(0,len(red_contours)):
                     peripheral = cv2.arcLength(red_contours[i], True)
                     approximate_polygon = cv2.approxPolyDP(red_contours[i], 0.03 * peripheral, True)
                     if (len(approximate_polygon) == 8 and cv2.isContourConvex(approximate_polygon) and cv2.contourArea(approximate_polygon) > 300):
