@@ -47,7 +47,7 @@ class Modes:
                 print "0"
                 print self.following_line_running
                 if (self.following_line_running):
-                    steering.stop_following_line()
+                    self.steering.stop_following_line()
                     print "stop_following_line"
                     self.following_line_running = False
                 self.steering = Steering.SteeringWithIOSGyro(self.motors)
