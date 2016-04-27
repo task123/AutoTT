@@ -60,6 +60,6 @@ except:
         fan_controller.turn_off()
     if (disconnect != None):
         disconnect.disconnect()
-    if (mode != None and steering != None):
+    if (modes != None and steering != None):
         if (mode.is_following_line_running):
             steering.stop_following_line()
