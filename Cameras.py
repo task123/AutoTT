@@ -291,12 +291,14 @@ class Cameras:
         #Looking for speed signs
         take_median_of_speed_signs = 15
         result_list_speed_signs = []
+        is_only_inner_circle = False
         if(self.look_for_speed_sign):
             if (not self.knn_initialized):
                 with np.load('knn_data.npz') as data:
                     train = data['train']
                     train_labels = data['train_labels']
                 knn.train(train,cv2.ml.ROW_SAMPLE,train_labels)
+                self.knn_initialized = True
             
             red_circles = cv2.HoughCircles(red_mask,cv2.HOUGH_GRADIENT,1,100000,param1=50,param2=40,minRadius=3,maxRadius=70)
             if circles is not None:
@@ -311,6 +313,8 @@ class Cameras:
                 for sat_values in hsv_half_sign_image[:,:,1].flat:
                     temp_sum = temp_sum + sat_values
                 average_sat_value = temp_sum.astype(np.float32)/(red_circles[0,:][0][2]**2)
+                if average_sat_value < 80:
+                    is_only_inner_circle = True
 
                 sign_center_x = red_circles[0,:][0][0]
                 sign_center_y = red_circles[0,:][0][1]
@@ -341,9 +345,9 @@ class Cameras:
                 if(self.write_type_of_objects):
                     #write objects
                     cv2.putText(self.image_1, "Speed limit: %d" % speed_sign_value, (sign_center_x-sign_radius,sign_center_y-sign_radius-7), font, font_size, (0,0,200),font_thickness)
-                if(self.ok_to_send_messages):
+                if(self.ok_to_send_messages and is_only_inner_circle and sign_radius > 27):
                     #Send message
-                    #must make a better timing scheme! sort a list and take the smallest radius? Or check if it includes red, and then have two different cases?
+                    #must calibrate the distance given by sign_radius. Also, must reset ok_to_send_messages somewhere else, probably in steering...
                     self.ok_to_send_messages = False
 
         #Looking for traffic lights
