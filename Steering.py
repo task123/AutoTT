@@ -269,6 +269,7 @@ class FollowLine:
     def follow_line_loop(self):
         print "following line"
         while not self.quit:
+            print "run loop"
             if (self.stopped):
                 self.motors.stop()
             else:
@@ -342,7 +343,6 @@ class FollowLine:
             self.traffic_stop = False
             self.motors.set_left_speed(0.0)
             self.motors.set_right_speed(0.0)
-            print "Stop"
         elif (type == "Continue"):
             self.stopped = False
             self.traffic_stop = True
