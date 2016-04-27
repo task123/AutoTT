@@ -314,7 +314,7 @@ class Cameras:
                             # We have now found a stop sign
                             if (self.draw_rectangles):
                                 cv2.rectangle(self.image_1, (x,y), (x+w,y+h), (0,0,155),3)
-                            if (write_type_of_objects):
+                            if (self.write_type_of_objects):
                                 cv2.putText(self.image_1, "Stop", (x,y-7), font, font_size, (0,0,200),font_thickness)
                             if (cv2.contourArea(approximate_polygon) > 3000 and cv2.contourArea(approximate_polygon) > 2000 and self.ok_to_send_messages):
                                 # Here we send a message to stop the car. We have to ajust the parameter so that we enter this if at the correct distance.
@@ -364,7 +364,7 @@ class Cameras:
                 resized_ROI_array = np.array(resized_ROI[0])
                 temporary_array = resized_ROI_array.astype(np.uint8)  # No idea whatsoever why you have to do this
                 prepeared_array = temporary_array.reshape(-1,400).astype(np.float32)
-                _,result,neighbours,dist = knn.findNearest(prepeared_number,k=10)
+                _,result,neighbours,dist = knn.findNearest(prepeared_array,k=10)
                 result_list_speed_signs.append(result)
                 if (len(result_list_speed_signs) > take_median_of_speed_signs):
                     result_list_speed_signs.pop(0)
