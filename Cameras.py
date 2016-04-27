@@ -297,7 +297,7 @@ class Cameras:
         if (self.look_for_stop_sign):
             red_edges = cv2.Canny(red_mask,100,50)
             _, red_contours, hierarchy = cv2.findContours(red_edges, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
-            if contours is not None:
+            if red_contours is not None:
                 for i in range(0,len(contours)):
                     peripheral = cv2.arcLength(red_contours[i], True)
                     approximate_polygon = cv2.approxPolyDP(red_contours[i], 0.03 * peripheral, True)
@@ -334,7 +334,7 @@ class Cameras:
                 self.knn_initialized = True
             
             red_circles = cv2.HoughCircles(red_mask,cv2.HOUGH_GRADIENT,1,100000,param1=50,param2=40,minRadius=3,maxRadius=70)
-            if circles is not None:
+            if red_circles is not None:
                 red_circles = np.uint16(np.around(red_circles))
                 (rows,columns,channels) = self.image_1.shape
                 sign_area = np.zeros((rows,columns), dtype=np.uint8)
