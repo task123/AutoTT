@@ -18,8 +18,8 @@ class Status:
         #this values might need to be adjusted
         self.arduino_max_voltage_analog_read = 5.01
         # these values might change 
-        self.pin_motor_battery = 19
-        self.pin_raspberry_pi_battery = 18
+        self.pin_motor_battery = 15
+        self.pin_raspberry_pi_battery = 14
         ##################################################
         # Values after this should not need to be changed.
         ##################################################
