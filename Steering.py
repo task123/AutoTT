@@ -13,7 +13,7 @@ Sends messages set_right_speed('speed') and set_left_speed('speed') to 'motors'.
  - 'speed' is a number from -100 to 100, 100 being full speed forward, -100 being full speed in reverse.
 """
 class SteeringWithIOSGyro:
-    def __init__(self, motors, autoTTCommunication = None):
+    def __init__(self, motors):
         # these values might need to be adjusted
         self.min_roll = 3.5 * 3.14 / 180.0
         self.max_roll = 45.0 * 3.14 / 180.0
@@ -26,8 +26,6 @@ class SteeringWithIOSGyro:
         self.motors = motors
         
         self.stop = True
-        if (autoTTCommunication != None):
-            autoTTCommunication.start_gyro_with_update_intervall(gyro_update_intervall)
         
         self.light = None
         self.is_button_indicator_on = False
@@ -132,7 +130,7 @@ Sends messages set_right_speed('speed') and set_left_speed('speed') to 'motors'.
 """
 class SteeringWithIOSButtons:
     max_speed = 100.0
-    def __init__(self, motors, autoTTCommunication = None):
+    def __init__(self, motors):
         # this values might need to be adjusted
         gyro_update_intervall = 1.0/60.0
         ##################################################
@@ -142,9 +140,6 @@ class SteeringWithIOSButtons:
         self.motors = motors
         
         self.stop = True
-        if (autoTTCommunication != None):
-            autoTTCommunication.start_gyro_with_update_intervall(gyro_update_intervall)
-            autoTTCommunication.button_on()
     
     def receive_message(self, type, message):
         if (type == "LeftButtonTouchDown" and self.stop == False):
