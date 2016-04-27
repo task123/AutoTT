@@ -29,6 +29,8 @@ class Cameras:
         self.blur_1 = None
         self.blur_2 = None
         
+        self.frame_height = 300
+        self.frame_width = 568
         self.jpeg_quality = 95
         self.stream_on = False
         self.reduse_stream_fps_by_a_factor = 1
