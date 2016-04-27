@@ -27,6 +27,7 @@ class SteeringWithIOSGyro:
         ##################################################
         
         self.motors = motors
+        self.trip_meter = motors.trip_meter
         
         self.stop = True
         self.traffic_stop = True
