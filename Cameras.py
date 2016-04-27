@@ -206,36 +206,52 @@ class Cameras:
 
 
     def start_looking_for_stop_signs(self):
+        if (not self.is_camera_1_on):
+            self.start_camera_1()
         self.look_for_stop_sign = True
 
     def stop_looking_for_stop_signs(self):
+        self.conditionally_stop_camera_1()
         self.look_for_stop_sign = False
 
     def start_looking_for_speed_signs(self):
+        if (not self.is_camera_1_on):
+            self.start_camera_1()
         self.look_for_speed_sign = True
     
     def stop_looking_for_speed_signs(self):
+        self.conditionally_stop_camera_1()
         self.look_for_speed_sign = False
 
     def start_looking_for_traffic_lights(self):
+        if (not self.is_camera_1_on):
+            self.start_camera_1()
         self.look_for_traffic_light = True
 
     def stop_looking_for_traffic_lights(self):
+        self.conditionally_stop_camera_1()
         self.look_for_traffic_light = False
 
     def start_drawing_rectangles(self):
+        if (not self.is_camera_1_on):
+            self.start_camera_1()
         self.draw_rectangles = True
         
     def stop_drawing_rectangles(self):
         self.draw_rectangles = False
 
     def start_writing_distances(self):
+        if (not self.is_camera_1_on):
+            self.start_camera_1()
         self.write_distances = True
     
     def stop_writing_distances(self):
+        self.conditionally_stop_camera_1()
         self.write_distances = False
 
     def start_writing_type_of_objects(self):
+        if (not self.is_camera_1_on):
+            self.start_camera_1()
         self.write_type_of_objects = True
     
     def stop_writing_type_of_objects(self):
