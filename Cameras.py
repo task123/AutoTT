@@ -64,7 +64,7 @@ class Cameras:
             
     def start_camera_1(self):
         self.arduino.digitalWrite(self.pin_battery_camera_1, 1) # active high
-        time.sleep(5)
+        time.sleep(2)
         self.video_1 = cv2.VideoCapture(0)
         self.video_1.set(cv2.CAP_PROP_FRAME_HEIGHT, self.frame_height)
         self.video_1.set(cv2.CAP_PROP_FRAME_WIDTH, self.frame_width)
@@ -78,7 +78,7 @@ class Cameras:
 
     def start_camera_2(self):
         self.arduino.digitalWrite(self.pin_battery_camera_2, 0) # activ low
-        time.sleep(5)
+        time.sleep(2)
         self.video_2 = cv2.VideoCapture(1)
         self.video_2.set(cv2.CAP_PROP_FRAME_HEIGHT, self.frame_height)
         self.video_2.set(cv2.CAP_PROP_FRAME_WIDTH, self.frame_width)
@@ -206,8 +206,12 @@ class Cameras:
 
 
     def start_looking_for_stop_signs(self):
-        if (not self.is_camera_1_on):
+        print "start stop sign"
+        if (not self.is_camera_1_on()):
             self.start_camera_1()
+            print "turn on cam 1"
+        print "is camera_1 on " 
+        print self.is_camera_1_on()
         self.look_for_stop_sign = True
 
     def stop_looking_for_stop_signs(self):
