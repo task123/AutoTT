@@ -57,7 +57,7 @@ class Modes:
                     stop_cont_recv = self.steering, disconnect_recv = self.disconnect, shut_down_recv = self.disconnect, 
                     video_recv = self.cameras, button_recv = self.steering)
                 print "2"
-                self.steering.button_indicators_on(lights)
+                self.steering.button_indicators_on(self.lights)
                 print "3"
                 self.autoTTCommunication.buttons_on()
                 print "4"
