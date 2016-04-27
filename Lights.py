@@ -58,11 +58,8 @@ class Lights:
     
   def high_beam_off(self):
     self.is_high_beam_on = False
-    print "high_beam_off"
     if (self.is_lights_on):
       self.arduino.analogWrite(self.headlight_pin, self.low_beam_value)
-      print self.low_beam_value
-      print self.high_beam_value
     else:
       self.arduino.analogWrite(self.headlight_pin, 0)
       
@@ -102,7 +99,8 @@ class Lights:
     self.on()
     self.high_beam_on()
     time.sleep(self.high_beam_blink_time_and_delay)
-    self.high_beam_off()
+    self.off()
     time.sleep(self.high_beam_blink_time_and_delay)
+    self.on()
     self.high_beam_on()
     time.sleep(self.high_beam_blink_time_and_delay)
