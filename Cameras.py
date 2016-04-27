@@ -294,13 +294,13 @@ class Cameras:
 
         #Looking for stop signs
         if (self.look_for_stop_sign):
-            red_edges = cv2.Canny(red_mask,100,50)
+            red_edges = cv2.Canny(red_mask,70,30)
             _, red_contours, hierarchy = cv2.findContours(red_edges, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
             if red_contours is not None:
                 for i in range(0,len(red_contours)):
                     peripheral = cv2.arcLength(red_contours[i], True)
-                    approximate_polygon = cv2.approxPolyDP(red_contours[i], 0.03 * peripheral, True)
-                    if (len(approximate_polygon) == 8 and cv2.isContourConvex(approximate_polygon) and cv2.contourArea(approximate_polygon) > 300):
+                    approximate_polygon = cv2.approxPolyDP(red_contours[i], 0.04 * peripheral, True)
+                    if (len(approximate_polygon) == 8 and cv2.isContourConvex(approximate_polygon) and cv2.contourArea(approximate_polygon) > 50):
                         x,y,w,h = cv2.boundingRect(approximate_polygon)
                         stop_sign = red_mask[y:(y+h),x:(x+w)]
                         sign_rows,sign_cols = stop_sign.shape
