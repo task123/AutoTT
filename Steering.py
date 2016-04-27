@@ -245,7 +245,7 @@ class FollowLine:
         self.find_line(self.speed)
         
     def set_speed(speed):
-       self.speed = 
+       self.speed = speed
         
     def start_following_line(self):
         self.quit = True
