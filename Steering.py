@@ -382,4 +382,5 @@ class FollowLine:
         self.quit = True
 
     def __del__(self):
+        print "__del__"
         self.quit = True
