@@ -93,7 +93,7 @@ class Modes:
                 self.steering = Steering.SteeringWithIOSGyro(self.motors)
                 self.autoTTCommunication.set_receivers(gyro_recv = self.steering, mode_recv = self, status_recv = self.status, 
                     stop_cont_recv = self.steering, disconnect_recv = self.disconnect, shut_down_recv = self.disconnect, 
-                    video_recv = self.cameras)
+                    video_recv = self.cameras, button_recv = self.steering)
                 self.steering.button_indicators_on(self.lights)
                 self.autoTTCommunication.buttons_on()
                 self.cameras.set_steering(self.steering)
