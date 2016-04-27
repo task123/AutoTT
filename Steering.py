@@ -383,4 +383,5 @@ class FollowLine:
         self.is_speed_limit_on = False
 
     def stop_following_line(self):
+        self.arduino.digitalWrite(self.pin_photo_diode_power, 0)
         self.quit = True
