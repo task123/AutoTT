@@ -299,7 +299,9 @@ class Cameras:
             if red_contours is not None:
                 for i in range(0,len(red_contours)):
                     peripheral = cv2.arcLength(red_contours[i], True)
+
                     approximate_polygon = cv2.approxPolyDP(red_contours[i], 0.04 * peripheral, True)
+
                     if (len(approximate_polygon) == 8 and cv2.isContourConvex(approximate_polygon) and cv2.contourArea(approximate_polygon) > 50):
                         x,y,w,h = cv2.boundingRect(approximate_polygon)
                         stop_sign = red_mask[y:(y+h),x:(x+w)]
@@ -317,6 +319,7 @@ class Cameras:
                                 cv2.putText(self.image_1, "Stop", (x,y-7), font, font_size, (0,0,200),font_thickness)
                             if (cv2.contourArea(approximate_polygon) > 3000 and cv2.contourArea(approximate_polygon) > 2000 and self.ok_to_send_messages):
                                 # Here we send a message to stop the car. We have to ajust the parameter so that we enter this if at the correct distance.
+                                print "tries to stop"
                                 if (self.steering != None):
                                     self.steering.stop_sign()
                                 self.ok_to_send_messages = False

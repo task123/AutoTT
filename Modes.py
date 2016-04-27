@@ -94,8 +94,9 @@ class Modes:
                 self.autoTTCommunication.set_receivers(gyro_recv = self.steering, mode_recv = self, status_recv = self.status, 
                     stop_cont_recv = self.steering, disconnect_recv = self.disconnect, shut_down_recv = self.disconnect, 
                     video_recv = self.cameras)
-                self.lights.off()
-                self.autoTTCommunication.buttons_off()
+                self.steering.button_indicators_on(self.lights)
+                self.autoTTCommunication.buttons_on()
+                self.cameras.set_steering(self.steering)
                 self.cameras.stop_following_traffic_rules()
                 self.cameras.start_looking_for_stop_signs()
                 self.cameras.start_drawing_rectangles()

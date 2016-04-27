@@ -21,12 +21,13 @@ class SteeringWithIOSGyro:
         self.distance_to_travel_before_stopping_for_stop_sign = 0.05
         self.distance_to_travel_before_stopping_for_traffic_light = 0.05
         self.distance_to_travel_before_changing_speed_limit = 0.05
-        self.time_waiting_at_stop_sign = 2.0
+        self.time_waiting_at_stop_sign = 3.0
         ##################################################
         # Values after this should not need to be changed.
         ##################################################
         
         self.motors = motors
+        self.trip_meter = motors.trip_meter
         
         self.stop = True
         self.traffic_stop = True
@@ -134,6 +135,7 @@ class SteeringWithIOSGyro:
             self.light.off()
             
     def stop_sign(self):
+       print "inside stop"
        self.traffic_stop = True
        self.trip_meter.reset()
        while (self.trip_meter.get_right_distance() < self.distance_to_travel_before_stopping_for_stop_sign and self.trip_meter.get_left_distance() < self.distance_to_travel_before_stopping_for_stop_sign):
