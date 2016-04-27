@@ -470,7 +470,7 @@ class Cameras:
 
                                             if (self.draw_rectangles):
                                                 cv2.rectangle(self.image_1, (x_min,y_min), (x_max,y_max), (0,green_light_value,red_light_value),3)
-                                            if (write_type_of_objects):
+                                            if (self.write_type_of_objects):
                                                 cv2.putText(self.image_1, "Traffic light", (x_min,y_min-7), font, font_size, (0,green_light_value,red_light_value),font_thickness)
                                             if (self.ok_to_send_messages and green_y - red_y > 55):
                                                 # Here we send a message to stop the car. We have to ajust the parameter so that we enter this if at the correct distance.
