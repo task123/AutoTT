@@ -248,6 +248,8 @@ class Cameras:
         return self.ok_to_send_messages
 
     def detect_signs_and_lights(self):
+        if (self.image_1 == None):
+            print "cameras attribute image_1 is None"
         hsv_image_1 = cv2.cvtColor(self.image_1, cv2.COLOR_BGR2HSV)
         font = cv2.FONT_HERSHEY_PLAIN
         font_size = 1.5
@@ -301,13 +303,18 @@ class Cameras:
                 red_circles = np.uint16(np.around(red_circles))
                 (rows,columns,channels) = self.image_1.shape
                 sign_area = np.zeros((rows,columns), dtype=np.uint8)
-                cv2.ellipse(sign_area,(red_circles[0,:][i][0],red_circles[0,:][i][1]),(red_circles[0,:][i][2],red_circles[0,:][i][2]), 90,0,180,(255,255,255),-1,8,0)
+                cv2.ellipse(sign_area,(red_circles[0,:][0][0],red_circles[0,:][0][1]),(red_circles[0,:][0][2],red_circles[0,:][0][2]), 90,0,180,(255,255,255),-1,8,0)
                 hsv_half_sign_image = cv2.bitwise_and(self.image_1, self.image_1, mask=sign_area )
                 _,sign_mask = cv2.threshold(hsv_half_sign_image[:,:,2], 150, 255, cv2.THRESH_BINARY_INV)
+                
+                temp_sum = 0
+                for sat_values in hsv_half_sign_image[:,:,1].flat:
+                    temp_sum = temp_sum + sat_values
+                average_sat_value = temp_sum.astype(np.float32)/(red_circles[0,:][0][2]**2)
 
-                sign_center_x = red_circles[0,:][i][0]
-                sign_center_y = red_circles[0,:][i][1]
-                sign_radius = red_circles[0,:][i][2]
+                sign_center_x = red_circles[0,:][0][0]
+                sign_center_y = red_circles[0,:][0][1]
+                sign_radius = red_circles[0,:][0][2]
                 x_start =int(sign_center_x-sign_radius*0.8)
                 x_end = sign_center_x
                 y_start =int(sign_center_y-sign_radius*0.5)
