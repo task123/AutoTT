@@ -10,7 +10,7 @@ import Lights
 import Motor
 
 class Modes:
-    list_of_modes = ["Tilt Steering", "Tilt, Lights", "Tilt with AOA", "Button Steering", "Button with AOA", "Follow line", "Stop sign", "Traffic light", "Tilt, Traffic rules, Light", "Self steering"] # AOA - Automated Object Avoidence
+    list_of_modes = ["Tilt Steering", "Tilt, Lights", "Tilt with AOA", "Button Steering", "Button with AOA", "Follow line", "Stop sign", "Traffic light", "Speed limit", "Tilt, Traffic rules, Light", "Self steering"] # AOA - Automated Object Avoidence
     
     list_of_info_modes = ["Control the car by tilting your iOS device.", 
     "As 'Tilt Stering', but with lights on. The indicators are controlled by pushing the right/left side of the screen and the high beam by pushing both sides of the screen.", 
@@ -20,6 +20,7 @@ class Modes:
     "The car tries to follow a line on the ground and stops when objects blocks its way.", 
     "The car tries to follow a line on the ground and stops for stop signs and objects blocking its way.", 
     "The car tries to follow a line on the ground and stops for red traffic lights and objects blocking its way.", 
+    "As 'Tilt, Lights', but with speedlimits.",
     "As 'Tilt, Lights', but with speedlimits and the car stops for stop signs, red traffic lights and object blocking its way.",
     "The car tries to follow a line on the ground and stops for stop signs, red traffic lights and objects blocking its way."]
     
@@ -45,8 +46,9 @@ class Modes:
                 self.autoTTCommunication.set_receivers(gyro_recv = self.steering, mode_recv = self, status_recv = self.status, 
                     stop_cont_recv = self.steering, disconnect_recv = self.disconnect, shut_down_recv = self.disconnect, 
                     video_recv = self.cameras)
-                steering.button_indicators_off()
-                autoTTCommunication.buttons_off()
+                self.lights.off()
+                self.autoTTCommunication.buttons_off()
+                self.cameras.stop_following_traffic_rules()
             elif (message == "1"): # Tilt, Lights
                 self.steering = Steering.SteeringWithIOSGyro(self.motors)
                 self.autoTTCommunication.set_receivers(gyro_recv = self.steering, mode_recv = self, status_recv = self.status, 
@@ -54,27 +56,57 @@ class Modes:
                     video_recv = self.cameras, button_recv = self.steering)
                 self.steering.button_indicators_on(self.lights)
                 self.autoTTCommunication.buttons_on()
+                self.cameras.stop_following_traffic_rules()
             elif (message == "2"): # Tilt with AOA
                 self.steering = Steering.SteeringWithIOSGyro(self.motors)
                 self.autoTTCommunication.set_receivers(gyro_recv = self.steering, mode_recv = self, status_recv = self.status, 
                     stop_cont_recv = self.steering, disconnect_recv = self.disconnect, shut_down_recv = self.disconnect, 
                     video_recv = self.cameras)
+                self.lights.off()
+                self.autoTTCommunication.buttons_off()
+                self.cameras.stop_following_traffic_rules()
             elif (message == "3"): # Button Steering
                 self.steering = Steering.SteeringWithIOSButtons(self.motors)
                 self.autoTTCommunication.set_receivers(gyro_recv = self.steering, mode_recv = self, status_recv = self.status, 
                     stop_cont_recv = self.steering, disconnect_recv = self.disconnect, shut_down_recv = self.disconnect, 
                     video_recv = self.cameras, button_recv = self.steering)
+                self.lights.off()
+                self.autoTTCommunication.buttons_on()
+                self.cameras.stop_following_traffic_rules()
             elif (message == "4"): # Button with AOA
                 self.steering = Steering.SteeringWithIOSButtons(self.motors)
                 self.autoTTCommunication.set_receivers(gyro_recv = self.steering, mode_recv = self, status_recv = self.status, 
                     stop_cont_recv = self.steering, disconnect_recv = self.disconnect, shut_down_recv = self.disconnect, 
                     video_recv = self.cameras, button_recv = self.steering)
+                self.lights.off()
+                self.autoTTCommunication.buttons_on()
+                self.cameras.stop_following_traffic_rules()
             elif (message == "5"): # Follow line
                 self.steering = Steering.FollowLine(self.motors)
+                self.autoTTCommunication.set_receivers(gyro_recv = self.steering, mode_recv = self, status_recv = self.status, 
+                    stop_cont_recv = self.steering, disconnect_recv = self.disconnect, shut_down_recv = self.disconnect, 
+                    video_recv = self.cameras)
+                self.lights.off()
+                self.autoTTCommunication.buttons_off()
+                self.cameras.stop_following_traffic_rules()
             elif (message == "6"): # Stop sign
-                steering
+                self.steering = Steering.SteeringWithIOSGyro(self.motors)
+                self.autoTTCommunication.set_receivers(gyro_recv = self.steering, mode_recv = self, status_recv = self.status, 
+                    stop_cont_recv = self.steering, disconnect_recv = self.disconnect, shut_down_recv = self.disconnect, 
+                    video_recv = self.cameras)
+                self.lights.off()
+                self.autoTTCommunication.buttons_off()
+                self.cameras.stop_following_traffic_rules()
+                self.cameras.start_looking_for_stop_signs()
             elif (message == "7"): # Traffic light
-                steering
+                self.steering = Steering.SteeringWithIOSGyro(self.motors)
+                self.autoTTCommunication.set_receivers(gyro_recv = self.steering, mode_recv = self, status_recv = self.status, 
+                    stop_cont_recv = self.steering, disconnect_recv = self.disconnect, shut_down_recv = self.disconnect, 
+                    video_recv = self.cameras)
+                self.lights.off()
+                self.autoTTCommunication.buttons_off()
+                self.cameras.stop_following_traffic_rules()
+                self.cameras.start_looking_for_traffic_lights()
             elif (message == "8"): # Tilt, Traffic rules, Lights
                 steering
             elif (message == "9"): # Self steering
