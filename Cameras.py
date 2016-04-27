@@ -296,6 +296,7 @@ class Cameras:
         if (self.look_for_stop_sign):
             red_edges = cv2.Canny(red_mask,100,50)
             _, red_contours, hierarchy = cv2.findContours(red_edges, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
+            self.image_1 = red_contours
             if red_contours is not None:
                 for i in range(0,len(red_contours)):
                     peripheral = cv2.arcLength(red_contours[i], True)
