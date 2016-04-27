@@ -6,7 +6,7 @@ import threading
 from flask import Flask, render_template, Response
 import numpy as np
 
-# sends messages stop_sign(), traffic_light(), speed_limit(speed_limit) to 'steering' set by set_steering(steering)
+# sends messages stop_sign(), traffic_light(light_color), speed_limit(speed_limit) to 'steering' set by set_steering(steering)
 class Cameras:
     # streaming_port on AutoTT iOS app is by default port + 1
     def __init__(self, motors, autoTTCommunication, streaming_port):
@@ -463,7 +463,10 @@ class Cameras:
                                             if (self.ok_to_send_messages and green_y - red_y > 55):
                                                 # Here we send a message to stop the car. We have to ajust the parameter so that we enter this if at the correct distance.
                                                 if (self.steering != None):
-                                                    self.steering.traffic_light()
+                                                    if (traffic_light_value == 0 or traffic_light_value == 1):
+                                                        self.steering.traffic_light("red")
+                                                    elif (traffic_light_value == 2):
+                                                        self.steering.traffic_light("green")
                                                 self.ok_to_send_messages = False
 
 
