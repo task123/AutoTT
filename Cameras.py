@@ -240,6 +240,13 @@ class Cameras:
     
     def stop_writing_type_of_objects(self):
         self.write_type_of_objects = False
+        
+    def stop_following_traffic_rules(self):
+        self.stop_looking_for_stop_signs()
+        self.stop_looking_for_speed_signs()
+        self.stop_looking_for_traffic_lights()
+        self.stop_drawing_rectangles()
+        self.stop_writing_type_of_objects()
     
     def set_ok_to_send_messages(self, ok_to_send_messages):
         self.ok_to_send_messages = ok_to_send_messages
