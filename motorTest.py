@@ -11,7 +11,7 @@ def print_speed_loop(trip_meter):
 trip_meter = Motor.TripMeter()
 motor = Motor.Motor(trip_meter)
 
-print_speed_thread = threading.Thread(target = print_speed_loop, args=(trip_meter,)
+print_speed_thread = threading.Thread(target = print_speed_loop, args=(trip_meter,))
 print_speed_thread.setDaemon(True)
 print_speed_thread.start()
 
