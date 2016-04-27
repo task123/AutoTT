@@ -6,6 +6,7 @@ import threading
 from flask import Flask, render_template, Response
 import numpy as np
 
+# sends messages stop_sign(), traffic_light(), speed_limit(speed_limit) to 'steering' set by set_steering(steering)
 class Cameras:
     # streaming_port on AutoTT iOS app is by default port + 1
     def __init__(self, motors, autoTTCommunication, streaming_port):
@@ -53,6 +54,8 @@ class Cameras:
         self.knn_initialized = False
     
         self.ok_to_send_messages = True
+        
+        self.steering = None
 
         self.camera_thread = threading.Thread(target = self.camera_loop)
         self.camera_thread.setDaemon(True)
@@ -61,15 +64,16 @@ class Cameras:
         self.video_stream_thread = threading.Thread(target = self.video_stream_loop)
         self.video_stream_thread.setDaemon(True)
         self.video_stream_thread.start()
+        
+    def set_steering(self, steering):
+        self.steering = steering
 
     def is_camera_1_on(self):
         return self.camera_1_on
             
     def start_camera_1(self):
-        print "inside start_camera_1"
         self.arduino.digitalWrite(self.pin_battery_camera_1, 1) # active high
         time.sleep(2)
-        print "51"
         self.video_1 = cv2.VideoCapture(0)
         self.video_1.set(cv2.CAP_PROP_FRAME_HEIGHT, self.frame_height)
         self.video_1.set(cv2.CAP_PROP_FRAME_WIDTH, self.frame_width)
@@ -211,13 +215,8 @@ class Cameras:
 
 
     def start_looking_for_stop_signs(self):
-        print "start stop sign"
         if (not self.camera_1_on):
-            print "start camera 1"
             self.start_camera_1()
-            print "camera 1 started"
-        print "is camera_1 on " 
-        print self.camera_1_on
         self.look_for_stop_sign = True
 
     def stop_looking_for_stop_signs(self):
@@ -318,7 +317,8 @@ class Cameras:
                                 cv2.putText(self.image_1, "Stop", (x,y-7), font, font_size, (0,0,200),font_thickness)
                             if (cv2.contourArea(approximate_polygon) > 3000 and cv2.contourArea(approximate_polygon) > 2000 and self.ok_to_send_messages):
                                 # Here we send a message to stop the car. We have to ajust the parameter so that we enter this if at the correct distance.
-
+                                if (self.steering != None):
+                                    self.steering.stop_sign()
                                 self.ok_to_send_messages = False
 
         #Looking for speed signs
@@ -385,6 +385,8 @@ class Cameras:
                 if(self.ok_to_send_messages and is_only_inner_circle and sign_radius > 27):
                     #Send message
                     #must calibrate the distance given by sign_radius. Also, must reset ok_to_send_messages somewhere else, probably in steering...
+                    if (self.steering != None):
+                        self.steering.speed_limit(speed_sign_value)
                     self.ok_to_send_messages = False
 
         #Looking for traffic lights
@@ -460,6 +462,8 @@ class Cameras:
                                                 cv2.putText(self.image_1, "Traffic light", (x_min,y_min-7), font, font_size, (0,green_light_value,red_light_value),font_thickness)
                                             if (self.ok_to_send_messages and green_y - red_y > 55):
                                                 # Here we send a message to stop the car. We have to ajust the parameter so that we enter this if at the correct distance.
+                                                if (self.steering != None):
+                                                    self.steering.traffic_light()
                                                 self.ok_to_send_messages = False
 
 
