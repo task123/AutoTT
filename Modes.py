@@ -7,7 +7,7 @@ from nanpy import ArduinoApi
 import Steering
 import TCP
 import Lights
-import Motors
+import Motor
 
 class Modes:
     list_of_modes = ["Tilt Steering", "Tilt, Lights", "Tilt with AOA", "Button Steering", "Button with AOA", "Follow line", "Stop sign", "Traffic light", "Self steering"] # AOA - Automated Object Avoidence
