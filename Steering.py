@@ -18,7 +18,6 @@ class SteeringWithIOSGyro:
         self.min_roll = 3.5 * 3.14 / 180.0
         self.max_roll = 45.0 * 3.14 / 180.0
         self.max_pitch = 80.0 * 3.14 / 180.0
-        gyro_update_intervall = 1.0/60.0
         ##################################################
         # Values after this should not need to be changed.
         ##################################################
@@ -131,12 +130,6 @@ Sends messages set_right_speed('speed') and set_left_speed('speed') to 'motors'.
 class SteeringWithIOSButtons:
     max_speed = 100.0
     def __init__(self, motors):
-        # this values might need to be adjusted
-        gyro_update_intervall = 1.0/60.0
-        ##################################################
-        # Values after this should not need to be changed.
-        ##################################################
-        
         self.motors = motors
         
         self.stop = True
