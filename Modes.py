@@ -10,7 +10,7 @@ import Lights
 import Motor
 
 class Modes:
-    list_of_modes = ["Tilt Steering", "Tilt, Lights", "Tilt with AOA", "Button Steering", "Button with AOA", "Follow line", "Stop sign", "Traffic light", "Self steering"] # AOA - Automated Object Avoidence
+    list_of_modes = ["Tilt Steering", "Tilt, Lights", "Tilt with AOA", "Button Steering", "Button with AOA", "Follow line", "Stop sign", "Traffic light", "Tilt, Traffic rules, Light", "Self steering"] # AOA - Automated Object Avoidence
     
     list_of_info_modes = ["Control the car by tilting your iOS device.", 
     "As 'Tilt Stering', but with lights on. The indicators are controlled by pushing the right/left side of the screen and the high beam by pushing both sides of the screen.", 
@@ -20,6 +20,7 @@ class Modes:
     "The car tries to follow a line on the ground and stops when objects blocks its way.", 
     "The car tries to follow a line on the ground and stops for stop signs and objects blocking its way.", 
     "The car tries to follow a line on the ground and stops for red traffic lights and objects blocking its way.", 
+    "As 'Tilt, Lights', but with speedlimits and the car stops for stop signs, red traffic lights and object blocking its way.",
     "The car tries to follow a line on the ground and stops for stop signs, red traffic lights and objects blocking its way."]
     
     def __init__(self, autoTTCommunication, motors,  lights, steering, cameras, status, disconnect):
@@ -69,12 +70,14 @@ class Modes:
                     stop_cont_recv = self.steering, disconnect_recv = self.disconnect, shut_down_recv = self.disconnect, 
                     video_recv = self.cameras, button_recv = self.steering)
             elif (message == "5"): # Follow line
-                steering
+                self.steering = Steering.FollowLine(self.motors)
             elif (message == "6"): # Stop sign
                 steering
             elif (message == "7"): # Traffic light
                 steering
-            elif (message == "8"): # Self steering
+            elif (message == "8"): # Tilt, Traffic rules, Lights
+                steering
+            elif (message == "9"): # Self steering
                 steering
 
     def send_modes(self):
