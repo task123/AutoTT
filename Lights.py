@@ -10,6 +10,7 @@ class Lights:
     self.high_beam_value = 400
     self.indicator_blink_time = 0.3
     self.indicator_blink_delay = 0.3
+    self.high_beam_blink_time_and_delay = 0.5
     # these variables might change
     self.headlight_pin = 9
     self.tail_light_pin = 17
@@ -97,7 +98,8 @@ class Lights:
   def blink_high_beam(self):
     self.on()
     self.high_beam_on()
-    time.sleep(0.5)
+    time.sleep(self.high_beam_blink_time_and_delay)
     self.high_beam_off()
-    time.sleep(0.5)
+    time.sleep(self.high_beam_blink_time_and_delay)
     self.high_beam_on()
+    time.sleep(self.high_beam_blink_time_and_delay)
