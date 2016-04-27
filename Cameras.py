@@ -209,7 +209,6 @@ class Cameras:
         print "start stop sign"
         if (not self.is_camera_1_on()):
             self.start_camera_1()
-            print "turn on cam 1"
         print "is camera_1 on " 
         print self.is_camera_1_on()
         self.look_for_stop_sign = True
@@ -219,7 +218,7 @@ class Cameras:
         self.look_for_stop_sign = False
 
     def start_looking_for_speed_signs(self):
-        if (not self.is_camera_1_on):
+        if (not self.is_camera_1_on()):
             self.start_camera_1()
         self.look_for_speed_sign = True
     
@@ -228,7 +227,7 @@ class Cameras:
         self.look_for_speed_sign = False
 
     def start_looking_for_traffic_lights(self):
-        if (not self.is_camera_1_on):
+        if (not self.is_camera_1_on()):
             self.start_camera_1()
         self.look_for_traffic_light = True
 
@@ -237,7 +236,7 @@ class Cameras:
         self.look_for_traffic_light = False
 
     def start_drawing_rectangles(self):
-        if (not self.is_camera_1_on):
+        if (not self.is_camera_1_on()):
             self.start_camera_1()
         self.draw_rectangles = True
         
@@ -245,7 +244,7 @@ class Cameras:
         self.draw_rectangles = False
 
     def start_writing_distances(self):
-        if (not self.is_camera_1_on):
+        if (not self.is_camera_1_on()):
             self.start_camera_1()
         self.write_distances = True
     
@@ -254,7 +253,7 @@ class Cameras:
         self.write_distances = False
 
     def start_writing_type_of_objects(self):
-        if (not self.is_camera_1_on):
+        if (not self.is_camera_1_on()):
             self.start_camera_1()
         self.write_type_of_objects = True
     
