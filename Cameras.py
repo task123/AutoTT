@@ -283,7 +283,7 @@ class Cameras:
     def detect_signs_and_lights(self):
         if (self.image_1 == None):
             print "cameras attribute image_1 is None"
-        hsv_image_1 = cv2.cvtColor(self.image_1, cv2.COLOR_BGR2HSV)
+        self.hsv_image_1 = cv2.cvtColor(self.image_1, cv2.COLOR_BGR2HSV)
         font = cv2.FONT_HERSHEY_PLAIN
         font_size = 1.5
         font_thickness = 2
