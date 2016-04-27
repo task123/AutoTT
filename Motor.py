@@ -86,7 +86,7 @@ class Motor:
         min_voltage = 1.0
         self.correction_interval = 0.01
         self.proportional_term_in_PID = 1.4  #0.12
-        self.derivative_term_in_PID = 0.1
+        self.derivative_term_in_PID = 0.01
         # these values might change
         self.pin_right_forward = 6
         self.pin_right_backward = 11
