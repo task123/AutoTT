@@ -46,6 +46,8 @@ class Lights:
     self.is_left_indicator_on = False
     self.arduino.analogWrite(self.headlight_pin, 0)
     self.arduino.digitalWrite(self.tail_light_pin, 0)
+    self.arduino.digitalWrite(self.right_indicator_pin, 0)
+    self.arduino.digitalWrite(self.left_indicator_pin, 0)
 
     
   def high_beam_on(self):
