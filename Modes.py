@@ -4,6 +4,7 @@ import math
 import time
 import os
 from nanpy import ArduinoApi
+import Steering
 
 class Modes:
     list_of_modes = ["Tilt Steering", "Tilt, Lights", "Tilt with AOA", "Button Steering", "Button with AOA", "Follow line", "Stop sign", "Traffic light", "Self steering"] # AOA - Automated Object Avoidence
@@ -34,13 +35,13 @@ class Modes:
             self.autoTTCommunication.info_modes(self.list_of_info_modes, int(message))
         elif (type == "ChosenMode"):
             if (message == " 0"): # Tilt Steering
-                steering = SteeringWithIOSGyro(self.motors, self.autoTTCommunication)
+                steering = Steering.SteeringWithIOSGyro(self.motors, self.autoTTCommunication)
                 autoTTCommunication.set_receivers(gyro_recv = steering, stop_cont_recv = steering, button_recv = None)
                 steering.button_indicators_off()
                 autoTTCommunication.buttons_off()
             elif (message == "1"): # Tilt, Lights
                 print "yess"
-                steering = SteeringWithIOSGyro(self.motors, self.autoTTCommunication)
+                steering = Steering.SteeringWithIOSGyro(self.motors, self.autoTTCommunication)
                 print "1"
                 autoTTCommunication.set_receivers(gyro_recv = steering, stop_cont_recv = steering, button_recv = steering)
                 print "2"
@@ -54,13 +55,13 @@ class Modes:
                 autoTTCommunication.buttons_on()
                 time.sleep(1)                
             elif (message == "2"): # Tilt with AOA
-                steering = SteeringWithIOSGyro(self.motors, self.autoTTCommunication)
+                steering = Steering.SteeringWithIOSGyro(self.motors, self.autoTTCommunication)
                 autoTTCommunication.set_receivers(gyro_recv = steering, stop_cont_recv = steering)
             elif (message == "3"): # Button Steering
-                steering = SteeringWithIOSButtons(self.motors, self.autoTTCommunication)
+                steering = Steering.SteeringWithIOSButtons(self.motors, self.autoTTCommunication)
                 autoTTCommunication.set_receivers(gyro_recv = steering, stop_cont_recv = steering)
             elif (message == "4"): # Button with AOA
-                steering = SteeringWithIOSButtons(self.motors, self.autoTTCommunication)
+                steering = Steering.SteeringWithIOSButtons(self.motors, self.autoTTCommunication)
                 autoTTCommunication.set_receivers(gyro_recv = steering, stop_cont_recv = steering)
             elif (message == "5"): # Follow line
                 steering
