@@ -360,7 +360,6 @@ class Cameras:
                 y_end =int(sign_center_y+sign_radius*0.5)
 
                 temporary_ROI = sign_mask[y_start:y_end,x_start:x_end]
-                cv2.imshow("number",temporary_ROI)
                 resized_ROI = [cv2.resize(temporary_ROI,(20,20),interpolation=cv2.INTER_LINEAR)]
 
                 resized_ROI_array = np.array(resized_ROI[0])
@@ -391,6 +390,8 @@ class Cameras:
 
         #Looking for traffic lights
         if(self.look_for_traffic_light):
+            print "looking for traffic lights"
+            
             green_mask = cv2.inRange(hsv_image_1,np.array((80,100,50), dtype = "uint8"),np.array((90, 255, 255), dtype = "uint8"))
             yellow_mask = cv2.inRange(hsv_image_1,np.array((20,50,100), dtype = "uint8"),np.array((30, 255, 255), dtype = "uint8"))
 
@@ -412,6 +413,8 @@ class Cameras:
                             green_minus_red = abs(green_circles[0,:][g_circ][1]-red_circles[0,:][r_circ][1])
                             y_min = int(red_circles[0,:][r_circ][1] + green_minus_red/2*(1-2))
                             y_max = int(red_circles[0,:][r_circ][1] + green_minus_red/2*(1+2))
+                            
+                            print "found good traffic light candidate"
                             
                             #Checking if it is the correct proportionality and if green is on top, might have to ajust the proportionality interval
                             if(green_circles[0,:][g_circ][1]>red_circles[0,:][r_circ][1] and (y_max-y_min)/(x_max-x_min) > 1.8 and (y_max-y_min)/(x_max-x_min) < 2.2):
