@@ -302,7 +302,7 @@ class Cameras:
 
                     approximate_polygon = cv2.approxPolyDP(red_contours[i], 0.05 * peripheral, True)
 
-                    if (len(approximate_polygon) == 8 and cv2.isContourConvex(approximate_polygon) and cv2.contourArea(approximate_polygon) > 30):
+                    if (True)#len(approximate_polygon) == 8 and cv2.isContourConvex(approximate_polygon) and cv2.contourArea(approximate_polygon) > 30):
                         x,y,w,h = cv2.boundingRect(approximate_polygon)
                         stop_sign = red_mask[y:(y+h),x:(x+w)]
                         sign_rows,sign_cols = stop_sign.shape
