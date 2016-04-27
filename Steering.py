@@ -278,7 +278,7 @@ class FollowLine:
                 self.motors.set_right_speed(self.right_speed)
                 
                 self.previous_error = self.error
-                print self.right_speed
+                print self.error
 
             time.sleep(self.correction_interval)
 
