@@ -15,6 +15,8 @@ lights = None
 cameras = None
 fan_controller = None
 disconnect = None
+modes = None
+steering = None
 try:
     trip_meter = Motor.TripMeter()
     motors = Motor.Motor(trip_meter)
@@ -58,3 +60,6 @@ except:
         fan_controller.turn_off()
     if (disconnect != None):
         disconnect.disconnect()
+    if (mode != None and steering != None):
+        if (mode.is_following_line_running):
+            steering.stop_following_line()
