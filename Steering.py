@@ -241,6 +241,7 @@ class FollowLine:
         self.traffic_stop = True
         self.is_speed_limit_on = False
         self.speed_limit = 100.0
+        self.quit = False
     
         self.arduino.pinMode(self.pin_photo_diode_power,self.arduino.OUTPUT)
         self.arduino.pinMode(self.pin_left_photo_diode, self.arduino.INPUT)
@@ -250,6 +251,7 @@ class FollowLine:
         self.find_line(start_speed)
         
     def start_following_line(self):
+        self.quit = False
         self.follow_line_thread = threading.Thread(target = self.follow_line_loop)
         self.follow_line_thread.setDaemon(True)
         self.follow_line_thread.start()
@@ -267,7 +269,7 @@ class FollowLine:
  
     def follow_line_loop(self):
         print "following line"
-        while True:
+        while not self.quit:
             if (self.stopped):
                 self.motors.stop()
             else:
@@ -299,28 +301,32 @@ class FollowLine:
         self.motors.turn_off()
 
     def find_line(self, speed):
+        self.quit = False
         self.find_line_thread = threading.Thread(target = self.find_line_loop, args=(speed,))
         self.find_line_thread.setDaemon(True)
         self.find_line_thread.start()
      
     def find_line_loop(self,speed):
         print speed
-        self.stopped = False
         self.motors.set_left_speed(speed)
         self.motors.set_right_speed(speed)
         print "speed set"
         line_found_left = False
         line_found_right = False
-        while not line_found_left and not line_found_right:
+        while (self.stopped and not self.quit):
+            time.sleep(0.01)
+        while not line_found_left and not line_found_right and not self.quit:
             if (self.arduino.analogRead(self.pin_left_photo_diode) < self.left_photo_diode_found_line_value):
                 line_found_left = True
                 print "left diode triggered low"
             elif (self.arduino.analogRead(self.pin_right_photo_diode) < self.right_photo_diode_found_line_value):
                 line_found_right = True
                 print "right diode triggered low"
+            while (self.stopped and not self.quit):
+                time.sleep(0.01)
             time.sleep(self.correction_interval)
         print "Line found!"
-        while True:
+        while not quit:
             if (line_found_left and self.arduino.analogRead(self.pin_left_photo_diode) > self.left_photo_diode_found_line_value):
                 self.start_following_line()
                 print "break"
@@ -375,4 +381,6 @@ class FollowLine:
     def stop_following_speed_limit(self):
         self.is_speed_limit_on = False
 
+    def end_following_line(self):
+        self.quit = True
 
