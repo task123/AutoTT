@@ -38,13 +38,13 @@ class Cameras:
         self.video_1 = None
         self.video_2 = None
         
-        self.look_for_stop_sign = True
-        self.look_for_speed_sign = True
-        self.look_for_traffic_light = True
+        self.look_for_stop_sign = False
+        self.look_for_speed_sign = False
+        self.look_for_traffic_light = False
         
-        self.draw_rectangles = True
+        self.draw_rectangles = False
         self.write_distances = False
-        self.write_type_of_objects = True
+        self.write_type_of_objects = False
         
         self.knn = cv2.ml.KNearest_create()
         self.knn_initialized = False
