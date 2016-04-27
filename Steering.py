@@ -208,7 +208,7 @@ The car must start off the line, such that it will cross it when driving straigh
 class FollowLine:
     def __init__(self, motors, speed = 10):
         # these values might need to be adjusted
-        self.proportional_term_in_PID = 0.12
+        self.proportional_term_in_PID = 0.11
         self.derivative_term_in_PID = 0.002
         self.part_off_new_error_used_in_smoothing = 0.3
         self.left_photo_diode_found_line_value = 180
