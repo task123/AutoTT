@@ -61,5 +61,5 @@ except:
     if (disconnect != None):
         disconnect.disconnect()
     if (modes != None and steering != None):
-        if (mode.is_following_line_running):
+        if (modes.is_following_line_running):
             steering.stop_following_line()
