@@ -205,41 +205,41 @@ class Cameras:
         flaskApp.run(host='0.0.0.0', port=self.streaming_port, debug=False, use_reloader=False)
 
 
-    def set_look_for_stop_sign(self,look_for_stop_sign):
-        self.look_for_stop_sign = look_for_stop_sign
+    def start_looking_for_stop_signs(self):
+        self.look_for_stop_sign = True
 
-    def get_look_for_stop_sign(self):
-        return self.look_for_stop_sign
+    def stop_looking_for_stop_signs(self):
+        self.look_for_stop_sign = False
 
-    def set_look_for_speed_sign(self,look_for_speed_sign):
-        self.look_for_speed_sign = look_for_speed_sign
+    def start_looking_for_speed_signs(self):
+        self.look_for_speed_sign = True
     
-    def get_look_for_speed_sign(self):
-        return self.look_for_speed_sign
+    def stop_looking_for_speed_signs(self):
+        self.look_for_speed_sign = False
 
-    def set_look_for_traffic_light(self,look_for_traffic_light):
-        self.look_for_traffic_light = look_for_traffic_light
+    def start_looking_for_traffic_lights(self):
+        self.look_for_traffic_light = True
 
-    def get_look_for_traffic_light(self):
-        return look_for_traffic_light
+    def stop_looking_for_traffic_lights(self):
+        self.look_for_traffic_light = False
 
-    def set_draw_rectangles(self,draw_rectangles):
-        self.draw_rectangles = draw_rectangles
+    def start_drawing_rectangles(self):
+        self.draw_rectangles = True
         
-    def get_draw_rectangles(self):
-        return self.draw_rectangles
+    def stop_drawing_rectangles(self):
+        self.draw_rectangles = False
 
-    def set_write_distances(self,write_distances):
-        self.write_distances = write_distances
+    def start_writing_distances(self):
+        self.write_distances = True
     
-    def get_write_distances(self):
-        return self.write_distances
+    def stop_writing_distances(self):
+        self.write_distances = False
 
-    def set_write_type_of_objects(self, write_type_of_objects):
-        self.write_type_of_objects = write_type_of_objects
+    def start_writing_type_of_objects(self):
+        self.write_type_of_objects = True
     
-    def get_write_type_of_objects(self):
-        return self.write_type_of_objects
+    def stop_writing_type_of_objects(self):
+        self.write_type_of_objects = False
     
     def set_ok_to_send_messages(self, ok_to_send_messages):
         self.ok_to_send_messages = ok_to_send_messages
