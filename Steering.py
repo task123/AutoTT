@@ -330,8 +330,8 @@ class FollowLine:
                 time.sleep(0.01)
             time.sleep(self.correction_interval)
         print "Line found!"
-        print quit
-        while not quit:
+        print self.quit
+        while not self.quit:
             if (line_found_left and self.arduino.analogRead(self.pin_left_photo_diode) > self.left_photo_diode_found_line_value):
                 self.motors.set_right_speed(0.0)
                 self.motors.set_left_speed(0.0)
