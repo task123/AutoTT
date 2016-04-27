@@ -95,7 +95,7 @@ class Lights:
     self.is_left_indicator_on = False
     
   def blink_high_beam(self):
-    self.lights_on()
+    self.on()
     self.high_beam_on()
     time.sleep(0.5)
     self.high_beam_off()
