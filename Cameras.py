@@ -453,6 +453,11 @@ class Cameras:
                                                 for col in range(0,green_cols):
                                                     green_avg = green_avg + green_ROI[row,col]
                                             green_avg = green_avg/green_ROI.size
+                                            
+                                            traffic_light_value = 0
+                                            
+                                            green_light_value = 0
+                                            red_light_value = 255
 
                                             if(red_avg > 150):
                                                 traffic_light_value = 0 # 0 red, 1 yellow, 2 green
