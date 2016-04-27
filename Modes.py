@@ -34,13 +34,13 @@ class Modes:
         self.disconnect = disconnect
         
     
-    def receive_message(self, type, message):
+    def receive_message(self, message_type, message):
         print "mode " + message
-        if (type == "Modes"):
+        if (message_type == "Modes"):
             self.autoTTCommunication.modes(self.list_of_modes)
-        elif (type == "InfoModes"):
+        elif (message_type == "InfoModes"):
             self.autoTTCommunication.info_modes(self.list_of_info_modes, int(message))
-        elif (type == "ChosenMode"):
+        elif (message_type == "ChosenMode"):
             if (message == "0"): # Tilt Steering
                 print "0000"
                 steering = None
