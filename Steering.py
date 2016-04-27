@@ -20,6 +20,7 @@ class SteeringWithIOSGyro:
         self.max_pitch = 80.0 * 3.14 / 180.0
         self.distance_to_travel_before_stopping_for_stop_sign = 0.05
         self.distance_to_travel_before_stopping_for_traffic_light = 0.05
+        self.distance_to_travel_before_changing_speed_limit = 0.05
         self.time_waiting_at_stop_sign = 2.0
         ##################################################
         # Values after this should not need to be changed.
@@ -29,6 +30,8 @@ class SteeringWithIOSGyro:
         
         self.stop = True
         self.traffic_stop = True
+        self.speed_limit = 100.0
+        self.is_speed_limit_on = False
         
         self.light = None
         self.is_button_indicator_on = False
@@ -67,7 +70,13 @@ class SteeringWithIOSGyro:
             elif (direction_angle < -90.0 and direction_angle >= -180.0):
                 left_speed = -100.0 * speed
                 right_speed = -left_speed * (1 + (direction_angle - 90.0) / 45.0)
-
+            if (self.is_speed_limit_on):
+                highest_speed = left_speed
+                if (right_speed > left_speed):
+                    highest_speed = right_speed
+                if (highest_speed > self.speed_limit):
+                    right_speed = right_speed / highest_speed * self.speed_limit
+                    left_speed = left_speed / highest_speed * self.speed_limit
             self.motors.set_right_speed(right_speed)
             self.motors.set_left_speed(left_speed)
         elif (type == "Stop"):
@@ -116,12 +125,10 @@ class SteeringWithIOSGyro:
                 self.lights.left_indicator_off()
             
     def button_indicators_on(self, lights):
-        print "button_indicators_on"
         self.lights = lights
         self.is_button_indicators_on = True
         self.lights.on()
-        print "button_indicators_on_finished"
-        
+
     def button_indicators_off(self):
         self.is_button_indicators_on = False
         if (self.lights != None):
@@ -148,7 +155,19 @@ class SteeringWithIOSGyro:
        elif (light_color == "green"):
            if (self.traffic_stop):
                self.stop = False
+               
+    def speed_limit(speed_limit):
+        self.trip_meter.reset()
+        while (self.trip_meter.get_right_distance() < self.distance_to_travel_before_changing_speed_limit and self.trip_meter.get_left_distance() < self.distance_to_travel_before_changing_speed_limit):
+            time.sleep(0.01)
+        self.speed_limit = speed_limit
 
+    def start_following_speed_limit(self):
+        self.is_speed_limit_on = True
+        
+    def stop_following_speed_limit(self):
+        self.is_speed_limit_on = False
+        
 """React to messages from AutoTTCommunication and control a class 'motors', which steers the motors.
     
 Sends messages set_right_speed('speed') and set_left_speed('speed') to 'motors'.
@@ -193,6 +212,10 @@ class FollowLine:
         self.target_value_left_photo_diode = 200
         self.target_value_right_photo_diode = 200
         self.correction_interval = 0.01
+        self.distance_to_travel_before_stopping_for_stop_sign = 0.05
+        self.distance_to_travel_before_stopping_for_traffic_light = 0.05
+        self.distance_to_travel_before_changing_speed_limit = 0.05
+        self.time_waiting_at_stop_sign = 2.0
         # these values might change
         self.pin_photo_diode_power = 12
         self.pin_left_photo_diode = 18
@@ -214,6 +237,9 @@ class FollowLine:
         self.previous_right_error = 0
         
         self.stopped = True #Need this to have an absolute stop, implement a if/else in PID loop
+        self.traffic_stop = True
+        self.is_speed_limit_on = False
+        self.speed_limit = 100.0
     
         self.arduino.pinMode(self.pin_photo_diode_power,self.arduino.OUTPUT)
         self.arduino.pinMode(self.pin_left_photo_diode, self.arduino.INPUT)
@@ -249,7 +275,15 @@ class FollowLine:
                 
                 self.new_left_speed = self.target_speed + self.left_error*self.proportional_term_in_PID - (self.left_error - self.previous_left_error)*self.derivative_term_in_PID/self.correction_interval
                 self.new_right_speed = self.target_speed + self.right_error*self.proportional_term_in_PID - (self.right_error - self.previous_right_error)*self.derivative_term_in_PID/self.correction_interval
-
+                           
+                if (self.is_speed_limit_on):
+                    highest_speed = new_left_speed
+                    if (new_right_speed > new_left_speed):
+                        highest_speed = new_right_speed
+                    if (highest_speed > self.speed_limit):
+                        new_right_speed = new_right_speed / highest_speed * self.speed_limit
+                        new_left_speed = new_left_speed / highest_speed * self.speed_limit
+                    
                 self.motors.set_left_speed(self.new_left_speed)
                 self.motors.set_right_speed(self.new_right_speed)
 
@@ -257,6 +291,8 @@ class FollowLine:
                 self.previous_right_error = self.right_error
 
             time.sleep(self.correction_interval)
+       
+    def 
 
     def stop(self):
         self.stopped = True
@@ -296,6 +332,48 @@ class FollowLine:
                 break
             time.sleep(self.correction_interval)
         
-            
+    def receive_message(self, type, message):
+        if (type == "Stop"):
+            self.stopped = True
+            self.traffic_stop = False
+            self.motors.left_speed(0.0)
+            self.motors.right_speed(0.0)
+        elif (type == "Continue"):
+            self.stopped = False
+            self.traffic_stop = True
+        
+    def stop_sign(self):
+       self.traffic_stop = True
+       self.trip_meter.reset()
+       while (self.trip_meter.get_right_distance() < self.distance_to_travel_before_stopping_for_stop_sign and self.trip_meter.get_left_distance() < self.distance_to_travel_before_stopping_for_stop_sign):
+           time.sleep(0.01)
+       if (not self.stopped):
+           self.stopped = True
+           time.sleep(self.time_waiting_at_stop_sign)
+           if (self.traffic_stop):
+               self.stopped = False
+              
+    def traffic_light(light_color):
+       if (light_color == "red"):
+           self.traffic_stop = True
+           self.trip_meter.reset()
+           while (self.trip_meter.get_right_distance() < self.distance_to_travel_before_stopping_for_traffic_light and self.trip_meter.get_left_distance() < self.distance_to_travel_before_stopping_for_traffic_light):
+               time.sleep(0.01)
+           self.stopped = True
+       elif (light_color == "green"):
+           if (self.traffic_stop):
+               self.stopped = False
+               
+    def speed_limit(speed_limit):
+        self.trip_meter.reset()
+        while (self.trip_meter.get_right_distance() < self.distance_to_travel_before_changing_speed_limit and self.trip_meter.get_left_distance() < self.distance_to_travel_before_changing_speed_limit):
+            time.sleep(0.01)
+        self.speed_limit = speed_limit
+        
+    def start_following_speed_limit(self):
+        self.is_speed_limit_on = True
+        
+    def stop_following_speed_limit(self):
+        self.is_speed_limit_on = False
 
 
