@@ -337,7 +337,7 @@ class Cameras:
                     result_list_speed_signs.pop(0)
                 copy_result_list = list(result_list_speed_signs)
                 copy_result_list.sort()
-                speed_sign_value = copy_result_list.pop(int(len(copy_result_list)/2))[0][0]
+                speed_sign_value = copy_result_list.pop(int(len(copy_result_list)/2))[0][0]*10
 
                 if(self.draw_rectangles):
                     #draw rectangles
