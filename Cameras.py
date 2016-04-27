@@ -380,7 +380,7 @@ class Cameras:
                     cv2.rectangle(self.image_1, (sign_center_x-sign_radius,sign_center_y-sign_radius), (sign_center_x+sign_radius,sign_center_y+sign_radius), (0,0,155),3)
                 if(self.write_type_of_objects):
                     #write objects
-                    cv2.putText(self.image_1, "Speed limit: %d" % speed_sign_value, (sign_center_x-sign_radius,sign_center_y-sign_radius-7), font, font_size, (0,0,200),font_thickness)
+                    cv2.putText(self.image_1, "%d" % speed_sign_value, (sign_center_x-sign_radius,sign_center_y-sign_radius-7), font, font_size, (0,0,200),font_thickness)
                 if(self.ok_to_send_messages and is_only_inner_circle and sign_radius > 27):
                     #Send message
                     #must calibrate the distance given by sign_radius. Also, must reset ok_to_send_messages somewhere else, probably in steering...
