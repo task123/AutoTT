@@ -204,14 +204,13 @@ The car must start off the line, such that it will cross it when driving straigh
 """
 # It is adjusted to work for a line of black electrical tape on a grey speckled floor.
 class FollowLine:
-    def __init__(self, motors, start_speed = 30):
+    def __init__(self, motors, speed = 30):
         # these values might need to be adjusted
         self.proportional_term_in_PID = 80
         self.derivative_term_in_PID = 0
         self.left_photo_diode_found_line_value = 180
         self.right_photo_diode_found_line_value = 140
-        self.target_value_left_photo_diode = 210
-        self.target_value_right_photo_diode = 170
+        self.offset_value_between_right_and_left_photo_diode = 40
         self.correction_interval = 0.01
         self.distance_to_travel_before_stopping_for_stop_sign = 0.05
         self.distance_to_travel_before_stopping_for_traffic_light = 0.05
@@ -227,16 +226,11 @@ class FollowLine:
         
         self.motors = motors
         self.arduino = motors.arduino
+        
+        self.speed = speed
+        self.error = 0
+        self.previous_error = 0
 
-        self.set_speed(start_speed)
-        
-        self.new_left_speed = start_speed
-        self.new_right_speed = start_speed
-        self.left_error = 0
-        self.right_error = 0
-        self.previous_left_error = 0
-        self.previous_right_error = 0
-        
         self.stopped = True #Need this to have an absolute stop, implement a if/else in PID loop
         self.traffic_stop = True
         self.is_speed_limit_on = False
@@ -248,25 +242,18 @@ class FollowLine:
         self.arduino.pinMode(self.pin_right_photo_diode, self.arduino.INPUT)
        
         self.arduino.digitalWrite(self.pin_photo_diode_power, 1)
-        self.find_line(start_speed)
+        self.find_line(self.speed)
+        
+    def set_speed(speed):
+       self.speed = 
         
     def start_following_line(self):
         self.quit = True
-        time.sleep(1)
+        time.sleep(0.5)
         self.quit = False
         self.follow_line_thread = threading.Thread(target = self.follow_line_loop)
         self.follow_line_thread.setDaemon(True)
         self.follow_line_thread.start()
-
-    def set_speed(self, target_speed):
-        self.target_speed = int(target_speed)
-        if (self.target_speed > 100):
-            self.target_speed = 100
-        if (self.target_speed < -100):
-            self.target_speed = -100
-        
-        self.previous_left_error = self.arduino.analogRead(self.pin_left_photo_diode) - self.target_value_left_photo_diode
-        self.previous_right_error = self.arduino.analogRead(self.pin_right_photo_diode) - self.target_value_right_photo_diode
  
     def follow_line_loop(self):
         print "following line"
@@ -274,26 +261,16 @@ class FollowLine:
             if (self.stopped):
                 self.motors.stop()
             else:
-                self.left_error = self.arduino.analogRead(self.pin_left_photo_diode) - self.target_value_left_photo_diode
-                self.right_error = self.arduino.analogRead(self.pin_right_photo_diode) - self.target_value_right_photo_diode
+                self.error = self.arduino.analogRead(self.pin_right_photo_diode) - self.arduino.analogRead(self.pin_left_photo_diode) - self.offset_value_between_right_and_left_photo_diode
                 
-                self.new_left_speed = self.target_speed + self.left_error*self.proportional_term_in_PID + (self.left_error - self.previous_left_error)*self.derivative_term_in_PID/self.correction_interval
-                self.new_right_speed = self.target_speed + self.right_error*self.proportional_term_in_PID + (self.right_error - self.previous_right_error)*self.derivative_term_in_PID/self.correction_interval
+                self.left_speed = self.speed - self.error*self.proportional_term_in_PID + (self.error - self.previous_error)*self.derivative_term_in_PID/self.correction_interval
+                self.right_speed = self.speed + self.error*self.proportional_term_in_PID - (self.error - self.previous_error)*self.derivative_term_in_PID/self.correction_interval
                 
-                print self.new_right_speed 
-                if (self.is_speed_limit_on):
-                    highest_speed = new_left_speed
-                    if (new_right_speed > new_left_speed):
-                        highest_speed = new_right_speed
-                    if (highest_speed > self.speed_limit):
-                        new_right_speed = new_right_speed / highest_speed * self.speed_limit
-                        new_left_speed = new_left_speed / highest_speed * self.speed_limit
+                self.previous_error = self.error
                     
-                self.motors.set_left_speed(self.new_left_speed)
-                self.motors.set_right_speed(self.new_right_speed)
-
-                self.previous_left_error = self.left_error
-                self.previous_right_error = self.right_error
+                self.motors.set_left_speed(self.left_speed)
+                self.motors.set_right_speed(self.right_speed)
+                print self.right_speed
 
             time.sleep(self.correction_interval)
 
@@ -331,16 +308,12 @@ class FollowLine:
             if (line_found_left and self.arduino.analogRead(self.pin_left_photo_diode) > self.left_photo_diode_found_line_value):
                 self.motors.set_right_speed(0.0)
                 self.motors.set_left_speed(0.0)
-                self.new_right_speed = 0.0
-                self.new_left_speed = 0.0
                 self.start_following_line()
                 print "break"
                 break
             elif (line_found_right and self.arduino.analogRead(self.pin_right_photo_diode) > self.right_photo_diode_found_line_value):
                 self.motors.set_right_speed(0.0)
                 self.motors.set_left_speed(0.0)
-                self.new_right_speed = 0.0
-                self.new_left_speed = 0.0
                 self.start_following_line()
                 print "break"
                 break
