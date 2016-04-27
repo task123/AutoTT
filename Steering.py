@@ -19,6 +19,7 @@ class SteeringWithIOSGyro:
         self.max_roll = 45.0 * 3.14 / 180.0
         self.max_pitch = 80.0 * 3.14 / 180.0
         self.distance_to_travel_before_stopping_for_stop_sign = 0.05
+        self.distance_to_travel_before_stopping_for_traffic_light = 0.05
         self.time_waiting_at_stop_sign = 2.0
         ##################################################
         # Values after this should not need to be changed.
@@ -27,7 +28,7 @@ class SteeringWithIOSGyro:
         self.motors = motors
         
         self.stop = True
-        self.traffic_stop = False
+        self.traffic_stop = True
         
         self.light = None
         self.is_button_indicator_on = False
@@ -74,6 +75,7 @@ class SteeringWithIOSGyro:
             self.stop = True
             self.motors.stop()
         elif (type == "Continue"):
+            self.traffic_stop = True
             self.stop = False
         elif (self.is_button_indicators_on and type == "RightButtonTouchDown"):
             if (self.is_left_indicator_on):
@@ -135,10 +137,17 @@ class SteeringWithIOSGyro:
            time.sleep(self.time_waiting_at_stop_sign)
            if (self.traffic_stop):
                self.stop = False
-       self.traffic_stop = False
-       
-    def traffic_light():
-       "jl"
+              
+    def traffic_light(light_color):
+       if (light_color == "red"):
+           self.traffic_stop = True
+           self.trip_meter.reset()
+           while (self.trip_meter.get_right_distance() < self.distance_to_travel_before_stopping_for_traffic_light and self.trip_meter.get_left_distance() < self.distance_to_travel_before_stopping_for_traffic_light):
+               time.sleep(0.01)
+           self.stop = True
+       elif (light_color == "green"):
+           if (self.traffic_stop):
+               self.stop = False
 
 """React to messages from AutoTTCommunication and control a class 'motors', which steers the motors.
     
