@@ -11,6 +11,7 @@ import os
 port = 12345 
 
 motors = None
+lights = None
 cameras = None
 fan_controller = None
 disconnect = None
@@ -45,6 +46,8 @@ try:
 except:
     if (motors != None):
         motors.turn_off()
+    if (lights != None):
+        lights.off()
     if (cameras != None):
         cameras.turn_off()
     if (fan_controller != None):
