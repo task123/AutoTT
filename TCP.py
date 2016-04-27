@@ -163,6 +163,7 @@ class Disconnect:
             os.system("sudo shutdown now")
 
     def disconnect(self):
+        self.motors.arduino.digitalWrite(12,0) # turn off the light for the photo diode under the car
         self.motors.turn_off()
         self.lights.off()
         self.cameras.turn_off()
