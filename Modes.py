@@ -57,15 +57,10 @@ class Modes:
                     stop_cont_recv = self.steering, disconnect_recv = self.disconnect, shut_down_recv = self.disconnect, 
                     video_recv = self.cameras, button_recv = self.steering)
                 print "2"
-                steering.button_indicators_on(lights)
+                self.steering.button_indicators_on(lights)
                 print "3"
-                autoTTCommunication.buttons_on()
+                self.autoTTCommunication.buttons_on()
                 print "4"
-                time.sleep(1)
-                autoTTCommunication.buttons_on()
-                time.sleep(1)
-                autoTTCommunication.buttons_on()
-                time.sleep(1)                
             elif (message == "2"): # Tilt with AOA
                 self.steering = Steering.SteeringWithIOSGyro(self.motors, self.autoTTCommunication)
                 self.autoTTCommunication.set_receivers(gyro_recv = self.steering, mode_recv = self, status_recv = self.status, 
