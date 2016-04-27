@@ -227,11 +227,11 @@ class FollowLine:
         
         self.motors = motors
         self.arduino = motors.arduino
-        
+
         self.set_speed(start_speed)
         
-        self.new_left_speed = 0
-        self.new_right_speed = 0
+        self.new_left_speed = start_speed
+        self.new_right_speed = start_speed
         self.left_error = 0
         self.right_error = 0
         self.previous_left_error = 0
@@ -345,6 +345,8 @@ class FollowLine:
         elif (type == "Continue"):
             self.stopped = False
             self.traffic_stop = True
+            self.motors.set_right_speed(self.new_right_speed)
+            self.motors.set_left_speed(self.new_left_speed)
         
     def stop_sign(self):
        self.traffic_stop = True
