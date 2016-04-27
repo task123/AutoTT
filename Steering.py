@@ -114,6 +114,7 @@ class SteeringWithIOSGyro:
                 self.lights.left_indicator_off()
             
     def button_indicators_on(self, lights):
+        print "button_indicators_on"
         self.lights = lights
         self.is_button_indicators_on = True
         self.lights.on()
