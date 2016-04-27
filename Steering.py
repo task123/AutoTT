@@ -95,6 +95,7 @@ class SteeringWithIOSGyro:
                 else:
                     self.lights.high_beam_on()
                 self.is_high_beam_on = not self.is_high_beam_on
+                self.lights.left_indicator_off()
             else:
                 if (self.is_right_indicator_on):
                     self.lights.right_indicator_off()
@@ -109,6 +110,7 @@ class SteeringWithIOSGyro:
                 else:
                     self.lights.high_beam_on()
                 self.is_high_beam_on = not self.is_high_beam_on
+                self.lights.right_indicator_off()
             else:
                 if (self.is_left_indicator_on):
                     self.lights.left_indicator_off()
