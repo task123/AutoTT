@@ -42,6 +42,8 @@ class Modes:
             self.autoTTCommunication.info_modes(self.list_of_info_modes, int(message))
         elif (type == "ChosenMode"):
             if (message == "0"): # Tilt Steering
+                print "0000"
+                steering = None
                 print type(steering)
                 if (type(steering) == FollowingLine):
                     steering.stop_following_line()
@@ -86,7 +88,7 @@ class Modes:
                 self.cameras.stop_following_traffic_rules()
             elif (message == "5"): # Follow line
                 self.steering = Steering.FollowLine(self.motors)
-                self.autoTTCommunication.set_receivers(gyro_recv = self.steering, mode_recv = self, status_recv = self.status, 
+                self.autoTTCommunication.set_receivers(mode_recv = self, status_recv = self.status, 
                     stop_cont_recv = self.steering, disconnect_recv = self.disconnect, shut_down_recv = self.disconnect, 
                     video_recv = self.cameras)
                 self.lights.off()
@@ -140,7 +142,7 @@ class Modes:
                 self.cameras.start_writing_type_of_objects()
             elif (message == "10"): # Self steering
                 self.steering = Steering.FollowLine(self.motors)
-                self.autoTTCommunication.set_receivers(gyro_recv = self.steering, mode_recv = self, status_recv = self.status, 
+                self.autoTTCommunication.set_receivers(mode_recv = self, status_recv = self.status, 
                     stop_cont_recv = self.steering, disconnect_recv = self.disconnect, shut_down_recv = self.disconnect, 
                     video_recv = self.cameras)
                 self.lights.on()
