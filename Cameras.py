@@ -374,7 +374,7 @@ class Cameras:
                             y_min = int(red_circles[0,:][r_circ][1] + green_minus_red/2*(1-2))
                             y_max = int(red_circles[0,:][r_circ][1] + green_minus_red/2*(1+2))
                             
-                            #Checking if it is the correct proportionality and if green is on top
+                            #Checking if it is the correct proportionality and if green is on top, might have to ajust the proportionality interval
                             if(green_circles[0,:][g_circ][1]>red_circles[0,:][r_circ][1] and (y_max-y_min)/(x_max-x_min) > 1.8 and (y_max-y_min)/(x_max-x_min) < 2.2):
                                 
                                 #Finding which color is on
@@ -421,9 +421,8 @@ class Cameras:
                                                 cv2.rectangle(self.image_1, (x_min,y_min), (x_max,y_max), (0,green_light_value,red_light_value),3)
                                             if (write_type_of_objects):
                                                 cv2.putText(self.image_1, "Traffic light", (x_min,y_min-7), font, font_size, (0,green_light_value,red_light_value),font_thickness)
-                                            if (self.ok_to_send_messages):
+                                            if (self.ok_to_send_messages and green_y - red_y > 55):
                                                 # Here we send a message to stop the car. We have to ajust the parameter so that we enter this if at the correct distance.
-                                                #must make a better timing scheme! sort over correct proportionality, and use distance between green and red circles(?)
                                                 self.ok_to_send_messages = False
 
 
