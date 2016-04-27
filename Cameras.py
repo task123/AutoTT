@@ -4,6 +4,7 @@ from nanpy import ArduinoApi
 import time
 import threading
 from flask import Flask, render_template, Response
+import numpy as np
 
 class Cameras:
     # streaming_port on AutoTT iOS app is by default port + 1
