@@ -374,7 +374,7 @@ class Cameras:
                 speed_sign_value = copy_result_list.pop(int(len(copy_result_list)/2))[0][0]*10
 
                 print "draw rectangles:"
-                print selv.draw_rectangles
+                print self.draw_rectangles
                 if(self.draw_rectangles):
                     #draw rectangles
                     cv2.rectangle(self.image_1, (sign_center_x-sign_radius,sign_center_y-sign_radius), (sign_center_x+sign_radius,sign_center_y+sign_radius), (0,0,155),3)
