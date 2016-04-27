@@ -326,6 +326,7 @@ class Cameras:
         result_list_speed_signs = []
         is_only_inner_circle = False
         if(self.look_for_speed_sign):
+            print "looking for speed signs"
             if (not self.knn_initialized):
                 with np.load('knn_data.npz') as data:
                     train = data['train']
@@ -335,6 +336,7 @@ class Cameras:
             
             red_circles = cv2.HoughCircles(red_mask,cv2.HOUGH_GRADIENT,1,100000,param1=50,param2=40,minRadius=3,maxRadius=70)
             if red_circles is not None:
+                print "found red circles"
                 red_circles = np.uint16(np.around(red_circles))
                 (rows,columns,channels) = self.image_1.shape
                 sign_area = np.zeros((rows,columns), dtype=np.uint8)
@@ -372,6 +374,8 @@ class Cameras:
                 copy_result_list.sort()
                 speed_sign_value = copy_result_list.pop(int(len(copy_result_list)/2))[0][0]*10
 
+                print "draw rectangles:"
+                print selv.draw_rectangles
                 if(self.draw_rectangles):
                     #draw rectangles
                     cv2.rectangle(self.image_1, (sign_center_x-sign_radius,sign_center_y-sign_radius), (sign_center_x+sign_radius,sign_center_y+sign_radius), (0,0,155),3)
