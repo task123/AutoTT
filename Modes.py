@@ -33,6 +33,8 @@ class Modes:
         self.status = status
         self.disconnect = disconnect
         
+        self.following_line_running = False
+        
     
     def receive_message(self, message_type, message):
         print "mode " + message
@@ -42,10 +44,7 @@ class Modes:
             self.autoTTCommunication.info_modes(self.list_of_info_modes, int(message))
         elif (message_type == "ChosenMode"):
             if (message == "0"): # Tilt Steering
-                print "0000"
-                steering = None
-                print type(steering)
-                if (type(steering) == FollowingLine):
+                if (self.followling_line_running):
                     steering.stop_following_line()
                 self.steering = Steering.SteeringWithIOSGyro(self.motors)
                 self.autoTTCommunication.set_receivers(gyro_recv = self.steering, mode_recv = self, status_recv = self.status, 
