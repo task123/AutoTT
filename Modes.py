@@ -96,6 +96,7 @@ class Modes:
                     video_recv = self.cameras)
                 self.lights.off()
                 self.autoTTCommunication.buttons_off()
+                self.cameras.set_steering(self.steering)
                 self.cameras.stop_following_traffic_rules()
                 self.cameras.start_looking_for_stop_signs()
                 self.cameras.start_drawing_rectangles()
