@@ -18,9 +18,11 @@ disconnect = None
 try:
     trip_meter = Motor.TripMeter()
     motors = Motor.Motor(trip_meter)
+    lights = Lights.Lights(motors) 
+    lights.blink_high_beam()
+    lights.off()
     print "Ready to login"
     autoTTCommunication = TCP.AutoTTCommunication(port)
-    lights = Lights.Lights(motors)
     steering = Steering.SteeringWithIOSGyro(motors)
     cameras = Cameras.Cameras(motors, autoTTCommunication, streaming_port = port + 1)
     status = Status.Status(autoTTCommunication, motors)
