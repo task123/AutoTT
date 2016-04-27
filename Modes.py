@@ -53,9 +53,12 @@ class Modes:
                 print "yess"
                 self.steering = Steering.SteeringWithIOSGyro(self.motors, self.autoTTCommunication)
                 print "1"
+                """
                 self.autoTTCommunication.set_receivers(gyro_recv = self.steering, mode_recv = self.modes, status_recv = self.status, 
                     stop_cont_recv = self.steering, disconnect_recv = self.disconnect, shut_down_recv = self.disconnect, 
                     video_recv = self.cameras, button_recv = self.steering)
+                """
+                self.autoTTCommunication.set_receivers(gyro_recv = self.steering)
                 print "2"
                 steering.button_indicators_on(lights)
                 print "3"
