@@ -72,7 +72,6 @@ class SteeringWithIOSGyro:
         elif (type == "Continue"):
             self.stop = False
         elif (self.is_button_indicators_on and type == "RightButtonTouchDown"):
-            print "right"
             if (self.is_left_indicator_on):
                 self.is_left_indicator_on = False
                 if (self.is_high_beam_on):
