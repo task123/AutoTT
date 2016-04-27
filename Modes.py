@@ -43,17 +43,17 @@ class Modes:
             self.autoTTCommunication.info_modes(self.list_of_info_modes, int(message))
         elif (type == "ChosenMode"):
             if (message == " 0"): # Tilt Steering
-                steering = Steering.SteeringWithIOSGyro(self.motors, self.autoTTCommunication)
-                autoTTCommunication.set_receivers(gyro_recv = steering, mode_recv = modes, status_recv = status, 
+                self.steering = Steering.SteeringWithIOSGyro(self.motors, self.autoTTCommunication)
+                self.autoTTCommunication.set_receivers(gyro_recv = steering, mode_recv = modes, status_recv = status, 
                     stop_cont_recv = steering, disconnect_recv = disconnect, shut_down_recv = disconnect, 
                     video_recv = cameras)
                 steering.button_indicators_off()
                 autoTTCommunication.buttons_off()
             elif (message == "1"): # Tilt, Lights
                 print "yess"
-                steering = Steering.SteeringWithIOSGyro(self.motors, self.autoTTCommunication)
+                self.steering = Steering.SteeringWithIOSGyro(self.motors, self.autoTTCommunication)
                 print "1"
-                autoTTCommunication.set_receivers(gyro_recv = steering, mode_recv = modes, status_recv = status, 
+                self.autoTTCommunication.set_receivers(gyro_recv = steering, mode_recv = modes, status_recv = status, 
                     stop_cont_recv = steering, disconnect_recv = disconnect, shut_down_recv = disconnect, 
                     video_recv = cameras, button_recv = steering)
                 print "2"
@@ -67,18 +67,18 @@ class Modes:
                 autoTTCommunication.buttons_on()
                 time.sleep(1)                
             elif (message == "2"): # Tilt with AOA
-                steering = Steering.SteeringWithIOSGyro(self.motors, self.autoTTCommunication)
-                autoTTCommunication.set_receivers(gyro_recv = steering, mode_recv = modes, status_recv = status, 
+                self.steering = Steering.SteeringWithIOSGyro(self.motors, self.autoTTCommunication)
+                self.autoTTCommunication.set_receivers(gyro_recv = steering, mode_recv = modes, status_recv = status, 
                     stop_cont_recv = steering, disconnect_recv = disconnect, shut_down_recv = disconnect, 
                     video_recv = cameras)
             elif (message == "3"): # Button Steering
-                steering = Steering.SteeringWithIOSButtons(self.motors, self.autoTTCommunication)
-                autoTTCommunication.set_receivers(gyro_recv = steering, mode_recv = modes, status_recv = status, 
+                self.steering = Steering.SteeringWithIOSButtons(self.motors, self.autoTTCommunication)
+                self.autoTTCommunication.set_receivers(gyro_recv = steering, mode_recv = modes, status_recv = status, 
                     stop_cont_recv = steering, disconnect_recv = disconnect, shut_down_recv = disconnect, 
                     video_recv = cameras, button_recv = steering)
             elif (message == "4"): # Button with AOA
-                steering = Steering.SteeringWithIOSButtons(self.motors, self.autoTTCommunication)
-                autoTTCommunication.set_receivers(gyro_recv = steering, mode_recv = modes, status_recv = status, 
+                self.steering = Steering.SteeringWithIOSButtons(self.motors, self.autoTTCommunication)
+                self.autoTTCommunication.set_receivers(gyro_recv = steering, mode_recv = modes, status_recv = status, 
                     stop_cont_recv = steering, disconnect_recv = disconnect, shut_down_recv = disconnect, 
                     video_recv = cameras, button_recv = steering)
             elif (message == "5"): # Follow line
