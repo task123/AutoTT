@@ -287,8 +287,8 @@ class Cameras:
         font_size = 1.5
         font_thickness = 2
     
-        red_mask_low = cv2.inRange(hsv_image_1,np.array((0,100,100), dtype = "uint8"),np.array((7, 255, 255), dtype = "uint8"))
-        red_mask_high = cv2.inRange(hsv_image_1,np.array((160,100,100), dtype = "uint8"),np.array((179, 255, 255), dtype = "uint8"))
+        red_mask_low = cv2.inRange(hsv_image_1,np.array((0,80,80), dtype = "uint8"),np.array((10, 255, 255), dtype = "uint8"))
+        red_mask_high = cv2.inRange(hsv_image_1,np.array((160,80,80), dtype = "uint8"),np.array((179, 255, 255), dtype = "uint8"))
         red_mask = cv2.addWeighted(red_mask_low,1.0, red_mask_high,1.0, 0.0)
         red_mask = cv2.GaussianBlur(red_mask,(5,5),0)
 
@@ -300,9 +300,9 @@ class Cameras:
                 for i in range(0,len(red_contours)):
                     peripheral = cv2.arcLength(red_contours[i], True)
 
-                    approximate_polygon = cv2.approxPolyDP(red_contours[i], 0.04 * peripheral, True)
+                    approximate_polygon = cv2.approxPolyDP(red_contours[i], 0.05 * peripheral, True)
 
-                    if (len(approximate_polygon) == 8 and cv2.isContourConvex(approximate_polygon) and cv2.contourArea(approximate_polygon) > 50):
+                    if (len(approximate_polygon) == 8 and cv2.isContourConvex(approximate_polygon) and cv2.contourArea(approximate_polygon) > 30):
                         x,y,w,h = cv2.boundingRect(approximate_polygon)
                         stop_sign = red_mask[y:(y+h),x:(x+w)]
                         sign_rows,sign_cols = stop_sign.shape
@@ -311,7 +311,7 @@ class Cameras:
                             for col in range(0,sign_cols):
                                 average_intensity = average_intensity + stop_sign[row,col]
                         average_intensity = average_intensity/stop_sign.size
-                        if (average_intensity > 90):
+                        if (average_intensity > 30):
                             # We have now found a stop sign
                             if (self.draw_rectangles):
                                 cv2.rectangle(self.image_1, (x,y), (x+w,y+h), (0,0,155),3)
