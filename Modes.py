@@ -5,6 +5,9 @@ import time
 import os
 from nanpy import ArduinoApi
 import Steering
+import TCP
+import Lights
+import Motors
 
 class Modes:
     list_of_modes = ["Tilt Steering", "Tilt, Lights", "Tilt with AOA", "Button Steering", "Button with AOA", "Follow line", "Stop sign", "Traffic light", "Self steering"] # AOA - Automated Object Avoidence
@@ -22,8 +25,9 @@ class Modes:
     "The car tries to follow a line on the ground and stops for stop signs, red traffic lights and objects blocking its way."]
     """
     
-    def __init__(self, autoTTCommunication, steering, lights):
+    def __init__(self, autoTTCommunication, motors, steering, lights):
         self.autoTTCommunication = autoTTCommunication
+        self.motors = motors
         self.steering = steering
         self.lights = lights
     
