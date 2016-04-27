@@ -210,6 +210,7 @@ class FollowLine:
         # these values might need to be adjusted
         self.proportional_term_in_PID = 1.0
         self.derivative_term_in_PID = 0
+        self.part_off_new_error_used_in_smoothing = 0.2
         self.left_photo_diode_found_line_value = 180
         self.right_photo_diode_found_line_value = 140
         self.offset_value_between_right_and_left_photo_diode = 40
@@ -263,7 +264,8 @@ class FollowLine:
             if (self.stopped):
                 self.motors.stop()
             else:
-                self.error = self.arduino.analogRead(self.pin_right_photo_diode) - self.arduino.analogRead(self.pin_left_photo_diode) - self.offset_value_between_right_and_left_photo_diode
+                self.new_error = self.arduino.analogRead(self.pin_right_photo_diode) - self.arduino.analogRead(self.pin_left_photo_diode) - self.offset_value_between_right_and_left_photo_diode
+                self.error = self.part_off_new_error_used_in_smoothing * self.new_error + (1 - self.part_off_new_error_used_in_smoothing) * self.error
                 
                 self.left_speed = self.speed - self.error*self.proportional_term_in_PID + (self.error - self.previous_error)*self.derivative_term_in_PID/self.correction_interval
                 self.right_speed = self.speed + self.error*self.proportional_term_in_PID - (self.error - self.previous_error)*self.derivative_term_in_PID/self.correction_interval
