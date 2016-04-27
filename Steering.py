@@ -210,7 +210,7 @@ class FollowLine:
         self.derivative_term_in_PID = 0
         self.left_photo_diode_found_line_value = 180
         self.right_photo_diode_found_line_value = 140
-        self.offset_value_between_right_and_left_photo_diode = 40
+        self.offset_value_between_right_and_left_photo_diode = 80
         self.correction_interval = 0.01
         self.distance_to_travel_before_stopping_for_stop_sign = 0.05
         self.distance_to_travel_before_stopping_for_traffic_light = 0.05
