@@ -156,9 +156,10 @@ class AutoTTCommunication:
         self.send_message("Message",message)
 
 class Disconnect:
-    def __init__(self, autoTTCommunication, motors, cameras, fan_controller):
+    def __init__(self, autoTTCommunication, motors, lights, cameras, fan_controller):
         self.autoTTCommunication = autoTTCommunication
         self.motors = motors
+        self.lights = lights
         self.cameras = cameras
         self.fan_controller = fan_controller
         self.good_connection = True
@@ -173,6 +174,7 @@ class Disconnect:
 
     def disconnect(self):
         self.motors.turn_off()
+        self.lights.off()
         self.cameras.turn_off()
         self.fan_controller.turn_off()
         self.good_connection = False
