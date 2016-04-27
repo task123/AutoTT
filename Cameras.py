@@ -283,7 +283,7 @@ class Cameras:
     def detect_signs_and_lights(self):
         if (self.image_1 == None):
             print "cameras attribute image_1 is None"
-        self.hsv_image_1 = cv2.cvtColor(self.image_1, cv2.COLOR_BGR2HSV)
+        hsv_image_1 = cv2.cvtColor(self.image_1, cv2.COLOR_BGR2HSV)
         font = cv2.FONT_HERSHEY_PLAIN
         font_size = 1.5
         font_thickness = 2
@@ -385,15 +385,15 @@ class Cameras:
 
         #Looking for traffic lights
         if(self.look_for_traffic_light):
-            green_mask = cv2.inRange(self.hsv_image_1,np.array((80,100,50), dtype = "uint8"),np.array((90, 255, 255), dtype = "uint8"))
-            yellow_mask = cv2.inRange(self.hsv_image_1,np.array((20,50,100), dtype = "uint8"),np.array((30, 255, 255), dtype = "uint8"))
+            green_mask = cv2.inRange(hsv_image_1,np.array((80,100,50), dtype = "uint8"),np.array((90, 255, 255), dtype = "uint8"))
+            yellow_mask = cv2.inRange(hsv_image_1,np.array((20,50,100), dtype = "uint8"),np.array((30, 255, 255), dtype = "uint8"))
 
             green_circles = cv2.HoughCircles(green_mask,cv2.HOUGH_GRADIENT,1,15, param1=100,param2=10,minRadius=1,maxRadius=30)
             yellow_circles = cv2.HoughCircles(yellow_mask,cv2.HOUGH_GRADIENT,1,15, param1=100,param2=7,minRadius=1,maxRadius=20)
             red_circles = cv2.HoughCircles(red_mask,cv2.HOUGH_GRADIENT,1,15,param1=100,param2=10,minRadius=1,maxRadius=20)
 
-            red_light_mask = cv2.inRange(self.hsv_image_1,np.array((0,0,240), dtype = "uint8"),np.array((255, 255, 255), dtype = "uint8"))
-            green_light_mask = cv2.inRange(self.hsv_image_1,np.array((0,0,50), dtype = "uint8"),np.array((70, 200, 255), dtype = "uint8"))
+            red_light_mask = cv2.inRange(hsv_image_1,np.array((0,0,240), dtype = "uint8"),np.array((255, 255, 255), dtype = "uint8"))
+            green_light_mask = cv2.inRange(hsv_image_1,np.array((0,0,50), dtype = "uint8"),np.array((70, 200, 255), dtype = "uint8"))
 
 
 
