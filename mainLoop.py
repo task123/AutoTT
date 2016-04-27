@@ -41,9 +41,7 @@ try:
     modes.send_modes()
     
     while True:
-        print "%f  %f" %(trip_meter.get_right_distance(), trip_meter.get_left_distance())
-        time.sleep(0.1)
-        #time.sleep(0.3)
+        time.sleep(0.3)
         if (not disconnect.good_connection):
             pid = os.getpid()
             file = open("pidMainLoop.txt", "w")
