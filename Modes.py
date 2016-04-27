@@ -111,7 +111,7 @@ class Modes:
                 self.cameras.start_looking_for_traffic_lights()
                 self.cameras.start_drawing_rectangles()
                 self.cameras.start_writing_type_of_objects()
-            elif (message == "9"): # Speed limit
+            elif (message == "8"): # Speed limit
                 self.steering = Steering.SteeringWithIOSGyro(self.motors)
                 self.autoTTCommunication.set_receivers(gyro_recv = self.steering, mode_recv = self, status_recv = self.status, 
                     stop_cont_recv = self.steering, disconnect_recv = self.disconnect, shut_down_recv = self.disconnect, 
