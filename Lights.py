@@ -61,6 +61,8 @@ class Lights:
     print "high_beam_off"
     if (self.is_lights_on):
       self.arduino.analogWrite(self.headlight_pin, self.low_beam_value)
+      print self.low_beam_value
+      print self.high_beam_value
     else:
       self.arduino.analogWrite(self.headlight_pin, 0)
       
