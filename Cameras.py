@@ -334,7 +334,7 @@ class Cameras:
                 self.knn.train(train,cv2.ml.ROW_SAMPLE,train_labels)
                 self.knn_initialized = True
             
-            red_circles = cv2.HoughCircles(red_mask,cv2.HOUGH_GRADIENT,1,100000,param1=50,param2=40,minRadius=3,maxRadius=70)
+            red_circles = cv2.HoughCircles(red_mask,cv2.HOUGH_GRADIENT,1,100000,param1=50,param2=30,minRadius=3,maxRadius=70)#param2=40
             if red_circles is not None:
                 print "found red circles"
                 red_circles = np.uint16(np.around(red_circles))
@@ -365,7 +365,7 @@ class Cameras:
                 resized_ROI_array = np.array(resized_ROI[0])
                 temporary_array = resized_ROI_array.astype(np.uint8)  # No idea whatsoever why you have to do this
                 prepeared_array = temporary_array.reshape(-1,400).astype(np.float32)
-                _,result,neighbours,dist = knn.findNearest(prepeared_array,k=10)
+                _,result,neighbours,dist = self.knn.findNearest(prepeared_array,k=10)
                 result_list_speed_signs.append(result)
                 if (len(result_list_speed_signs) > take_median_of_speed_signs):
                     result_list_speed_signs.pop(0)
