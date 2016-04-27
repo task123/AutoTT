@@ -290,8 +290,6 @@ class FollowLine:
                 self.previous_right_error = self.right_error
 
             time.sleep(self.correction_interval)
-       
-    def 
 
     def stop(self):
         self.stopped = True
