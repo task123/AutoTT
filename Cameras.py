@@ -331,7 +331,7 @@ class Cameras:
                 with np.load('knn_data.npz') as data:
                     train = data['train']
                     train_labels = data['train_labels']
-                knn.train(train,cv2.ml.ROW_SAMPLE,train_labels)
+                self.knn.train(train,cv2.ml.ROW_SAMPLE,train_labels)
                 self.knn_initialized = True
             
             red_circles = cv2.HoughCircles(red_mask,cv2.HOUGH_GRADIENT,1,100000,param1=50,param2=40,minRadius=3,maxRadius=70)
