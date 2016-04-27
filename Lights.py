@@ -10,7 +10,7 @@ class Lights:
     self.high_beam_value = 400
     self.indicator_blink_time = 0.3
     self.indicator_blink_delay = 0.3
-    self.high_beam_blink_time_and_delay = 0.5
+    self.high_beam_blink_time_and_delay = 3
     # these variables might change
     self.headlight_pin = 9
     self.tail_light_pin = 17
