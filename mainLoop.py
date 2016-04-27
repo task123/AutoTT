@@ -51,6 +51,7 @@ try:
 
 except:
     if (motors != None):
+        motors.arduino.digitalWrite(12, 0) #turn off the light for the photo diodes under the car
         motors.turn_off()
     if (lights != None):
         lights.off()
@@ -60,6 +61,3 @@ except:
         fan_controller.turn_off()
     if (disconnect != None):
         disconnect.disconnect()
-    if (modes != None and steering != None):
-        if (modes.is_following_line_running):
-            steering.stop_following_line()
