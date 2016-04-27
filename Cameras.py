@@ -392,7 +392,7 @@ class Cameras:
         if(self.look_for_traffic_light):
             print "looking for traffic lights"
             
-            green_mask = cv2.inRange(hsv_image_1,np.array((80,100,50), dtype = "uint8"),np.array((90, 255, 255), dtype = "uint8"))
+            green_mask = cv2.inRange(hsv_image_1,np.array((70,50,25), dtype = "uint8"),np.array((100, 255, 255), dtype = "uint8")) #((80,100,50), dtype = "uint8"),np.array((90, 255, 255), dtype = "uint8"))
             yellow_mask = cv2.inRange(hsv_image_1,np.array((20,50,100), dtype = "uint8"),np.array((30, 255, 255), dtype = "uint8"))
 
             green_circles = cv2.HoughCircles(green_mask,cv2.HOUGH_GRADIENT,1,15, param1=100,param2=10,minRadius=1,maxRadius=30)
@@ -401,6 +401,7 @@ class Cameras:
 
             red_light_mask = cv2.inRange(hsv_image_1,np.array((0,0,240), dtype = "uint8"),np.array((255, 255, 255), dtype = "uint8"))
             green_light_mask = cv2.inRange(hsv_image_1,np.array((0,0,50), dtype = "uint8"),np.array((70, 200, 255), dtype = "uint8"))
+            
 
             if (red_circles is not None):
                 print "we have red circles"
