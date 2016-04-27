@@ -263,7 +263,6 @@ class FollowLine:
         if (self.target_speed < -100):
             self.target_speed = -100
         
-        self.stopped = False
         self.previous_left_error = self.arduino.analogRead(self.pin_left_photo_diode) - self.target_value_left_photo_diode
         self.previous_right_error = self.arduino.analogRead(self.pin_right_photo_diode) - self.target_value_right_photo_diode
  
