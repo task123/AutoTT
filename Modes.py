@@ -37,7 +37,6 @@ class Modes:
         
     
     def receive_message(self, message_type, message):
-        print "mode " + message
         if (message_type == "Modes"):
             self.autoTTCommunication.modes(self.list_of_modes)
         elif (message_type == "InfoModes"):
