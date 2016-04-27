@@ -41,7 +41,7 @@ class Modes:
         elif (type == "InfoModes"):
             self.autoTTCommunication.info_modes(self.list_of_info_modes, int(message))
         elif (type == "ChosenMode"):
-            if (message == " 0"): # Tilt Steering
+            if (message == "0"): # Tilt Steering
                 print type(steering)
                 if (type(steering) == FollowingLine):
                     steering.stop_following_line()
