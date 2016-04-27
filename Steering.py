@@ -382,7 +382,7 @@ class FollowLine:
     def stop_following_speed_limit(self):
         self.is_speed_limit_on = False
 
-    def end_following_line(self):
+    def stop_following_line(self):
         self.quit = True
 
     def __del__(self):
