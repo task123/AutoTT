@@ -251,8 +251,13 @@ class FollowLine:
         self.find_line(start_speed)
         
     def start_following_line(self):
+        print "start_following_line"
+        self.quit = True
+        time.sleep(1)
         self.quit = False
+        print "1"
         self.follow_line_thread = threading.Thread(target = self.follow_line_loop)
+        print "2"
         self.follow_line_thread.setDaemon(True)
         self.follow_line_thread.start()
 
@@ -331,6 +336,8 @@ class FollowLine:
                 self.motors.set_left_speed(0.0)
                 self.new_right_speed = 0.0
                 self.new_left_speed = 0.0
+                print "ssss"
+                time.sleep(5)
                 self.start_following_line()
                 print "break"
                 break
