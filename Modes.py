@@ -182,6 +182,9 @@ class Modes:
                 self.cameras.start_looking_for_speed_signs()
                 self.cameras.start_drawing_rectangles()
                 self.cameras.start_writing_type_of_objects()
+    
+    def is_following_line_running(self):
+        return self.following_line_running
 
     def send_modes(self):
         time.sleep(0.01)
