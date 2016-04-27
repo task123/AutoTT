@@ -208,10 +208,10 @@ class FollowLine:
         # these values might need to be adjusted
         self.proportional_term_in_PID = 80
         self.derivative_term_in_PID = 0
-        self.left_photo_diode_found_line_value = 100
-        self.right_photo_diode_found_line_value = 100
-        self.target_value_left_photo_diode = 200
-        self.target_value_right_photo_diode = 200
+        self.left_photo_diode_found_line_value = 210
+        self.right_photo_diode_found_line_value = 170
+        self.target_value_left_photo_diode = 210
+        self.target_value_right_photo_diode = 170
         self.correction_interval = 0.01
         self.distance_to_travel_before_stopping_for_stop_sign = 0.05
         self.distance_to_travel_before_stopping_for_traffic_light = 0.05
@@ -277,7 +277,8 @@ class FollowLine:
                 
                 self.new_left_speed = self.target_speed + self.left_error*self.proportional_term_in_PID - (self.left_error - self.previous_left_error)*self.derivative_term_in_PID/self.correction_interval
                 self.new_right_speed = self.target_speed + self.right_error*self.proportional_term_in_PID - (self.right_error - self.previous_right_error)*self.derivative_term_in_PID/self.correction_interval
-                           
+                
+                print self.new_right_speed 
                 if (self.is_speed_limit_on):
                     highest_speed = new_left_speed
                     if (new_right_speed > new_left_speed):
