@@ -381,3 +381,5 @@ class FollowLine:
     def end_following_line(self):
         self.quit = True
 
+    def __del__(self):
+        self.quit = True
