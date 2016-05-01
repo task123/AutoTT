@@ -3,16 +3,25 @@ This is the code used to steer the self driving car controlled from an iPhone de
 
 ## Describtion of the car
 
+
 ## Capabilites
 
-## Connection to the app (TCP.py)
+## Overview of what the different modules does
 
-## Steering the app (Modes.py, Steering.py, Motors.py and Tripmeter.py)
+### Connection to the app 
+####(TCP.py)
 
-## Status and lights (Status.py and Lights.py)
+### Steering the app 
+####(Modes.py, Steering.py, Motors.py and Tripmeter.py)
 
-## Cameras (Cameras.py and templates)
+### Status and lights 
+####(Status.py and Lights.py)
 
-## Running the program (mainLoop.py, controllerOfMainloop.py and startControllerOfMainLoopAtBoot.sh)
+### Cameras 
+####(Cameras.py and templates)
 
-## Arduino (tripMeterArduino, CH341SER_MAC and CH341SER_WIN)
+### Running the program 
+####(mainLoop.py, controllerOfMainloop.py and startControllerOfMainLoopAtBoot.sh)
+
+## Arduino 
+####(tripMeterArduino, CH341SER_MAC and CH341SER_WIN)
