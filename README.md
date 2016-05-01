@@ -3,6 +3,7 @@ This is the code used to steer the self driving car controlled from an iPhone de
 
 ## Describtion of the car
 
+
 ## Capabilites
 
 ## Overview of what the different modules does
@@ -22,4 +23,5 @@ This is the code used to steer the self driving car controlled from an iPhone de
 ### Running the program 
 ####(mainLoop.py, controllerOfMainloop.py and startControllerOfMainLoopAtBoot.sh)
 
-## Arduino (tripMeterArduino, CH341SER_MAC and CH341SER_WIN)
+## Arduino 
+####(tripMeterArduino, CH341SER_MAC and CH341SER_WIN)
