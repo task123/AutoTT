@@ -281,7 +281,7 @@ class Cameras:
 
     def detect_signs_and_lights(self):
         variableFile = open("variablesTrafficSignDetection.txt")
-        var1 = variableFile.readline().split()[0]
+        var1 = int(variableFile.readline().split()[0])
         variableFile.close()
         if (self.image_1 == None):
             print "cameras attribute image_1 is None"
