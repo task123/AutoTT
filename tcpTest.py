@@ -6,7 +6,7 @@ class R:
     print message
 
 r = R()
-connection = TCP.Connection("10.22.13.211", 12345, r);
+connection = TCP.Connection("10.22.14.203", 12345, r);
 
 while True:
     message = raw_input("Write message: ")

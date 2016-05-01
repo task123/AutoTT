@@ -4,6 +4,10 @@ from nanpy import ArduinoApi
 from nanpy import SerialManager
 import time
 
+connection = SerialManager(device='/dev/ttyACM0')
+arduino = ArduinoApi(connection=connection)
+
+"""
 try:
      connection = SerialManager(device='/dev/ttyACM2')
      arduino = ArduinoApi(connection=connection)
@@ -21,11 +25,12 @@ except:
                     arduino = ArduinoApi(connection=connection)
                except:
                     print "Could not connect to the arduino using /dev/ttyACM0, /dev/ttyACM1, /dev/ttyACM2 or /dev/ttyACM3"
+"""
             
 arduino.pinMode(13, arduino.OUTPUT)
 arduino.digitalWrite(13, 1)
-arduino.pinMode(9, arduino.OUTPUT)
-arduino.digitalWrite(9, 0)
+arduino.pinMode(8, arduino.OUTPUT)
+arduino.digitalWrite(8, 0)
 
 time.sleep(5)
 
