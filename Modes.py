@@ -33,15 +33,19 @@ class Modes:
         self.status = status
         self.disconnect = disconnect
         
+        self.following_line_running = False
+        
     
-    def receive_message(self, type, message):
-        print "mode " + message
-        if (type == "Modes"):
+    def receive_message(self, message_type, message):
+        if (message_type == "Modes"):
             self.autoTTCommunication.modes(self.list_of_modes)
-        elif (type == "InfoModes"):
+        elif (message_type == "InfoModes"):
             self.autoTTCommunication.info_modes(self.list_of_info_modes, int(message))
-        elif (type == "ChosenMode"):
-            if (message == " 0"): # Tilt Steering
+        elif (message_type == "ChosenMode"):
+            if (message == "0"): # Tilt Steering
+                if (self.following_line_running):
+                    self.steering.stop_following_line()
+                    self.following_line_running = False
                 self.steering = Steering.SteeringWithIOSGyro(self.motors)
                 self.autoTTCommunication.set_receivers(gyro_recv = self.steering, mode_recv = self, status_recv = self.status, 
                     stop_cont_recv = self.steering, disconnect_recv = self.disconnect, shut_down_recv = self.disconnect, 
@@ -50,6 +54,9 @@ class Modes:
                 self.autoTTCommunication.buttons_off()
                 self.cameras.stop_following_traffic_rules()
             elif (message == "1"): # Tilt, Lights
+                if (self.following_line_running):
+                    self.steering.stop_following_line()
+                    self.following_line_running = False
                 self.steering = Steering.SteeringWithIOSGyro(self.motors)
                 self.autoTTCommunication.set_receivers(gyro_recv = self.steering, mode_recv = self, status_recv = self.status, 
                     stop_cont_recv = self.steering, disconnect_recv = self.disconnect, shut_down_recv = self.disconnect, 
@@ -58,6 +65,9 @@ class Modes:
                 self.autoTTCommunication.buttons_on()
                 self.cameras.stop_following_traffic_rules()
             elif (message == "2"): # Tilt with AOA
+                if (self.following_line_running):
+                    self.steering.stop_following_line()
+                    self.following_line_running = False
                 self.steering = Steering.SteeringWithIOSGyro(self.motors)
                 self.autoTTCommunication.set_receivers(gyro_recv = self.steering, mode_recv = self, status_recv = self.status, 
                     stop_cont_recv = self.steering, disconnect_recv = self.disconnect, shut_down_recv = self.disconnect, 
@@ -66,6 +76,9 @@ class Modes:
                 self.autoTTCommunication.buttons_off()
                 self.cameras.stop_following_traffic_rules()
             elif (message == "3"): # Button Steering
+                if (self.following_line_running):
+                    self.steering.stop_following_line()
+                    self.following_line_running = False
                 self.steering = Steering.SteeringWithIOSButtons(self.motors)
                 self.autoTTCommunication.set_receivers(gyro_recv = self.steering, mode_recv = self, status_recv = self.status, 
                     stop_cont_recv = self.steering, disconnect_recv = self.disconnect, shut_down_recv = self.disconnect, 
@@ -74,6 +87,9 @@ class Modes:
                 self.autoTTCommunication.buttons_on()
                 self.cameras.stop_following_traffic_rules()
             elif (message == "4"): # Button with AOA
+                if (self.following_line_running):
+                    self.steering.stop_following_line()
+                    self.following_line_running = False
                 self.steering = Steering.SteeringWithIOSButtons(self.motors)
                 self.autoTTCommunication.set_receivers(gyro_recv = self.steering, mode_recv = self, status_recv = self.status, 
                     stop_cont_recv = self.steering, disconnect_recv = self.disconnect, shut_down_recv = self.disconnect, 
@@ -82,14 +98,21 @@ class Modes:
                 self.autoTTCommunication.buttons_on()
                 self.cameras.stop_following_traffic_rules()
             elif (message == "5"): # Follow line
+                if (self.following_line_running):
+                    self.steering.stop_following_line()
+                    self.following_line_running = False
+                self.following_line_running = True
                 self.steering = Steering.FollowLine(self.motors)
-                self.autoTTCommunication.set_receivers(gyro_recv = self.steering, mode_recv = self, status_recv = self.status, 
+                self.autoTTCommunication.set_receivers(mode_recv = self, status_recv = self.status, 
                     stop_cont_recv = self.steering, disconnect_recv = self.disconnect, shut_down_recv = self.disconnect, 
                     video_recv = self.cameras)
                 self.lights.off()
                 self.autoTTCommunication.buttons_off()
                 self.cameras.stop_following_traffic_rules()
             elif (message == "6"): # Stop sign
+                if (self.following_line_running):
+                    self.steering.stop_following_line()
+                    self.following_line_running = False
                 self.steering = Steering.SteeringWithIOSGyro(self.motors)
                 self.autoTTCommunication.set_receivers(gyro_recv = self.steering, mode_recv = self, status_recv = self.status, 
                     stop_cont_recv = self.steering, disconnect_recv = self.disconnect, shut_down_recv = self.disconnect, 
@@ -102,6 +125,9 @@ class Modes:
                 self.cameras.start_drawing_rectangles()
                 self.cameras.start_writing_type_of_objects()
             elif (message == "7"): # Traffic light
+                if (self.following_line_running):
+                    self.steering.stop_following_line()
+                    self.following_line_running = False
                 self.steering = Steering.SteeringWithIOSGyro(self.motors)
                 self.autoTTCommunication.set_receivers(gyro_recv = self.steering, mode_recv = self, status_recv = self.status, 
                     stop_cont_recv = self.steering, disconnect_recv = self.disconnect, shut_down_recv = self.disconnect, 
@@ -113,6 +139,9 @@ class Modes:
                 self.cameras.start_drawing_rectangles()
                 self.cameras.start_writing_type_of_objects()
             elif (message == "8"): # Speed limit
+                if (self.following_line_running):
+                    self.steering.stop_following_line()
+                    self.following_line_running = False
                 self.steering = Steering.SteeringWithIOSGyro(self.motors)
                 self.autoTTCommunication.set_receivers(gyro_recv = self.steering, mode_recv = self, status_recv = self.status, 
                     stop_cont_recv = self.steering, disconnect_recv = self.disconnect, shut_down_recv = self.disconnect, 
@@ -124,6 +153,9 @@ class Modes:
                 self.cameras.start_drawing_rectangles()
                 self.cameras.start_writing_type_of_objects()
             elif (message == "9"): # Tilt, Traffic rules, Lights
+                if (self.following_line_running):
+                    self.steering.stop_following_line()
+                    self.following_line_running = False
                 self.steering = Steering.SteeringWithIOSGyro(self.motors)
                 self.autoTTCommunication.set_receivers(gyro_recv = self.steering, mode_recv = self, status_recv = self.status, 
                     stop_cont_recv = self.steering, disconnect_recv = self.disconnect, shut_down_recv = self.disconnect, 
@@ -136,8 +168,11 @@ class Modes:
                 self.cameras.start_drawing_rectangles()
                 self.cameras.start_writing_type_of_objects()
             elif (message == "10"): # Self steering
+                if (self.following_line_running):
+                    self.steering.stop_following_line()
+                    self.following_line_running = False
                 self.steering = Steering.FollowLine(self.motors)
-                self.autoTTCommunication.set_receivers(gyro_recv = self.steering, mode_recv = self, status_recv = self.status, 
+                self.autoTTCommunication.set_receivers(mode_recv = self, status_recv = self.status, 
                     stop_cont_recv = self.steering, disconnect_recv = self.disconnect, shut_down_recv = self.disconnect, 
                     video_recv = self.cameras)
                 self.lights.on()
@@ -147,6 +182,9 @@ class Modes:
                 self.cameras.start_looking_for_speed_signs()
                 self.cameras.start_drawing_rectangles()
                 self.cameras.start_writing_type_of_objects()
+    
+    def is_following_line_running(self):
+        return self.following_line_running
 
     def send_modes(self):
         time.sleep(0.01)

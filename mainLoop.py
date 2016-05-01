@@ -15,12 +15,16 @@ lights = None
 cameras = None
 fan_controller = None
 disconnect = None
+modes = None
+steering = None
 try:
     trip_meter = Motor.TripMeter()
     motors = Motor.Motor(trip_meter)
+    lights = Lights.Lights(motors) 
+    lights.blink_high_beam()
+    lights.off()
     print "Ready to login"
     autoTTCommunication = TCP.AutoTTCommunication(port)
-    lights = Lights.Lights(motors)
     steering = Steering.SteeringWithIOSGyro(motors)
     cameras = Cameras.Cameras(motors, autoTTCommunication, streaming_port = port + 1)
     status = Status.Status(autoTTCommunication, motors)
@@ -47,6 +51,7 @@ try:
 
 except:
     if (motors != None):
+        motors.arduino.digitalWrite(12, 0) #turn off the light for the photo diodes under the car
         motors.turn_off()
     if (lights != None):
         lights.off()
