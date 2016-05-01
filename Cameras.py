@@ -280,6 +280,9 @@ class Cameras:
         return self.ok_to_send_messages
 
     def detect_signs_and_lights(self):
+        variableFile = open("variablesTrafficSignDetection.txt")
+        var1 = variableFile.readline().split()[0]
+        variableFile.close()
         if (self.image_1 == None):
             print "cameras attribute image_1 is None"
         hsv_image_1 = cv2.cvtColor(self.image_1, cv2.COLOR_BGR2HSV)
