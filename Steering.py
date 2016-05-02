@@ -5,6 +5,7 @@ import time
 import os
 from nanpy import ArduinoApi
 import threading
+import numpy as np
 
 """React to gyroscopic and stop/continue data sendt from AutoTTCommunication and control a class 'motors', which steers the motors.
 Remember to start the gyro with autoTTCommunication.start_gyro_with_update_intervall(gyro_update_intervall)
@@ -319,29 +320,31 @@ class FollowLine:
             time.sleep(0.01)
         self.motors.set_left_speed(speed)
         self.motors.set_right_speed(speed)
-        left_value_1 = (self.left_photo_diode_found_white_line_value - self.left_photo_diode_found_black_line_value) / 2.0 + self.left_photo_diode_found_black_line_value
-        left_value_2 = left_value_1
-        left_value_3 = left_value_1
-        left_value_4 = left_value_1
-        left_value_5 = left_value_1
-        right_value_1 = (self.right_photo_diode_found_white_line_value - self.right_photo_diode_found_black_line_value) / 2.0 + self.right_photo_diode_found_black_line_value
-        right_value_2 = right_value_1 
-        right_value_3 = right_value_1 
-        right_value_4 = right_value_1 
-        right_value_5 = right_value_1 
+        left_value_list = []
+        left_value_list.append((self.left_photo_diode_found_white_line_value - self.left_photo_diode_found_black_line_value) / 2.0 + self.left_photo_diode_found_black_line_value)
+        left_value_list.append(left_value_1)
+        left_value_list.append(left_value_1)
+        left_value_list.append(left_value_1)
+        left_value_list.append(left_value_1)
+        right_value_list = []
+        right_value_list.append((self.right_photo_diode_found_white_line_value - self.right_photo_diode_found_black_line_value) / 2.0 + self.right_photo_diode_found_black_line_value)
+        right_value_list.append(right_value_1)
+        right_value_list.append(right_value_1)
+        right_value_list.append(right_value_1)
+        right_value_list.append(right_value_1)
         while not line_found_left and not line_found_right and not self.quit:
-            left_value_5 = left_value_4
-            left_value_4 = left_value_3 
-            left_value_3 = left_value_2
-            left_value_2 = left_value_1
-            left_value_1 = self.arduino.analogRead(self.pin_left_photo_diode)
-            left_value = (left_value_1 + left_value_2 + left_value_3 + left_value_4 + left_value_5) / 5.0
-            right_value_5 = right_value_4
-            right_value_4 = right_value_3 
-            right_value_3 = right_value_2
-            right_value_2 = right_value_1
-            right_value_1 = self.arduino.analogRead(self.pin_right_photo_diode)
-            right_value = (right_value_1 + right_value_2 + right_value_3 + right_value_4 + right_value_5) / 5.0
+            left_value_list[4] = left_value_list[3]
+            left_value_list[3] = left_value_list[2]
+            left_value_list[2] = left_value_list[1]
+            left_value_list[1] = left_value_list[0]
+            left_value_list[0] = self.arduino.analogRead(self.pin_left_photo_diode)
+            left_value = np.median(left_value_list)
+            right_value_list[4] = right_value_list[3]
+            right_value_list[3] = right_value_list[2]
+            right_value_list[2] = right_value_list[1]
+            right_value_list[1] = right_value_list[0]
+            right_value_list[0] = self.arduino.analogRead(self.pin_right_photo_diode)
+            right_value = np.median(right_value_list)
             print str(right_value) + "   " + str(left_value)
             if (left_value > self.left_photo_diode_found_white_line_value):
                 white_line_found_left = True
