@@ -206,11 +206,11 @@ The car must start off the line, such that it will cross it when driving straigh
 """
 # It is adjusted to work for a line of black electrical tape on a grey speckled floor.
 class FollowLine:
-    def __init__(self, motors, speed = 40):
+    def __init__(self, motors, speed = 20):
         # these values might need to be adjusted
         self.proportional_term_in_PID = 0.8 #1.0 
-        self.derivative_term_in_PID = 0.000 # 0.001
-        self.part_off_new_error_used_in_smoothing = 1.0
+        self.derivative_term_in_PID = 0.001 # 0.001
+        self.part_off_new_error_used_in_smoothing = 0.2
         self.left_photo_diode_found_black_line_value = 150
         self.right_photo_diode_found_black_line_value = 130
         self.left_photo_diode_found_white_line_value = 370
