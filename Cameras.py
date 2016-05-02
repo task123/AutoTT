@@ -494,7 +494,7 @@ class Cameras:
             if debug_speed:
                 if red_circles is not None:
                     for circ in range(0,len(red_circles[0,:])):
-                        cv2.circle(frame,(red_circles[0,:][circ][0],red_circles[0,:][circ][1]),int(red_circles[0,:][circ][2]+5),(0,0,155),2)
+                        cv2.circle(self.image_1,(red_circles[0,:][circ][0],red_circles[0,:][circ][1]),int(red_circles[0,:][circ][2]+5),(0,0,155),2)
 
         #Looking for traffic lights
         if(self.look_for_traffic_light):
