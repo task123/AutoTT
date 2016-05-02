@@ -426,7 +426,7 @@ class Cameras:
         result_list_speed_signs = []
         is_only_inner_circle = False
         if(self.look_for_speed_sign):
-            print "looking for speed signs"
+            #print "looking for speed signs"
             if (not self.knn_initialized):
                 with np.load('knn_data.npz') as data:
                     train = data['train']
@@ -436,7 +436,7 @@ class Cameras:
             
             red_circles = cv2.HoughCircles(red_mask,cv2.HOUGH_GRADIENT,1,speed_circles_minDist,param1=speed_circles_canny_high,param2=speed_circles_canny_low,minRadius=speed_circles_min_radius,maxRadius=speed_circles_max_radius)
             if red_circles is not None:
-                print "found red circles"
+                #print "found red circles"
                 red_circles = np.uint16(np.around(red_circles))
                 (rows,columns,channels) = self.image_1.shape
                 sign_area = np.zeros((rows,columns), dtype=np.uint8)
@@ -473,7 +473,7 @@ class Cameras:
                 copy_result_list.sort()
                 speed_sign_value = copy_result_list.pop(int(len(copy_result_list)/2))[0][0]*10
 
-                print "draw rectangles:"
+                #print "draw rectangles:"
                 print self.draw_rectangles
                 if(self.draw_rectangles):
                     #draw rectangles
@@ -495,7 +495,7 @@ class Cameras:
 
         #Looking for traffic lights
         if(self.look_for_traffic_light):
-            print "looking for traffic lights"
+            #print "looking for traffic lights"
             
             green_mask = cv2.inRange(hsv_image_1,np.array((green_range_low_h,green_range_low_s,green_range_low_v), dtype = "uint8"),np.array((green_range_high_h, green_range_high_s, green_range_high_v), dtype = "uint8"))
             yellow_mask = cv2.inRange(hsv_image_1,np.array((yellow_range_low_h,yellow_range_low_s,yellow_range_low_v), dtype = "uint8"),np.array((yellow_range_high_h, yellow_range_high_s, yellow_range_high_v), dtype = "uint8"))
@@ -533,9 +533,9 @@ class Cameras:
 
 
             if (red_circles is not None):
-                print "we have red circles"
+                #print "we have red circles"
             if (green_circles is not None):
-                print "we have green circles"
+                #print "we have green circles"
 
             if (red_circles is not None and green_circles is not None):
                 for g_circ in range(0,len(green_circles[0,:])):
@@ -547,7 +547,7 @@ class Cameras:
                             y_min = int(red_circles[0,:][r_circ][1] + green_minus_red/2*(1-2))
                             y_max = int(red_circles[0,:][r_circ][1] + green_minus_red/2*(1+2))
                             
-                            print "found good traffic light candidate"
+                            #print "found good traffic light candidate"
                             
                             #Checking if it is the correct proportionality and if green is on top, might have to ajust the proportionality interval
                             if(green_circles[0,:][g_circ][1]>red_circles[0,:][r_circ][1] and (y_max-y_min)/(x_max-x_min) > x_y_proportion_limit_low and (y_max-y_min)/(x_max-x_min) < x_y_proportion_limit_high):
