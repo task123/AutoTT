@@ -519,7 +519,7 @@ class Cameras:
             if debug_red_light:
                 self.image_1 = red__light_mask.copy()
             if debug_green_light:
-                self.image_1 = red_light_mask.copy()
+                self.image_1 = green_light_mask.copy()
             
             if debug_light:
                 if red_circles is not None:
