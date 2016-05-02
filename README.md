@@ -24,7 +24,7 @@ The car has two electric motors, a swivel wheel in the back and two webcameras u
 ####(mainLoop.py, controllerOfMainloop.py and startControllerOfMainLoopAtBoot.sh)
 
 ## Nanpy
-Python library and Arduino program to control the Arduino from the Raspberry Pi. It is poorly documented, but work fine if you only want to control the ports. We have added 'analogReference(INTERNAL)' in the setup function of the Arduino program part of Nanpy, to get more accurate voltage readings.
+Python library and Arduino program to control the Arduino from the Raspberry Pi. It is poorly documented, but work fine if you only want to control the ports. We have added 'analogReference(INTERNAL)' in the setup function of the Arduino program part of Nanpy, nanpy-firware, to get more accurate voltage readings.
 
 ## Arduino 
 ####(tripMeterArduino, CH341SER_MAC and CH341SER_WIN)
