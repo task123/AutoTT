@@ -1,8 +1,8 @@
 # AutoTT
-This is the code used to steer the self driving car described in [this project](https://autottblog.wordpress.com). The car is control from an iPhone using [this app](https://github.com/task123/AutoTTApp).
+This is the code used to steer the self driving car described in [this project](https://autottblog.wordpress.com). The car is controlled from an iPhone using [this app](https://github.com/task123/AutoTTApp).
 
-## Describtion of the car
-The got two electric motors, a swivel wheel on the back and to webcameras in the front. A Raspberry Pi 3 is used to steering the car with the help of one Arduino Uno and a Arduino Nano. 
+## Description of the car
+The car has two electric motors, a swivel wheel in the back and two webcameras up front. A Raspberry Pi 3 is used to steer the car with the help of one Arduino Uno and a Arduino Nano.
 
 ## Capabilites
 
