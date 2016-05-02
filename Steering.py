@@ -211,8 +211,10 @@ class FollowLine:
         self.proportional_term_in_PID = 10.0 # 0.12
         self.derivative_term_in_PID = 0.0 # 0.001
         self.part_off_new_error_used_in_smoothing = 0.3
-        self.left_photo_diode_found_line_value = 180
-        self.right_photo_diode_found_line_value = 140
+        self.left_photo_diode_found_black_line_value = 170
+        self.right_photo_diode_found_black_line_value = 130
+        self.left_photo_diode_found_white_line_value = 320
+        self.right_photo_diode_found_white_line_value = 400
         self.right_photo_diode_lowest_line_value = 112.0
         self.left_photo_diode_lowest_line_value = 79.0
         self.right_photo_diode_at_lowest_left_value = 331.0
@@ -310,17 +312,24 @@ class FollowLine:
         self.find_line_thread.start()
      
     def find_line_loop(self,speed):
+        white_line_found_left = False
+        white_line_found_right = False
         line_found_left = False
         line_found_right = False
         while (self.stopped and not self.quit):
             time.sleep(0.01)
         self.motors.set_left_speed(speed)
         self.motors.set_right_speed(speed)
+        
         while not line_found_left and not line_found_right and not self.quit:
-            if (self.arduino.analogRead(self.pin_left_photo_diode) < self.left_photo_diode_found_line_value):
+            if (self.arduino.analogRead(self.pin_left_photo_diode) > self.left_photo_diode_found_white_line_value):
+                white_line_found_left = True
+            if (self.arduino.analogRead(self.pin_right_photo_diode) > self.right_photo_diode_found_white_line_value):
+                white_line_found_right = True
+            if (self.arduino.analogRead(self.pin_left_photo_diode) < self.left_photo_diode_found_black_line_value):
                 line_found_left = True
                 print "left diode triggered low"
-            elif (self.arduino.analogRead(self.pin_right_photo_diode) < self.right_photo_diode_found_line_value):
+            elif (self.arduino.analogRead(self.pin_right_photo_diode) < self.right_photo_diode_found_black_line_value):
                 line_found_right = True
                 print "right diode triggered low"
             while (self.stopped and not self.quit):
