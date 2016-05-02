@@ -297,7 +297,7 @@ class Cameras:
         red_high_range_high_v = int(variableFile.readline().split()[0])
         canny_high_threshold = int(variableFile.readline().split()[0])
         canny_low_threshold = int(variableFile.readline().split()[0])
-        approx_poly_peripheral_percentage = int(variableFile.readline().split()[0])
+        approx_poly_peripheral_percentage = float(variableFile.readline().split()[0])
         stop_sign_area_limit = int(variableFile.readline().split()[0])
         avg_intensity_stop_sign_limit = int(variableFile.readline().split()[0])
         stop_sign_message_area_low_limit = int(variableFile.readline().split()[0])
