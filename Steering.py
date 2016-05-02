@@ -346,7 +346,7 @@ class FollowLine:
             if (left_value > self.left_photo_diode_found_white_line_value):
                 white_line_found_left = True
                 print "white line left found"
-            if (right_value) > self.right_photo_diode_found_white_line_value):
+            if (right_value > self.right_photo_diode_found_white_line_value):
                 white_line_found_right = True
                 print "white line right found"
             if (left_value < self.left_photo_diode_found_black_line_value and white_line_found_left):
