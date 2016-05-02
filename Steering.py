@@ -328,10 +328,10 @@ class FollowLine:
             if (self.arduino.analogRead(self.pin_right_photo_diode) > self.right_photo_diode_found_white_line_value):
                 white_line_found_right = True
                 print "white line right found"
-            if (self.arduino.analogRead(self.pin_left_photo_diode) < self.left_photo_diode_found_black_line_value):
+            if (self.arduino.analogRead(self.pin_left_photo_diode) < self.left_photo_diode_found_black_line_value and white_line_found_left):
                 line_found_left = True
                 print "left diode triggered low"
-            elif (self.arduino.analogRead(self.pin_right_photo_diode) < self.right_photo_diode_found_black_line_value):
+            elif (self.arduino.analogRead(self.pin_right_photo_diode) < self.right_photo_diode_found_black_line_value and white_line_found_right):
                 line_found_right = True
                 print "right diode triggered low"
             while (self.stopped and not self.quit):
