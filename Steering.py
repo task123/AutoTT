@@ -322,16 +322,16 @@ class FollowLine:
         self.motors.set_right_speed(speed)
         left_value_list = []
         left_value_list.append((self.left_photo_diode_found_white_line_value - self.left_photo_diode_found_black_line_value) / 2.0 + self.left_photo_diode_found_black_line_value)
-        left_value_list.append(left_value_1)
-        left_value_list.append(left_value_1)
-        left_value_list.append(left_value_1)
-        left_value_list.append(left_value_1)
+        left_value_list.append(left_value_list[0])
+        left_value_list.append(left_value_list[0])
+        left_value_list.append(left_value_list[0])
+        left_value_list.append(left_value_list[0])
         right_value_list = []
         right_value_list.append((self.right_photo_diode_found_white_line_value - self.right_photo_diode_found_black_line_value) / 2.0 + self.right_photo_diode_found_black_line_value)
-        right_value_list.append(right_value_1)
-        right_value_list.append(right_value_1)
-        right_value_list.append(right_value_1)
-        right_value_list.append(right_value_1)
+        right_value_list.append(right_value_list[0])
+        right_value_list.append(right_value_list[0])
+        right_value_list.append(right_value_list[0])
+        right_value_list.append(right_value_list[0])
         while not line_found_left and not line_found_right and not self.quit:
             left_value_list[4] = left_value_list[3]
             left_value_list[3] = left_value_list[2]
