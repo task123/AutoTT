@@ -425,5 +425,10 @@ class FollowLine:
         self.is_speed_limit_on = False
 
     def stop_following_line(self):
-        self.arduino.digitalWrite(self.pin_photo_diode_power, 0)
+        print "stop_following_line"
         self.quit = True
+        time.sleep(0.5)
+        self.arduino.digitalWrite(self.pin_photo_diode_power, 0)
+        self.motors.set_left_speed(0.0)
+        self.motors.set_right_speed(0.0)
+        print "end stop_following_line"
