@@ -323,7 +323,7 @@ class FollowLine:
         found_white_last_time_right = False
         found_black_last_time = False
         while not line_found_left and not line_found_right and not self.quit:
-            print str(self.arduino.analogRead(self.pin_left_photo_diode)) + "   " + str(self.arduino.analogRead(self.pin_right_photo_diode))
+            print str(self.arduino.analogRead(self.pin_left_photo_diode)) + "   " + str(self.arduino.analogRead(self.pin_right_photo_diode)) + "    $$$$$$$$$"
             if (self.arduino.analogRead(self.pin_left_photo_diode) > self.left_photo_diode_found_white_line_value):
                 if (found_white_last_time_left):
                     white_line_found_left = True
