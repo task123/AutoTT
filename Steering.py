@@ -209,7 +209,7 @@ class FollowLine:
         # these values might need to be adjusted
         self.proportional_term_in_PID = 2.0 # 0.12
         self.derivative_term_in_PID = 0.001 # 0.001
-        self.part_off_new_error_used_in_smoothing = 0.3
+        self.part_off_new_error_used_in_smoothing = 0.0
         self.left_photo_diode_found_black_line_value = 150
         self.right_photo_diode_found_black_line_value = 130
         self.left_photo_diode_found_white_line_value = 350
