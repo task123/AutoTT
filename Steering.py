@@ -271,7 +271,7 @@ class FollowLine:
                 self.left_position = (self.arduino.analogRead(self.pin_left_photo_diode) - self.left_photo_diode_lowest_line_value) / self.left_photo_diode_at_lowest_right_value
                 
                 if (self.right_position > 1):
-                    self.new_error = 2 * self.right_position)
+                    self.new_error = 2 * self.right_position
                 elif (self.left_position > 1):
                     self.new_error = - 2 * self.left_position
                 else:
