@@ -426,7 +426,7 @@ class Cameras:
         result_list_speed_signs = []
         is_only_inner_circle = False
         if(self.look_for_speed_sign):
-            print "looking for speed signs"
+            #print "looking for speed signs"
             if (not self.knn_initialized):
                 with np.load('knn_data.npz') as data:
                     train = data['train']
