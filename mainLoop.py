@@ -25,8 +25,8 @@ try:
     lights.off()
     print "Ready to login"
     autoTTCommunication = TCP.AutoTTCommunication(port)
-    steering = Steering.SteeringWithIOSGyro(motors)
     """
+    steering = Steering.SteeringWithIOSGyro(motors)
     cameras = Cameras.Cameras(motors, autoTTCommunication, streaming_port = port + 1)
     status = Status.Status(autoTTCommunication, motors)
     fan_controller = Status.FanController(motors, status, autoTTCommunication)
