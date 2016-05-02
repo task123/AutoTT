@@ -219,7 +219,7 @@ class FollowLine:
         self.left_photo_diode_lowest_line_value = 79.0
         self.right_photo_diode_at_lowest_left_value = 331.0
         self.left_photo_diode_at_lowest_right_value = 272.0
-        self.correction_interval = 0.01
+        self.correction_interval = 0.001
         self.distance_to_travel_before_stopping_for_stop_sign = 0.05
         self.distance_to_travel_before_stopping_for_traffic_light = 0.05
         self.distance_to_travel_before_changing_speed_limit = 0.05
@@ -345,7 +345,7 @@ class FollowLine:
             right_value_list[1] = right_value_list[0]
             right_value_list[0] = self.arduino.analogRead(self.pin_right_photo_diode)
             right_value = np.median(right_value_list)
-            print str(right_value) + "   " + str(left_value)
+            print str(right_value_list[0]) + "   " + str(left_value_list[0])
             if (left_value > self.left_photo_diode_found_white_line_value):
                 white_line_found_left = True
                 print "white line left found"
