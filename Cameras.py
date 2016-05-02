@@ -384,9 +384,6 @@ class Cameras:
         red_mask_high = cv2.inRange(hsv_image_1,np.array((red_high_range_low_h,red_high_range_low_s,red_high_range_low_v), dtype = "uint8"),np.array((red_high_range_high_h, red_high_range_high_s, red_high_range_high_v), dtype = "uint8"))
         red_mask = cv2.addWeighted(red_mask_low,1.0, red_mask_high,1.0, 0.0)
         red_mask = cv2.GaussianBlur(red_mask,(5,5),0)
-        
-        if debug_red:
-            self.image_1 = red_mask.copy()
 
         #Looking for stop signs
         if (self.look_for_stop_sign):
@@ -611,6 +608,8 @@ class Cameras:
                                                         self.steering.traffic_light("green")
                                                 self.ok_to_send_messages = False
 
+        if debug_red:
+            self.image_1 = red_mask.copy()
 
 
 
