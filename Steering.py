@@ -213,10 +213,10 @@ class FollowLine:
         self.part_off_new_error_used_in_smoothing = 0.3
         self.left_photo_diode_found_line_value = 180
         self.right_photo_diode_found_line_value = 140
-        self.right_photo_diode_lowest_line_value = 129.0
-        self.left_photo_diode_lowest_line_value = 87.0
-        self.right_photo_diode_at_lowest_left_value = 334.0
-        self.left_photo_diode_at_lowest_right_value = 280.0
+        self.right_photo_diode_lowest_line_value = 112.0
+        self.left_photo_diode_lowest_line_value = 79.0
+        self.right_photo_diode_at_lowest_left_value = 331.0
+        self.left_photo_diode_at_lowest_right_value = 272.0
         self.correction_interval = 0.01
         self.distance_to_travel_before_stopping_for_stop_sign = 0.05
         self.distance_to_travel_before_stopping_for_traffic_light = 0.05
