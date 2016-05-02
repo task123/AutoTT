@@ -219,7 +219,7 @@ class FollowLine:
         self.left_photo_diode_lowest_line_value = 79.0
         self.right_photo_diode_at_lowest_left_value = 331.0
         self.left_photo_diode_at_lowest_right_value = 272.0
-        self.correction_interval = 0.02
+        self.correction_interval = 0.05
         self.distance_to_travel_before_stopping_for_stop_sign = 0.05
         self.distance_to_travel_before_stopping_for_traffic_light = 0.05
         self.distance_to_travel_before_changing_speed_limit = 0.05
