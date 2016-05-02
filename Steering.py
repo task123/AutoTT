@@ -40,8 +40,6 @@ class SteeringWithIOSGyro:
         self.is_right_indicator_on = False
         self.is_high_beam_on = False
         
-        self.quit = False # only so one can set steering.quit = True and break the loops in FollowLine
-
     def receive_message(self, type, message):
         if (type == "Gyro" and self.stop == False):
             [roll, pitch, yaw] = message.split(';', 2)
@@ -183,9 +181,6 @@ class SteeringWithIOSButtons:
         self.motors = motors
         
         self.stop = True
-        
-        self.quit = False # only so one can set steering.quit = True and break the loops in FollowLine
-
     
     def receive_message(self, type, message):
         if (type == "LeftButtonTouchDown" and self.stop == False):
@@ -215,10 +210,10 @@ class FollowLine:
         self.proportional_term_in_PID = 5.0 # 0.12
         self.derivative_term_in_PID = 0.0 # 0.001
         self.part_off_new_error_used_in_smoothing = 0.3
-        self.left_photo_diode_found_black_line_value = 170
-        self.right_photo_diode_found_black_line_value = 130
-        self.left_photo_diode_found_white_line_value = 320
-        self.right_photo_diode_found_white_line_value = 400
+        self.left_photo_diode_found_black_line_value = 110
+        self.right_photo_diode_found_black_line_value = 150
+        self.left_photo_diode_found_white_line_value = 340
+        self.right_photo_diode_found_white_line_value = 420
         self.right_photo_diode_lowest_line_value = 112.0
         self.left_photo_diode_lowest_line_value = 79.0
         self.right_photo_diode_at_lowest_left_value = 331.0
