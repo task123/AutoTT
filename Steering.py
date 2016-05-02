@@ -280,8 +280,8 @@ class FollowLine:
                     
                 self.error = self.part_off_new_error_used_in_smoothing * self.new_error + (1 - self.part_off_new_error_used_in_smoothing) * self.error
                 
-                self.left_speed = self.speed - self.error*self.proportional_term_in_PID + (self.error - self.previous_error)*self.derivative_term_in_PID/self.correction_interval
-                self.right_speed = self.speed + self.error*self.proportional_term_in_PID - (self.error - self.previous_error)*self.derivative_term_in_PID/self.correction_interval
+                self.left_speed = self.speed * (1 - self.error*self.proportional_term_in_PID + (self.error - self.previous_error)*self.derivative_term_in_PID/self.correction_interval)
+                self.right_speed = self.speed * (1 + self.error*self.proportional_term_in_PID - (self.error - self.previous_error)*self.derivative_term_in_PID/self.correction_interval)
                 
                 if (self.left_speed > 100 or self.right_speed > 100):
                     if (self.left_speed > self.right_speed):
