@@ -11,7 +11,7 @@ The car has two electric motors, a swivel wheel in the back and two webcameras u
 ### Connection to the app 
 ####(TCP.py)
 
-### Steering the app 
+### Steering the car
 ####(Modes.py, Steering.py, Motors.py and Tripmeter.py)
 
 ### Status and lights 
