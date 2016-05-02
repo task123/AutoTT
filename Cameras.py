@@ -407,7 +407,7 @@ class Cameras:
                             for col in range(0,sign_cols):
                                 average_intensity = average_intensity + stop_sign[row,col]
                         average_intensity = average_intensity/stop_sign.size
-                        if (average_intensity > avg_s_intensity_stop_sign_limit):
+                        if (average_intensity > avg_intensity_stop_sign_limit):
                             # We have now found a stop sign
                             if (self.draw_rectangles):
                                 cv2.rectangle(self.image_1, (x,y), (x+w,y+h), (0,0,155),3)
