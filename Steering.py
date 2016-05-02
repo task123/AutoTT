@@ -269,8 +269,8 @@ class FollowLine:
             if (self.stopped):
                 self.motors.stop()
             else:
-                self.right_position = (self.arduino.analogRead(self.pin_right_photo_diode) - self.right_photo_diode_lowest_line_value) / self.right_photo_diode_at_lowest_left_value
-                self.left_position = (self.arduino.analogRead(self.pin_left_photo_diode) - self.left_photo_diode_lowest_line_value) / self.left_photo_diode_at_lowest_right_value
+                self.right_position = (self.arduino.analogRead(self.pin_right_photo_diode) - self.right_photo_diode_lowest_line_value) / (self.right_photo_diode_at_lowest_left_value - self.right_photo_diode_lowest_line_value)
+                self.left_position = (self.arduino.analogRead(self.pin_left_photo_diode) - self.left_photo_diode_lowest_line_value) / (self.left_photo_diode_at_lowest_right_value - self.left_photo_diode_lowest_line_value)
                 
                 if (self.right_position > 1):
                     self.new_error = 2 * self.right_position
