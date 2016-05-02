@@ -272,6 +272,7 @@ class FollowLine:
                 self.right_position = (self.arduino.analogRead(self.pin_right_photo_diode) - self.right_photo_diode_lowest_line_value) / (self.right_photo_diode_at_lowest_left_value - self.right_photo_diode_lowest_line_value)
                 self.left_position = (self.arduino.analogRead(self.pin_left_photo_diode) - self.left_photo_diode_lowest_line_value) / (self.left_photo_diode_at_lowest_right_value - self.left_photo_diode_lowest_line_value)
                 
+                print str(self.right_positions) + "   " + str(self.left_position)
                 self.right_position = self.right_position * self.right_position
                 self.left_position = self.left_position * self.left_position
                 
@@ -299,7 +300,7 @@ class FollowLine:
                 self.motors.set_right_speed(self.right_speed)
                 
                 self.previous_error = self.error
-                print self.error
+                #print self.error
 
             time.sleep(self.correction_interval)
 
