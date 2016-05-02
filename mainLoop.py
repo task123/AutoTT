@@ -50,7 +50,7 @@ try:
 
 
 except:
-    if (isinstance(steering, Steering.FollowLine):
+    if (isinstance(steering, Steering.FollowLine)):
         steering.stop_following_line()
         time.sleep(3)
     if (motors != None):
