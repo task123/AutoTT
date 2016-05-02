@@ -50,9 +50,6 @@ try:
 
 
 except:
-    if (steering != None):
-        steering.quit = True
-        time.sleep(0.5) # allow the loops to exit
     if (motors != None):
         motors.arduino.digitalWrite(12, 0) #turn off the light for the photo diodes under the car
         motors.turn_off()
