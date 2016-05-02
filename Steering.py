@@ -427,6 +427,7 @@ class FollowLine:
     def stop_following_line(self):
         print "stop_following_line"
         self.quit = True
+        self.stopped
         time.sleep(0.5)
         self.arduino.digitalWrite(self.pin_photo_diode_power, 0)
         self.motors.set_left_speed(0.0)
