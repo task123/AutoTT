@@ -23,7 +23,7 @@ try:
     right_value = (arduino.analogRead(pin_right_photo_diode) - 129.0) / 334.0
     left_value = (arduino.analogRead(pin_left_photo_diode) - 87.0) / 280.0
     error = 0
-    print str(right_value) + "    " + str(left_value) # + "    " + str(right_value + left_value) + "    " + str(right_value - left_value)
+    print str(arduino.analogRead(pin_right_photo_diode)) + "    " + str(arduino.analogRead(pin_left_photo_diode)) # + "    " + str(right_value + left_value) + "    " + str(right_value - left_value)
     if (right_value > 1):
       error = 2 * right_value
     elif (left_value > 1):
