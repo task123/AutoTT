@@ -25,7 +25,6 @@ try:
     lights.off()
     print "Ready to login"
     autoTTCommunication = TCP.AutoTTCommunication(port)
-    """
     steering = Steering.SteeringWithIOSGyro(motors)
     cameras = Cameras.Cameras(motors, autoTTCommunication, streaming_port = port + 1)
     status = Status.Status(autoTTCommunication, motors)
@@ -48,7 +47,6 @@ try:
             file = open("pidMainLoop.txt", "w")
             file.write(str(pid))
             file.close()
-    """
 
 except:
     print "except"
