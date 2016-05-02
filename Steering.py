@@ -213,7 +213,10 @@ class FollowLine:
         self.part_off_new_error_used_in_smoothing = 0.3
         self.left_photo_diode_found_line_value = 180
         self.right_photo_diode_found_line_value = 140
-        self.offset_value_between_right_and_left_photo_diode = 40
+        self.right_photo_diode_lowest_line_value = 129
+        self.left_photo_diode_lowest_line_value = 87
+        self.right_photo_diode_at_lowest_left_value = 334
+        self.left_photo_diode_at_lowest_right_value = 280
         self.correction_interval = 0.01
         self.distance_to_travel_before_stopping_for_stop_sign = 0.05
         self.distance_to_travel_before_stopping_for_traffic_light = 0.05
@@ -264,7 +267,16 @@ class FollowLine:
             if (self.stopped):
                 self.motors.stop()
             else:
-                self.new_error = self.arduino.analogRead(self.pin_right_photo_diode) - self.arduino.analogRead(self.pin_left_photo_diode) - self.offset_value_between_right_and_left_photo_diode
+                self.right_position = (self.arduino.analogRead(self.pin_right_photo_diode) - self.right_photo_diode_lowest_line_value) / self.right_photo_diode_at_lowest_left_value
+                self.left_position = (self.arduino.analogRead(self.pin_left_photo_diode) - self.left_photo_diode_lowest_line_value) / self.left_photo_diode_at_lowest_right_value
+                
+                if (self.right_position > 1):
+                    self.new_error = 2 * self.right_position)
+                elif (self.left_position > 1):
+                    self.new_error = - 2 * self.left_position
+                else:
+                    self.new_error = self.right_position - self.left_position
+                    
                 self.error = self.part_off_new_error_used_in_smoothing * self.new_error + (1 - self.part_off_new_error_used_in_smoothing) * self.error
                 
                 self.left_speed = self.speed - self.error*self.proportional_term_in_PID + (self.error - self.previous_error)*self.derivative_term_in_PID/self.correction_interval
