@@ -433,6 +433,9 @@ class Cameras:
                     train_labels = data['train_labels']
                 self.knn.train(train,cv2.ml.ROW_SAMPLE,train_labels)
                 self.knn_initialized = True
+        
+            rows, columns = red_mask.shape
+            search_area = red_mask[0:int(rows*3/4),0:columns]
             
             red_circles = cv2.HoughCircles(red_mask,cv2.HOUGH_GRADIENT,1,speed_circles_minDist,param1=speed_circles_canny_high,param2=speed_circles_canny_low,minRadius=speed_circles_min_radius,maxRadius=speed_circles_max_radius)
             if red_circles is not None:
