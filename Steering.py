@@ -39,8 +39,7 @@ class SteeringWithIOSGyro:
         self.is_left_indicator_on = False
         self.is_right_indicator_on = False
         self.is_high_beam_on = False
-
-
+        
     def receive_message(self, type, message):
         if (type == "Gyro" and self.stop == False):
             [roll, pitch, yaw] = message.split(';', 2)
@@ -208,15 +207,17 @@ The car must start off the line, such that it will cross it when driving straigh
 class FollowLine:
     def __init__(self, motors, speed = 12):
         # these values might need to be adjusted
-        self.proportional_term_in_PID = 0.12
-        self.derivative_term_in_PID = 0.001
+        self.proportional_term_in_PID = 10.0 # 0.12
+        self.derivative_term_in_PID = 0.01 # 0.001
         self.part_off_new_error_used_in_smoothing = 0.3
-        self.left_photo_diode_found_line_value = 180
-        self.right_photo_diode_found_line_value = 140
-        self.right_photo_diode_lowest_line_value = 129
-        self.left_photo_diode_lowest_line_value = 87
-        self.right_photo_diode_at_lowest_left_value = 334
-        self.left_photo_diode_at_lowest_right_value = 280
+        self.left_photo_diode_found_black_line_value = 150
+        self.right_photo_diode_found_black_line_value = 130
+        self.left_photo_diode_found_white_line_value = 350
+        self.right_photo_diode_found_white_line_value = 430
+        self.right_photo_diode_lowest_line_value = 112.0
+        self.left_photo_diode_lowest_line_value = 79.0
+        self.right_photo_diode_at_lowest_left_value = 331.0
+        self.left_photo_diode_at_lowest_right_value = 272.0
         self.correction_interval = 0.01
         self.distance_to_travel_before_stopping_for_stop_sign = 0.05
         self.distance_to_travel_before_stopping_for_traffic_light = 0.05
@@ -310,32 +311,61 @@ class FollowLine:
         self.find_line_thread.start()
      
     def find_line_loop(self,speed):
+        white_line_found_left = False
+        white_line_found_right = False
         line_found_left = False
         line_found_right = False
         while (self.stopped and not self.quit):
             time.sleep(0.01)
         self.motors.set_left_speed(speed)
         self.motors.set_right_speed(speed)
+        found_white_last_time_left = False
+        found_white_last_time_right = False
+        found_black_last_time = False
         while not line_found_left and not line_found_right and not self.quit:
-            if (self.arduino.analogRead(self.pin_left_photo_diode) < self.left_photo_diode_found_line_value):
-                line_found_left = True
-                print "left diode triggered low"
-            elif (self.arduino.analogRead(self.pin_right_photo_diode) < self.right_photo_diode_found_line_value):
-                line_found_right = True
-                print "right diode triggered low"
+            print str(self.arduino.analogRead(self.pin_left_photo_diode)) + "   " + str(self.arduino.analogRead(self.pin_right_photo_diode))
+            if (self.arduino.analogRead(self.pin_left_photo_diode) > self.left_photo_diode_found_white_line_value):
+                if (found_white_last_time_left):
+                    white_line_found_left = True
+                    print "white line left found"
+                else:
+                    found_white_last_time_left = True
+            else:
+                found_white_last_time_left = False
+            if (self.arduino.analogRead(self.pin_right_photo_diode) > self.right_photo_diode_found_white_line_value):
+                if (found_white_last_time_right):
+                    white_line_found_right = True
+                    print "white line right found"
+                else:
+                    found_white_last_time_right = False
+            else:
+                found_white_last_time_right = False
+            if (self.arduino.analogRead(self.pin_left_photo_diode) < self.left_photo_diode_found_black_line_value and white_line_found_left):
+                if (found_black_last_time):
+                    line_found_left = True
+                    print "left diode triggered low"
+                else:
+                    found_black_last_time = True
+            elif (self.arduino.analogRead(self.pin_right_photo_diode) < self.right_photo_diode_found_black_line_value and white_line_found_right):
+                if (found_black_last_time):
+                    line_found_right = True
+                    print "right diode triggered low"
+                else:
+                    found_black_last_time = True
+            else:
+                found_black_last_time = False
             while (self.stopped and not self.quit):
                 time.sleep(0.01)
             time.sleep(self.correction_interval)
         print "Line found!"
-        print self.quit
         while not self.quit:
-            if (line_found_left and self.arduino.analogRead(self.pin_left_photo_diode) > self.left_photo_diode_found_line_value):
+            if (line_found_left and self.arduino.analogRead(self.pin_left_photo_diode) > self.left_photo_diode_found_black_line_value):
                 self.motors.set_right_speed(0.0)
                 self.motors.set_left_speed(0.0)
                 self.start_following_line()
                 print "break"
                 break
-            elif (line_found_right and self.arduino.analogRead(self.pin_right_photo_diode) > self.right_photo_diode_found_line_value):
+            elif (line_found_right and self.arduino.analogRead(self.pin_right_photo_diode) > self.right_photo_diode_found_black_line_value):
                 self.motors.set_right_speed(0.0)
                 self.motors.set_left_speed(0.0)
                 self.start_following_line()
