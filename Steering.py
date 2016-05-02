@@ -342,6 +342,7 @@ class FollowLine:
             right_value_2 = right_value_1
             right_value_1 = self.arduino.analogRead(self.pin_right_photo_diode)
             right_value = (right_value_1 + right_value_2 + right_value_3 + right_value_4 + right_value_5) / 5.0
+            print str(right_value) + "   " + str(left_value)
             if (left_value > self.left_photo_diode_found_white_line_value):
                 white_line_found_left = True
                 print "white line left found"
