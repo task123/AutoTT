@@ -1,5 +1,5 @@
 # AutoTT
-This is the code used to run the self driving car described in [this project](https://autottblog.wordpress.com). The car is controlled from an iPhone using [this app](https://github.com/task123/AutoTTApp). It include the code run on a raspberrry pi (almost all the code is run on the pi) and two Arduinos. This 'README' file will briefly explain what the different moduels that does what to give an overview of what the code does. 
+This is the code used to run the self driving car described in [this project](https://autottblog.wordpress.com). The car is controlled from an iPhone using [this app](https://github.com/task123/AutoTTApp). It include the code run on a raspberrry pi (almost all the code is run on the pi) and two Arduinos. This 'README' file will briefly explain what the different moduels that does what to give an overview of what the code does. The code should probably be cleaned up to make it more readable and elegante, but as it works we do not feel any urgent need to do so at the time being. 
 
 ## Description of the car
 The car has two electric motors, a swivel wheel in the back and two webcameras up front. It also got two light sensor to be able to follow a road marked by white and black tape. A Raspberry Pi 3 is used to steer the car with the help of one Arduino Uno and a Arduino Nano. The pi control the Arduino Uno using Nanpy described below. The Arduino Uno control the motors, the lights, the relays turning on the power from the batteries, the fan to cool the pi. It also measure the voltage on the batteries and the signal from the two lightsensors on its analog pins. The Arduino Nano measure how fast the wheels are turning using a light sensor and a wheel with slits taken from an old CD-player, and sends signals to the pi's GPIO pins.
@@ -13,7 +13,7 @@ The 'AutoTTCommunication' class provides a simple way of communicating with the 
 The 'Disconnect' class turn off all the varius thing all the other classes when the app disconnects from the car.
 
 ### Steering the car
-####(tripMeterArduino,Motor.py, Steering.py and Modes.py)
+####(tripMeterArduino, Motor.py, Steering.py and Modes.py)
 As already stated the Arduino Nano measure how fast the wheels are turning using a light sensor and a wheel with slits taken from an old CD-player, and sends signals to the pi's GPIO pins.
 
 The TripMeter class initiate two interupts on the GPIO pins and calculates the speed and distance traved for each wheel when the Arduino Nano sends signals.
@@ -32,7 +32,7 @@ The FanController class turn the fan on when the CPU temperatur rises above 70 C
 
 ### Cameras 
 ####(Cameras.py and templates)
-The Cameras class takes picutes with the web cameras and stream video from a http-server using Flask in addition to using OpenCV to find stop signs, speed signs (machine learning used to read the numbers) and traffic lights. Flask is easily installed by running the command 'pip install flask' in the terminal. More on our use of OpenCv is found [here](https://autottblog.wordpress.com/programming-the-car/opencv/). 
+The Cameras class takes picutes with the web cameras and stream video from a http-server using Flask in addition to using OpenCV to find stop signs, speed signs (machine learning used to read the numbers) and traffic lights. Flask is easily installed by running the command 'pip install flask' in the terminal. The templates is used for this video stream. More on our use of OpenCv is found [here](https://autottblog.wordpress.com/programming-the-car/opencv/). The Cameras class
 
 ### Running the program 
 ####(mainLoop.py, controllerOfMainloop.py and startControllerOfMainLoopAtBoot.sh)
