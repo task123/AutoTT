@@ -149,7 +149,9 @@ class Modes:
                 self.steering.button_indicators_on(self.lights)
                 self.autoTTCommunication.buttons_on()
                 self.cameras.stop_following_traffic_rules()
+                print "mode 8 start_looking_for_speed_signs"
                 self.cameras.start_looking_for_speed_signs()
+                print "mode 8 done"
                 self.cameras.start_drawing_rectangles()
                 self.cameras.start_writing_type_of_objects()
             elif (message == "9"): # Tilt, Traffic rules, Lights
