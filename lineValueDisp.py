@@ -27,7 +27,9 @@ arduino.digitalWrite(pin_photo_diode_power, 1)
 print "7"
 try:
   while (True):
-    print str(arduino.analogRead(pin_right_photo_diode)) + "    " + str(arduino.analogRead(pin_left_photo_diode))
+    right_value = arduino.analogRead(pin_right_photo_diode)
+    left_value = arduino.analogRead(pin_left_photo_diode)
+    print str(right_value) + "    " + str(left_value) + "    " + str(right_value + left_value) + "    " + str(right_value - left_value)
     time.sleep(0.1)
 except:
   print "8"
