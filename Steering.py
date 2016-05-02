@@ -209,8 +209,8 @@ class FollowLine:
     def __init__(self, motors, speed = 12):
         # these values might need to be adjusted
         self.proportional_term_in_PID = 0.6 
-        self.derivative_term_in_PID = 0.001
-        self.part_off_new_error_used_in_smoothing = 0.8 #0.18
+        self.derivative_term_in_PID = 0.01
+        self.part_off_new_error_used_in_smoothing = 0.6 #0.18
         self.left_photo_diode_found_black_line_value = 145
         self.right_photo_diode_found_black_line_value = 125
         self.left_photo_diode_found_white_line_value = 390
@@ -219,7 +219,7 @@ class FollowLine:
         self.left_photo_diode_lowest_line_value = 79.0
         self.right_photo_diode_at_lowest_left_value = 331.0
         self.left_photo_diode_at_lowest_right_value = 272.0
-        self.correction_interval = 0.05
+        self.correction_interval = 0.01
         self.distance_to_travel_before_stopping_for_stop_sign = 0.05
         self.distance_to_travel_before_stopping_for_traffic_light = 0.05
         self.distance_to_travel_before_changing_speed_limit = 0.05
