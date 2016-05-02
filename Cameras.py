@@ -361,9 +361,14 @@ class Cameras:
         green_light_on_avg_limit = int(variableFile.readline().split()[0])
         traffic_light_message_dist = int(variableFile.readline().split()[0])
         
+        debug_red = int(variableFile.readline().split()[0])
+        debug_yellow = int(variableFile.readline().split()[0])
+        debug_green = int(variableFile.readline().split()[0])
         debug_stop = int(variableFile.readline().split()[0])
         debug_speed = int(variableFile.readline().split()[0])
         debug_light = int(variableFile.readline().split()[0])
+        debug_red_light = int(variableFile.readline().split()[0])
+        debug_green_light = int(variableFile.readline().split()[0])
 
         variableFile.close()
         # Finished loading variables for detection
@@ -379,6 +384,9 @@ class Cameras:
         red_mask_high = cv2.inRange(hsv_image_1,np.array((red_high_range_low_h,red_high_range_low_s,red_high_range_low_v), dtype = "uint8"),np.array((red_high_range_high_h, red_high_range_high_s, red_high_range_high_v), dtype = "uint8"))
         red_mask = cv2.addWeighted(red_mask_low,1.0, red_mask_high,1.0, 0.0)
         red_mask = cv2.GaussianBlur(red_mask,(5,5),0)
+        
+        if debug_red:
+            self.image_1 = red_mask.copy()
 
         #Looking for stop signs
         if (self.look_for_stop_sign):
@@ -411,6 +419,10 @@ class Cameras:
                                 if (self.steering != None):
                                     self.steering.stop_sign()
                                 self.ok_to_send_messages = False
+
+                    if debug_stop:
+                        cv2.drawContours(self.image_1, [approximate_polygon], -1, (0,255,0), 3)
+    
 
         #Looking for speed signs
         #take_median_of_speed_signs = 15
@@ -479,12 +491,23 @@ class Cameras:
                         self.steering.speed_limit(speed_sign_value)
                     self.ok_to_send_messages = False
 
+            if debug_speed:
+                if red_circles is not None:
+                    for circ in range(0,len(red_circles[0,:])):
+                        cv2.circle(frame,(red_circles[0,:][circ][0],red_circles[0,:][circ][1]),int(red_circles[0,:][circ][2]+5),(0,0,155),2)
+
         #Looking for traffic lights
         if(self.look_for_traffic_light):
             print "looking for traffic lights"
             
             green_mask = cv2.inRange(hsv_image_1,np.array((green_range_low_h,green_range_low_s,green_range_low_v), dtype = "uint8"),np.array((green_range_high_h, green_range_high_s, green_range_high_v), dtype = "uint8"))
             yellow_mask = cv2.inRange(hsv_image_1,np.array((yellow_range_low_h,yellow_range_low_s,yellow_range_low_v), dtype = "uint8"),np.array((yellow_range_high_h, yellow_range_high_s, yellow_range_high_v), dtype = "uint8"))
+            
+            if debug_yellow:
+                self.image_1 = yellow_mask.copy()
+            
+            if debug_green:
+                self.image_1 = green_mask.copy()
 
             red_circles = cv2.HoughCircles(red_mask,cv2.HOUGH_GRADIENT,1,red_traffic_circle_minDist,param1=red_traffic_circle_canny_high,param2=red_traffic_circle_canny_low,minRadius=red_traffic_circle_min_radius,maxRadius=red_traffic_circle_max_radius)
             yellow_circles = cv2.HoughCircles(yellow_mask,cv2.HOUGH_GRADIENT,1,yellow_traffic_circle_minDist, param1=yellow_traffic_circle_canny_high,param2=yellow_traffic_circle_canny_low,minRadius=yellow_traffic_circle_min_radius,maxRadius=yellow_traffic_circle_max_radius)
@@ -493,6 +516,24 @@ class Cameras:
             red_light_mask = cv2.inRange(hsv_image_1,np.array((red_light_range_low_h,red_light_range_low_s,red_light_range_low_v), dtype = "uint8"),np.array((red_light_range_high_h, red_light_range_high_s, red_light_range_high_v), dtype = "uint8"))
             green_light_mask = cv2.inRange(hsv_image_1,np.array((green_light_range_low_h,green_light_range_low_s,green_light_range_low_v), dtype = "uint8"),np.array((green_light_range_high_h, green_light_range_high_s, green_light_range_high_v), dtype = "uint8"))
             
+            if debug_red_light:
+                self.image_1 = red__light_mask.copy()
+            if debug_green_light:
+                self.image_1 = red_light_mask.copy()
+            
+            if debug_light:
+                if red_circles is not None:
+                    for circ in range(0,len(red_circles[0,:])):
+                        cv2.circle(self.image_1,(red_circles[0,:][circ][0],red_circles[0,:][circ][1]),int(red_circles[0,:][circ][2]+5),(0,0,155),2)
+
+                if yellow_circles is not None:
+                    for circ in range(0,len(yellow_circles[0,:])):
+                        cv2.circle(self.image_1,(yellow_circles[0,:][circ][0],yellow_circles[0,:][circ][1]),int(yellow_circles[0,:][circ][2]+5),(0,155,155),2)
+
+                if green_circles is not None:
+                    for circ in range(0,len(green_circles[0,:])):
+                        cv2.circle(self.image_1,(green_circles[0,:][circ][0],green_circles[0,:][circ][1]),int(green_circles[0,:][circ][2]+5),(0,155,0),2)
+
 
             if (red_circles is not None):
                 print "we have red circles"

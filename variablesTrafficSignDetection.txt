@@ -73,6 +73,11 @@
 150     red_light_on_avg_limit
 100     green_light_on_avg_limit
 55      traffic_light_message_dist
+0       debug_red
+0       debug_yellow
+0       debug_green
 0       debug_stop
 0       debug_speed
 0       debug_light
+0       debug_red_light
+0       debug_green_light
