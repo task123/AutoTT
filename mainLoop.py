@@ -52,7 +52,7 @@ try:
 except:
     if (isinstance(steering, Steering.FollowLine)):
         steering.stop_following_line()
-        time.sleep(3)
+        time.sleep(0.5)
     if (motors != None):
         motors.arduino.digitalWrite(12, 0) #turn off the light for the photo diodes under the car
         motors.turn_off()
