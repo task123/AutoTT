@@ -211,10 +211,10 @@ class FollowLine:
         self.proportional_term_in_PID = 0.8 #1.0 
         self.derivative_term_in_PID = 0.001 # 0.001
         self.part_off_new_error_used_in_smoothing = 0.1
-        self.left_photo_diode_found_black_line_value = 150
-        self.right_photo_diode_found_black_line_value = 130
-        self.left_photo_diode_found_white_line_value = 370
-        self.right_photo_diode_found_white_line_value = 450
+        self.left_photo_diode_found_black_line_value = 145
+        self.right_photo_diode_found_black_line_value = 125
+        self.left_photo_diode_found_white_line_value = 390
+        self.right_photo_diode_found_white_line_value = 470
         self.right_photo_diode_lowest_line_value = 112.0
         self.left_photo_diode_lowest_line_value = 79.0
         self.right_photo_diode_at_lowest_left_value = 331.0
