@@ -340,13 +340,13 @@ class FollowLine:
         print "Line found!"
         print self.quit
         while not self.quit:
-            if (line_found_left and self.arduino.analogRead(self.pin_left_photo_diode) > self.left_photo_diode_found_line_value):
+            if (line_found_left and self.arduino.analogRead(self.pin_left_photo_diode) > self.left_photo_diode_found_black_line_value):
                 self.motors.set_right_speed(0.0)
                 self.motors.set_left_speed(0.0)
                 self.start_following_line()
                 print "break"
                 break
-            elif (line_found_right and self.arduino.analogRead(self.pin_right_photo_diode) > self.right_photo_diode_found_line_value):
+            elif (line_found_right and self.arduino.analogRead(self.pin_right_photo_diode) > self.right_photo_diode_found_black_line_value):
                 self.motors.set_right_speed(0.0)
                 self.motors.set_left_speed(0.0)
                 self.start_following_line()
