@@ -39,7 +39,8 @@ class SteeringWithIOSGyro:
         self.is_left_indicator_on = False
         self.is_right_indicator_on = False
         self.is_high_beam_on = False
-
+        
+        self.quit = False # only so one can set steering.quit = True and break the loops in FollowLine
 
     def receive_message(self, type, message):
         if (type == "Gyro" and self.stop == False):
@@ -182,6 +183,9 @@ class SteeringWithIOSButtons:
         self.motors = motors
         
         self.stop = True
+        
+        self.quit = False # only so one can set steering.quit = True and break the loops in FollowLine
+
     
     def receive_message(self, type, message):
         if (type == "LeftButtonTouchDown" and self.stop == False):
