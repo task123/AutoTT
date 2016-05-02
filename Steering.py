@@ -319,41 +319,42 @@ class FollowLine:
             time.sleep(0.01)
         self.motors.set_left_speed(speed)
         self.motors.set_right_speed(speed)
-        found_white_last_time_left = False
-        found_white_last_time_right = False
-        found_black_last_time = False
+        left_value_1 = (self.left_photo_diode_found_white_line_value - self.left_photo_diode_found_black_line_value) / 2.0 + self.left_photo_diode_found_black_line_value
+        left_value_2 = left_value_1
+        left_value_3 = left_value_1
+        left_value_4 = left_value_1
+        left_value_5 = left_value_1
+        right_value_1 = (self.right_photo_diode_found_white_line_value - self.right_photo_diode_found_black_line_value) / 2.0 + self.right_photo_diode_found_black_line_value
+        right_value_2 = right_value_1 
+        right_value_3 = right_value_1 
+        right_value_4 = right_value_1 
+        right_value_5 = right_value_1 
         while not line_found_left and not line_found_right and not self.quit:
-            print str(self.arduino.analogRead(self.pin_left_photo_diode)) + "   " + str(self.arduino.analogRead(self.pin_right_photo_diode)) + "    $$$$$$$$$"
-            if (self.arduino.analogRead(self.pin_left_photo_diode) > self.left_photo_diode_found_white_line_value):
-                if (found_white_last_time_left):
-                    white_line_found_left = True
-                    print "white line left found"
-                else:
-                    found_white_last_time_left = True
-            else:
-                found_white_last_time_left = False
-            if (self.arduino.analogRead(self.pin_right_photo_diode) > self.right_photo_diode_found_white_line_value):
-                if (found_white_last_time_right):
-                    white_line_found_right = True
-                    print "white line right found"
-                else:
-                    found_white_last_time_right = False
-            else:
-                found_white_last_time_right = False
-            if (self.arduino.analogRead(self.pin_left_photo_diode) < self.left_photo_diode_found_black_line_value and white_line_found_left):
-                if (found_black_last_time):
-                    line_found_left = True
-                    print "left diode triggered low"
-                else:
-                    found_black_last_time = True
-            elif (self.arduino.analogRead(self.pin_right_photo_diode) < self.right_photo_diode_found_black_line_value and white_line_found_right):
-                if (found_black_last_time):
-                    line_found_right = True
-                    print "right diode triggered low"
-                else:
-                    found_black_last_time = True
-            else:
-                found_black_last_time = False
+            left_value_5 = left_value_4
+            left_value_4 = left_value_3 
+            left_value_3 = left_value_2
+            left_value_2 = left_value_1
+            left_value_1 = self.arduino.analogRead(self.pin_left_photo_diode)
+            left_value = (left_value_1 + left_value_2 + left_value_3 + left_value_4 + left_value_5) / 5.0
+            right_value_5 = right_value_4
+            right_value_4 = right_value_3 
+            right_value_3 = right_value_2
+            right_value_2 = right_value_1
+            right_value_1 = self.arduino.analogRead(self.pin_right_photo_diode)
+            right_value = (right_value_1 + right_value_2 + right_value_3 + right_value_4 + right_value_5) / 5.0
+            print str(right_value) + "   " + str(left_value) + "    $$$$$$$$$"
+            if (left_value > self.left_photo_diode_found_white_line_value):
+                white_line_found_left = True
+                print "white line left found"
+            if (right_value) > self.right_photo_diode_found_white_line_value):
+                white_line_found_right = True
+                print "white line right found"
+            if (left_value < self.left_photo_diode_found_black_line_value and white_line_found_left):
+                line_found_left = True
+                print "left diode triggered low"
+            elif (right_value < self.right_photo_diode_found_black_line_value and white_line_found_right):
+                line_found_right = True
+                print "right diode triggered low"
             while (self.stopped and not self.quit):
                 time.sleep(0.01)
             time.sleep(self.correction_interval)
