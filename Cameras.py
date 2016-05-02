@@ -532,9 +532,9 @@ class Cameras:
                         cv2.circle(self.image_1,(green_circles[0,:][circ][0],green_circles[0,:][circ][1]),int(green_circles[0,:][circ][2]+5),(0,155,0),2)
 
 
-            if (red_circles is not None):
+                #if (red_circles is not None):
                 #print "we have red circles"
-            if (green_circles is not None):
+                #if (green_circles is not None):
                 #print "we have green circles"
 
             if (red_circles is not None and green_circles is not None):
