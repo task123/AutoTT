@@ -4,6 +4,7 @@ import time
 import threading
 import socket
 import os
+import Steering
 
 class Connection:
     #the class 'receiver_of_message' must implement receive_message(message)
@@ -146,12 +147,13 @@ class AutoTTCommunication:
         self.send_message("Message",message)
 
 class Disconnect:
-    def __init__(self, autoTTCommunication, motors, lights, cameras, fan_controller):
+    def __init__(self, autoTTCommunication, motors, lights, cameras, fan_controller, steering):
         self.autoTTCommunication = autoTTCommunication
         self.motors = motors
         self.lights = lights
         self.cameras = cameras
         self.fan_controller = fan_controller
+        self.steering = steering
         self.good_connection = True
         self.time_of_last_connection = time.time()
                                          
@@ -163,6 +165,8 @@ class Disconnect:
             os.system("sudo shutdown now")
 
     def disconnect(self):
+        if (isinstance(self.steering, Steering.FollowLine)):
+            self.steering.stop_following_line()
         self.motors.arduino.digitalWrite(12,0) # turn off the light for the photo diode under the car
         self.motors.turn_off()
         self.lights.off()
