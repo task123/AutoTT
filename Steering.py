@@ -248,7 +248,8 @@ class FollowLine:
         self.arduino.pinMode(self.pin_right_photo_diode, self.arduino.INPUT)
        
         self.arduino.digitalWrite(self.pin_photo_diode_power, 1)
-        self.find_line(self.speed)
+        #self.find_line(self.speed)
+        self.start_following_line()
         
     def set_speed(speed):
        self.speed = speed
