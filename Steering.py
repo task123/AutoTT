@@ -206,7 +206,7 @@ The car must start off the line, such that it will cross it when driving straigh
 """
 # It is adjusted to work for a line of black electrical tape on a grey speckled floor.
 class FollowLine:
-    def __init__(self, motors, speed = 20):
+    def __init__(self, motors, speed = 12):
         # these values might need to be adjusted
         self.proportional_term_in_PID = 0.004
         self.derivative_term_in_PID = 0.00
@@ -248,9 +248,8 @@ class FollowLine:
         self.arduino.pinMode(self.pin_right_photo_diode, self.arduino.INPUT)
        
         self.arduino.digitalWrite(self.pin_photo_diode_power, 1)
-        #self.find_line(self.speed)
-        self.start_following_line()
-        
+        self.find_line(self.speed)
+
     def set_speed(speed):
        self.speed = speed
         
