@@ -261,6 +261,8 @@ class FollowLine:
  
     def follow_line_loop(self):
         print "following line"
+        self.left_speed = self.speed
+        self.right_speed = self.speed
         while not self.quit:
             if (self.stopped):
                 self.motors.stop()
