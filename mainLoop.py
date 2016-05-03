@@ -49,6 +49,7 @@ try:
             file.close()
 
 except:
+    print "exception"
     if (isinstance(steering, Steering.FollowLine)):
         steering.stop_following_line()
         time.sleep(0.5)
