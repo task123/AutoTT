@@ -232,6 +232,8 @@ class FollowLine:
         self.arduino = motors.arduino
         
         self.speed = speed
+        self.left_speed = speed
+        self.right_speed = speed
         self.error = 0
         self.previous_error = 0
 
