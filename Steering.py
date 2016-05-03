@@ -209,16 +209,12 @@ class FollowLine:
     def __init__(self, motors, speed = 12):
         # these values might need to be adjusted
         self.proportional_term_in_PID = 1.0
-        self.derivative_term_in_PID = 0.01
-        self.part_off_new_error_used_in_smoothing = 0.6 #0.18
-        self.left_photo_diode_found_black_line_value = 145
-        self.right_photo_diode_found_black_line_value = 125
-        self.left_photo_diode_found_white_line_value = 390
-        self.right_photo_diode_found_white_line_value = 470
-        self.right_photo_diode_lowest_line_value = 112.0
-        self.left_photo_diode_lowest_line_value = 79.0
-        self.right_photo_diode_at_lowest_left_value = 331.0
-        self.left_photo_diode_at_lowest_right_value = 272.0
+        self.derivative_term_in_PID = 0.00
+        self.part_off_new_error_used_in_smoothing = 1.0 #0.18
+        self.left_photo_diode_found_black_line_value = 100
+        self.right_photo_diode_found_black_line_value = 100
+        self.left_photo_diode_found_white_line_value = 420
+        self.right_photo_diode_found_white_line_value = 430
         self.correction_interval = 0.01
         self.distance_to_travel_before_stopping_for_stop_sign = 0.05
         self.distance_to_travel_before_stopping_for_traffic_light = 0.05
@@ -269,20 +265,8 @@ class FollowLine:
             if (self.stopped):
                 self.motors.stop()
             else:
-                self.right_position = (self.arduino.analogRead(self.pin_right_photo_diode) - self.right_photo_diode_lowest_line_value) / (self.right_photo_diode_at_lowest_left_value - self.right_photo_diode_lowest_line_value)
-                self.left_position = (self.arduino.analogRead(self.pin_left_photo_diode) - self.left_photo_diode_lowest_line_value) / (self.left_photo_diode_at_lowest_right_value - self.left_photo_diode_lowest_line_value)
+                self.new_error = self.arduino.analogRead(self.pin_right_photo_diode) - self.arduino.analogRead(self.pin_left_photo_diode)
                 
-                print str(self.right_position) + "   " + str(self.left_position)
-                self.right_position = self.right_position * self.right_position
-                self.left_position = self.left_position * self.left_position
-                
-                if (self.right_position > 1):
-                    self.new_error = 2 * self.right_position
-                elif (self.left_position > 1):
-                    self.new_error = - 2 * self.left_position
-                else:
-                    self.new_error = self.right_position - self.left_position
-                    
                 self.error = self.part_off_new_error_used_in_smoothing * self.new_error + (1.0 - self.part_off_new_error_used_in_smoothing) * self.error
                 
                 self.left_speed = self.speed * (1.0 - self.error*self.proportional_term_in_PID + (self.error - self.previous_error)*self.derivative_term_in_PID/self.correction_interval)
@@ -300,7 +284,7 @@ class FollowLine:
                 self.motors.set_right_speed(self.right_speed)
                 
                 self.previous_error = self.error
-                #print self.error
+                print self.error
 
             time.sleep(self.correction_interval)
 
