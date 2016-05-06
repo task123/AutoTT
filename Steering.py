@@ -319,7 +319,7 @@ class FollowLine:
                     
             time.sleep(self.correction_interval)
             
-    def is_at_juncition(self):
+    def is_at_junction(self):
         self.junction_left_check[4] = self.junction_left_check[3]
         self.junction_left_check[3] = self.junction_left_check[2]
         self.junction_left_check[2] = self.junction_left_check[1]
