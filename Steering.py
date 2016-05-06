@@ -319,7 +319,6 @@ class FollowLine:
                     self.is_turning_right = False
                     self.turn_right()
                     
-
             time.sleep(self.correction_interval)
             
     def is_at_juncition(self):
@@ -438,7 +437,31 @@ class FollowLine:
             self.traffic_stop = True
             self.motors.set_right_speed(self.new_right_speed)
             self.motors.set_left_speed(self.new_left_speed)
-        
+        elif (type = "SpeechRecognition"):
+            if (message == "DRIVE"):
+                self.stopped = False
+                self.traffic_stop = True
+                if (self.is_turning_left):
+                    self.motors.set_right_speed(0.0)
+                    self.motors.set_left_speed(self.speed)
+                elif (self.is_turning_right):
+                    self.motors.set_right_speed(self.speed)
+                    self.motors.set_left_speed(0.0)
+                else:
+                    self.motors.set_right_speed(self.speed)
+                    self.motors.set_left_speed(self.speed)
+            elif (message == "STOP"):
+                self.stopped = True
+                self.traffic_stop = False
+                self.motors.set_left_speed(0.0)
+                self.motors.set_right_speed(0.0)
+            elif (message == "RIGHT"):
+                self.is_turning_right = True
+                self.is_turning_left = False
+            elif (message == "LEFT"):
+                self.is_turning_left = True
+                self.is_turning_right = False
+            
     def stop_sign(self):
        self.traffic_stop = True
        self.trip_meter.reset()
