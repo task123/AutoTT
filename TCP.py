@@ -128,7 +128,13 @@ class AutoTTCommunication:
 
     def buttons_off(self):
         self.send_message("ButtonsOff", "")
+        
+    def speech_recognition_on(self):
+        self.send_message("SpeechRecognitionOn", "")
 
+    def speech_recognition_off(self):
+        self.send_message("SpeechRecognitionOff", "")
+        
     def modes(self, list_of_modes):
         message = ""
         for mode in list_of_modes:
