@@ -221,7 +221,7 @@ class FollowLine:
         self.distance_to_travel_before_stopping_for_traffic_light = 0.05
         self.distance_to_travel_before_changing_speed_limit = 0.05
         self.turn_after_distance = 0.07
-        self.max_turn = 1.0
+        self.max_turn = 1.5
         self.time_waiting_at_stop_sign = 2.0
         # these values might change
         self.pin_photo_diode_power = 12
@@ -293,13 +293,13 @@ class FollowLine:
                     else:
                         self.left_speed -= self.right_speed - 100
                         self.right_speed = 100
-                """
+                
                 difference = self.right_speed - self.left_speed
                 if (abs(difference) / self.speed > self.max_turn):
                     print "max"
                     self.right_speed = self.speed + difference / abs(difference) * self.max_turn / 2.0 * self.speed
                     self.left_speed = self.speed - difference / abs(difference) * self.max_turn / 2.0 * self.speed
-                """
+                
                 print str(self.left_speed) + "    " + str(self.right_speed)
                 self.motors.set_left_speed(self.left_speed)
                 self.motors.set_right_speed(self.right_speed)
