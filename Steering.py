@@ -429,7 +429,7 @@ class FollowLine:
             self.traffic_stop = True
             self.motors.set_right_speed(self.new_right_speed)
             self.motors.set_left_speed(self.new_left_speed)
-        elif (type = "SpeechRecognition"):
+        elif (type == "SpeechRecognition"):
             if (message == "DRIVE"):
                 self.stopped = False
                 self.traffic_stop = True
