@@ -259,17 +259,7 @@ class FollowLine:
        
         self.arduino.digitalWrite(self.pin_photo_diode_power, 1)
         self.find_line(self.speed)
-        
-                        if (self.is_at_junction() and (self.is_turning_left or self.is_turning_right)):
-                    self.trip_meter.reset()
-                    self.have_detected_junction = True
                     
-                if self.is_turning_left and self.have_detected_junction and self.trip_meter.get_right_distance() > self.turn_after_distance):
-                    self.turn_left()
-                if self.is_turning_right and self.have_detected_junction and self.trip_meter.get_right_distance() > self.turn_after_distance):
-                    self.turn_right()
-                    
-
     def set_speed(speed):
        self.speed = speed
         
