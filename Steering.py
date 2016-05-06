@@ -209,13 +209,13 @@ class FollowLine:
     def __init__(self, motors, speed = 17):
         # these values might need to be adjusted
         self.proportional_term_in_PID = 0.0043 #0.004
-        self.derivative_term_in_PID = 0.000001
+        self.derivative_term_in_PID = 0.00000
         self.part_off_new_error_used_in_smoothing = 1.0 #0.18
         self.left_photo_diode_found_black_line_value = 100
         self.right_photo_diode_found_black_line_value = 100
         self.left_photo_diode_found_white_line_value = 420
         self.right_photo_diode_found_white_line_value = 430
-        self.junction_found_value = 420
+        self.junction_found_value = 100
         self.correction_interval = 0.01
         self.distance_to_travel_before_stopping_for_stop_sign = 0.05
         self.distance_to_travel_before_stopping_for_traffic_light = 0.05
@@ -325,7 +325,7 @@ class FollowLine:
         self.junction_right_check[2] = self.junction_right_check[1]
         self.junction_right_check[1] = self.junction_right_check[0]
         self.junction_right_check[0] = self.arduino.analogRead(self.pin_right_photo_diode)
-        if (np.median(self.junction_left_check) > self.junction_found_value and np.median(self.junction_right_check) > self.junction_found_value):
+        if (np.median(self.junction_left_check) < self.junction_found_value and np.median(self.junction_right_check) < self.junction_found_value):
             print "at junction"
             return True
         else:
