@@ -283,12 +283,6 @@ class FollowLine:
                 
                 self.left_speed = self.speed * (1.0 - self.error*self.proportional_term_in_PID + (self.error - self.previous_error)*self.derivative_term_in_PID/self.correction_interval)
                 self.right_speed = self.speed * (1.0 + self.error*self.proportional_term_in_PID - (self.error - self.previous_error)*self.derivative_term_in_PID/self.correction_interval)
-                
-                difference = self.right_speed - self.left_speed
-                if (abs(difference) / self.speed > self.max_turn):
-                    print "max"
-                    self.right_speed = self.speed + difference / abs(difference) * self.max_turn / 2.0 * self.speed
-                    self.left_speed = self.speed - difference / abs(difference) * self.max_turn / 2.0 * self.speed
 
                 if (self.left_speed > 100 or self.right_speed > 100):
                     if (self.left_speed > self.right_speed):
@@ -297,12 +291,18 @@ class FollowLine:
                     else:
                         self.left_speed -= self.right_speed - 100
                         self.right_speed = 100
-
+               
+                difference = self.right_speed - self.left_speed
+                if (abs(difference) / self.speed > self.max_turn):
+                    print "max"
+                    self.right_speed = self.speed + difference / abs(difference) * self.max_turn / 2.0 * self.speed
+                    self.left_speed = self.speed - difference / abs(difference) * self.max_turn / 2.0 * self.speed
+                print str(self.left_speed) + "    " + str(self.right_speed)
                 self.motors.set_left_speed(self.left_speed)
                 self.motors.set_right_speed(self.right_speed)
                 
                 self.previous_error = self.error
-                print self.error
+                #print self.error
                 
                 if (self.is_at_junction() and (self.is_turning_left or self.is_turning_right) and not self.have_detected_junction):
                     self.trip_meter.reset()
