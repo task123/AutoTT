@@ -237,7 +237,7 @@ class FollowLine:
 
         print "fl1.6"
         self.arduino = self.motors.arduino
-        self.trip_meter = self.motor.trip_meter
+        self.trip_meter = self.motors.trip_meter
         
         print "fl1.7"
         self.left_speed = self.speed
