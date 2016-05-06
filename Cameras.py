@@ -583,7 +583,7 @@ class Cameras:
                                 
                                 green_rows,green_cols = green_ROI.shape
                                 green_avg=0
-                                if (green_ROI.size)
+                                if (green_ROI.size):
                                     for row in range(0,green_rows):
                                         for col in range(0,green_cols):
                                             green_avg = green_avg + green_ROI[row,col]
