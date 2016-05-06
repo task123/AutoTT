@@ -432,6 +432,7 @@ class FollowLine:
             self.motors.set_left_speed(self.new_left_speed)
         elif (type == "SpeechRecognition"):
             if (message == "DRIVE"):
+                print "drive"
                 self.stopped = False
                 self.traffic_stop = True
                 if (self.is_turning_left):
@@ -444,14 +445,17 @@ class FollowLine:
                     self.motors.set_right_speed(self.speed)
                     self.motors.set_left_speed(self.speed)
             elif (message == "STOP"):
+                print "stop"
                 self.stopped = True
                 self.traffic_stop = False
                 self.motors.set_left_speed(0.0)
                 self.motors.set_right_speed(0.0)
             elif (message == "RIGHT"):
+                print "right"
                 self.is_turning_right = True
                 self.is_turning_left = False
             elif (message == "LEFT"):
+                print "left"
                 self.is_turning_left = True
                 self.is_turning_right = False
 
