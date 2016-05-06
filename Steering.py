@@ -231,13 +231,16 @@ class FollowLine:
         # Values after this should not need to be changed.
         ##################################################
         
+        print "fl1.5"
         self.motors = motors
         self.speed = speed
         self.lights = lights
         
+        print "fl1.6"
         self.arduino = self.motors.arduino
         self.trip_meter = self.motor.trip_meter
         
+        print "fl1.7"
         self.left_speed = self.speed
         self.right_speed = self.speed
         self.error = 0
@@ -254,6 +257,7 @@ class FollowLine:
         self.is_turning_right = False
         self.have_detected_junction = False
     
+        print "fl1.8"
         self.arduino.pinMode(self.pin_photo_diode_power,self.arduino.OUTPUT)
         self.arduino.pinMode(self.pin_left_photo_diode, self.arduino.INPUT)
         self.arduino.pinMode(self.pin_right_photo_diode, self.arduino.INPUT)
