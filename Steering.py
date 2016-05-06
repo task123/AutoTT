@@ -221,6 +221,7 @@ class FollowLine:
         self.distance_to_travel_before_stopping_for_traffic_light = 0.05
         self.distance_to_travel_before_changing_speed_limit = 0.05
         self.turn_after_distance = 0.07
+        self.max_turn = 0.2
         self.time_waiting_at_stop_sign = 2.0
         # these values might change
         self.pin_photo_diode_power = 12
@@ -283,6 +284,11 @@ class FollowLine:
                 self.left_speed = self.speed * (1.0 - self.error*self.proportional_term_in_PID + (self.error - self.previous_error)*self.derivative_term_in_PID/self.correction_interval)
                 self.right_speed = self.speed * (1.0 + self.error*self.proportional_term_in_PID - (self.error - self.previous_error)*self.derivative_term_in_PID/self.correction_interval)
                 
+                difference = self.right_speed - self.left_speed
+                if (abs(difference) / self.speed > self.max_turn):
+                    self.right_speed = self.speed + difference / abs(difference) * self.max_turn / 2.0 * self.speed
+                    self.left_speed = self.speed - difference / abs(difference) * self.max_turn / 2.0 * self.speed
+
                 if (self.left_speed > 100 or self.right_speed > 100):
                     if (self.left_speed > self.right_speed):
                         self.right_speed -= self.left_speed - 100
