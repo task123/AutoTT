@@ -292,20 +292,13 @@ class FollowLine:
                     else:
                         self.left_speed -= self.right_speed - 100
                         self.right_speed = 100
-                """
-                difference = self.right_speed - self.left_speed
-                if (abs(difference) / self.speed > self.max_turn):
-                    print "max"
-                    self.right_speed = self.speed + difference / abs(difference) * self.max_turn / 2.0 * self.speed
-                    self.left_speed = self.speed - difference / abs(difference) * self.max_turn / 2.0 * self.speed
-                """
-                print str(self.left_speed) + "    " + str(self.right_speed)
+
                 self.motors.set_left_speed(self.left_speed)
                 self.motors.set_right_speed(self.right_speed)
                 
                 self.previous_error = self.error
                 #print self.error
-                """
+                
                 if (self.is_at_junction() and (self.is_turning_left or self.is_turning_right) and not self.have_detected_junction):
                     self.trip_meter.reset()
                     self.have_detected_junction = True
@@ -318,7 +311,7 @@ class FollowLine:
                     self.have_detected_junction = False
                     self.is_turning_right = False
                     self.turn_right()
-                """
+                
             time.sleep(self.correction_interval)
             
     def is_at_junction(self):
