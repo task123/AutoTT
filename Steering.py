@@ -258,7 +258,9 @@ class FollowLine:
         self.arduino.pinMode(self.pin_right_photo_diode, self.arduino.INPUT)
        
         self.arduino.digitalWrite(self.pin_photo_diode_power, 1)
-        self.find_line(self.speed)
+        #self.find_line(self.speed)
+        
+        self.start_following_line()
 
     def set_speed(speed):
        self.speed = speed
@@ -291,7 +293,7 @@ class FollowLine:
                     else:
                         self.left_speed -= self.right_speed - 100
                         self.right_speed = 100
-               
+               """
                 difference = self.right_speed - self.left_speed
                 if (abs(difference) / self.speed > self.max_turn):
                     print "max"
@@ -300,7 +302,7 @@ class FollowLine:
                 print str(self.left_speed) + "    " + str(self.right_speed)
                 self.motors.set_left_speed(self.left_speed)
                 self.motors.set_right_speed(self.right_speed)
-                
+                """
                 self.previous_error = self.error
                 #print self.error
                 
