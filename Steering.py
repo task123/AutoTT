@@ -302,7 +302,7 @@ class FollowLine:
                     self.trip_meter.reset()
                     self.have_detected_junction = True
                     
-                if self.is_turning_left and self.have_detected_junction and self.trip_meter.get_left_distance() > self.turn_after_distance):
+                if (self.is_turning_left and self.have_detected_junction and self.trip_meter.get_left_distance() > self.turn_after_distance):
                     self.have_detected_junction = False
                     self.is_turning_left = False
                     self.turn_left()
