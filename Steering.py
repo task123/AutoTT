@@ -326,7 +326,7 @@ class FollowLine:
         self.junction_right_check[1] = self.junction_right_check[0]
         self.junction_right_check[0] = self.arduino.analogRead(self.pin_right_photo_diode)
         if (np.median(self.junction_left_check) > self.junction_found_value and np.median(self.junction_right_check) > self.junction_found_value):
-            print "At junction"
+            print "at junction"
             return True
         else:
             return False
