@@ -555,10 +555,12 @@ class Cameras:
                             #Checking if it is the correct proportionality and if green is on top, might have to ajust the proportionality interval
                             if(green_circles[0,:][g_circ][1]>red_circles[0,:][r_circ][1] and (y_max-y_min)/(x_max-x_min) > x_y_proportion_limit_low and (y_max-y_min)/(x_max-x_min) < x_y_proportion_limit_high):
                                 
+                                ''' #Uncomment and reindent the following to turn on check for yellow
                                 #Finding which color is on
                                 if (yellow_circles is not None):
                                     for y_circ in range(0,len(yellow_circles[0,:])):
-                                        if (abs(yellow_circles[0,:][y_circ][0]-green_circles[0,:][g_circ][0]) < x_dist_red_green_light_limit  and abs(yellow_circles[0,:][y_circ][1]-green_circles[0,:][g_circ][1]) < y_dist_red_green_light_limit*0.7):
+                                        if (abs(yellow_circles[0,:][y_circ][0]-green_circles[0,:][g_circ][0]) < x_dist_red_green_light_limit  and abs(yellow_circles[0,:][y_circ][1]-green_circles[0,:][g_circ][1]) < y_dist_red_green_light_limit*0.7):'''
+                                            
                                             red_x = red_circles[0,:][r_circ][0]
                                             red_y = red_circles[0,:][r_circ][1]
                                             red_r = red_circles[0,:][r_circ][2] *0.50
