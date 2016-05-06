@@ -206,7 +206,7 @@ The car must start off the line, such that it will cross it when driving straigh
 """
 # It is adjusted to work for a line of black electrical tape on a grey speckled floor.
 class FollowLine:
-    def __init__(self, motors, speed = 17, lights = None):
+    def __init__(self, motors, speed = 17):
         # these values might need to be adjusted
         self.proportional_term_in_PID = 0.004
         self.derivative_term_in_PID = 0.00
@@ -463,13 +463,7 @@ class FollowLine:
             elif (message == "LEFT"):
                 self.is_turning_left = True
                 self.is_turning_right = False
-            elif (message == "HIGH"):
-                if (self.lights != None):
-                    if (self.lights.is_high_beam_on):
-                        self.lights.high_beam_off()
-                    else:
-                        self.lights.high_beam_on()
-            
+
     def stop_sign(self):
        self.traffic_stop = True
        self.trip_meter.reset()
