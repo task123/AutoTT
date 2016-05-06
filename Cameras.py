@@ -561,57 +561,57 @@ class Cameras:
                                     for y_circ in range(0,len(yellow_circles[0,:])):
                                         if (abs(yellow_circles[0,:][y_circ][0]-green_circles[0,:][g_circ][0]) < x_dist_red_green_light_limit  and abs(yellow_circles[0,:][y_circ][1]-green_circles[0,:][g_circ][1]) < y_dist_red_green_light_limit*0.7):'''
                                             
-                                            red_x = red_circles[0,:][r_circ][0]
-                                            red_y = red_circles[0,:][r_circ][1]
-                                            red_r = red_circles[0,:][r_circ][2] *0.50
-                                            
-                                            green_x = green_circles[0,:][g_circ][0]
-                                            green_y = green_circles[0,:][g_circ][1]
-                                            green_r = green_circles[0,:][g_circ][2] *0.50
-                                            
-                                            red_ROI = red_light_mask[int(red_y-red_r):int(red_y+red_r),int(red_x-red_r):int(red_x+red_r)]
-                                            green_ROI = green_light_mask[int(green_y-green_r):int(green_y+green_r),int(green_x-green_r):int(green_x+green_r)]
-                                            
-                                            red_rows,red_cols = red_ROI.shape
-                                            red_avg=0
-                                            for row in range(0,red_rows):
-                                                for col in range(0,red_cols):
-                                                    red_avg = red_avg + red_ROI[row,col]
-                                            red_avg = red_avg/red_ROI.size
-                                            
-                                            green_rows,green_cols = green_ROI.shape
-                                            green_avg=0
-                                            for row in range(0,green_rows):
-                                                for col in range(0,green_cols):
-                                                    green_avg = green_avg + green_ROI[row,col]
-                                            green_avg = green_avg/green_ROI.size
-                                            
-                                            traffic_light_value = 0
-                                            
-                                            green_light_value = 0
-                                            red_light_value = 255
+                                red_x = red_circles[0,:][r_circ][0]
+                                red_y = red_circles[0,:][r_circ][1]
+                                red_r = red_circles[0,:][r_circ][2] *0.50
+                                
+                                green_x = green_circles[0,:][g_circ][0]
+                                green_y = green_circles[0,:][g_circ][1]
+                                green_r = green_circles[0,:][g_circ][2] *0.50
+                                
+                                red_ROI = red_light_mask[int(red_y-red_r):int(red_y+red_r),int(red_x-red_r):int(red_x+red_r)]
+                                green_ROI = green_light_mask[int(green_y-green_r):int(green_y+green_r),int(green_x-green_r):int(green_x+green_r)]
+                                
+                                red_rows,red_cols = red_ROI.shape
+                                red_avg=0
+                                for row in range(0,red_rows):
+                                    for col in range(0,red_cols):
+                                        red_avg = red_avg + red_ROI[row,col]
+                                red_avg = red_avg/red_ROI.size
+                                
+                                green_rows,green_cols = green_ROI.shape
+                                green_avg=0
+                                for row in range(0,green_rows):
+                                    for col in range(0,green_cols):
+                                        green_avg = green_avg + green_ROI[row,col]
+                                green_avg = green_avg/green_ROI.size
+                                
+                                traffic_light_value = 0
+                                
+                                green_light_value = 0
+                                red_light_value = 255
 
-                                            if(red_avg > red_light_on_avg_limit):
-                                                traffic_light_value = 0 # 0 red, 1 yellow, 2 green
-                                                green_light_value = 0
-                                                red_light_value = 255
-                                            elif(green_avg > green_light_on_avg_limit):
-                                                traffic_light_value = 2 # 0 red, 1 yellow, 2 green
-                                                green_light_value = 255
-                                                red_light_value = 0
+                                if(red_avg > red_light_on_avg_limit):
+                                    traffic_light_value = 0 # 0 red, 1 yellow, 2 green
+                                    green_light_value = 0
+                                    red_light_value = 255
+                                elif(green_avg > green_light_on_avg_limit):
+                                    traffic_light_value = 2 # 0 red, 1 yellow, 2 green
+                                    green_light_value = 255
+                                    red_light_value = 0
 
-                                            if (self.draw_rectangles):
-                                                cv2.rectangle(self.image_1, (x_min,y_min), (x_max,y_max), (0,green_light_value,red_light_value),3)
-                                            if (self.write_type_of_objects):
-                                                cv2.putText(self.image_1, "Traffic light", (x_min,y_min-7), font, font_size, (0,green_light_value,red_light_value),font_thickness)
-                                            if (self.ok_to_send_messages and green_y - red_y > traffic_light_message_dist):
-                                                # Here we send a message to stop the car. We have to ajust the parameter so that we enter this if at the correct distance.
-                                                if (self.steering != None):
-                                                    if (traffic_light_value == 0 or traffic_light_value == 1):# 0 red, 1 yellow, 2 green
-                                                        self.steering.traffic_light("red")
-                                                    elif (traffic_light_value == 2):# 0 red, 1 yellow, 2 green
-                                                        self.steering.traffic_light("green")
-                                                self.ok_to_send_messages = False
+                                if (self.draw_rectangles):
+                                    cv2.rectangle(self.image_1, (x_min,y_min), (x_max,y_max), (0,green_light_value,red_light_value),3)
+                                if (self.write_type_of_objects):
+                                    cv2.putText(self.image_1, "Traffic light", (x_min,y_min-7), font, font_size, (0,green_light_value,red_light_value),font_thickness)
+                                if (self.ok_to_send_messages and green_y - red_y > traffic_light_message_dist):
+                                    # Here we send a message to stop the car. We have to ajust the parameter so that we enter this if at the correct distance.
+                                    if (self.steering != None):
+                                        if (traffic_light_value == 0 or traffic_light_value == 1):# 0 red, 1 yellow, 2 green
+                                            self.steering.traffic_light("red")
+                                        elif (traffic_light_value == 2):# 0 red, 1 yellow, 2 green
+                                            self.steering.traffic_light("green")
+                                    self.ok_to_send_messages = False
 
         if debug_red:
             self.image_1 = red_mask.copy()
