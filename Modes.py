@@ -42,7 +42,7 @@ class Modes:
         elif (message_type == "InfoModes"):
             self.autoTTCommunication.info_modes(self.list_of_info_modes, int(message))
         elif (message_type == "ChosenMode"):
-            print "ChosenMode:" + message
+            print "ChosenMode:" + message + "hei"
             if (message == "0"): # Tilt Steering
                 if (self.following_line_running):
                     self.steering.stop_following_line()
@@ -104,12 +104,12 @@ class Modes:
                 self.autoTTCommunication.speech_recognition_off()
                 self.cameras.stop_following_traffic_rules()
             elif (message == "5"): # Follow line
+                print "Follow"
                 if (self.following_line_running):
                     self.steering.stop_following_line()
                     self.following_line_running = False
                 self.following_line_running = True
                 self.steering = Steering.FollowLine(self.motors)
-                print "Follow"
                 self.autoTTCommunication.set_receivers(mode_recv = self, status_recv = self.status, 
                     stop_cont_recv = self.steering, disconnect_recv = self.disconnect, shut_down_recv = self.disconnect, 
                     video_recv = self.cameras)
