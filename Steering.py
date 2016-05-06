@@ -277,6 +277,7 @@ class FollowLine:
         print "following line"
         while not self.quit:
             if (self.stopped):
+                print "stopped"
                 self.motors.stop()
             else:
                 self.new_error = self.arduino.analogRead(self.pin_left_photo_diode) - self.arduino.analogRead(self.pin_right_photo_diode)
@@ -333,6 +334,7 @@ class FollowLine:
         self.junction_right_check[1] = self.junction_right_check[0]
         self.junction_right_check[0] = self.arduino.analogRead(self.pin_right_photo_diode)
         if (np.median(self.junction_left_check) > self.junction_found_value and np.median(self.junction_right_check) > self.junction_found_value):
+            print "At junction"
             return True
         else:
             return False
@@ -344,7 +346,6 @@ class FollowLine:
         while (self.trip_meter.get_left_distance() < self.distance_turned_before_looking_for_line):
             time.sleep(0.05)
         
-
     def stop(self):
         self.stopped = True
         self.arduino.digitalWrite(self.pin_photo_diode_power, 0)
