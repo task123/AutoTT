@@ -215,7 +215,7 @@ class FollowLine:
         self.right_photo_diode_found_black_line_value = 100
         self.left_photo_diode_found_white_line_value = 420
         self.right_photo_diode_found_white_line_value = 430
-        self.junction_found_value = 100
+        self.junction_found_value = 140
         self.correction_interval = 0.01
         self.distance_to_travel_before_stopping_for_stop_sign = 0.05
         self.distance_to_travel_before_stopping_for_traffic_light = 0.05
