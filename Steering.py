@@ -234,8 +234,7 @@ class FollowLine:
         print "fl1.5"
         self.motors = motors
         self.speed = speed
-        self.lights = lights
-        
+
         print "fl1.6"
         self.arduino = self.motors.arduino
         self.trip_meter = self.motor.trip_meter
