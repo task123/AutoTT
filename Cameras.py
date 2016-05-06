@@ -572,19 +572,22 @@ class Cameras:
                                 red_ROI = red_light_mask[int(red_y-red_r):int(red_y+red_r),int(red_x-red_r):int(red_x+red_r)]
                                 green_ROI = green_light_mask[int(green_y-green_r):int(green_y+green_r),int(green_x-green_r):int(green_x+green_r)]
                                 
+                                
                                 red_rows,red_cols = red_ROI.shape
                                 red_avg=0
-                                for row in range(0,red_rows):
-                                    for col in range(0,red_cols):
-                                        red_avg = red_avg + red_ROI[row,col]
-                                red_avg = red_avg/red_ROI.size
+                                if (red_ROI.size):
+                                    for row in range(0,red_rows):
+                                        for col in range(0,red_cols):
+                                            red_avg = red_avg + red_ROI[row,col]
+                                    red_avg = red_avg/red_ROI.size
                                 
                                 green_rows,green_cols = green_ROI.shape
                                 green_avg=0
-                                for row in range(0,green_rows):
-                                    for col in range(0,green_cols):
-                                        green_avg = green_avg + green_ROI[row,col]
-                                green_avg = green_avg/green_ROI.size
+                                if (green_ROI.size)
+                                    for row in range(0,green_rows):
+                                        for col in range(0,green_cols):
+                                            green_avg = green_avg + green_ROI[row,col]
+                                    green_avg = green_avg/green_ROI.size
                                 
                                 traffic_light_value = 0
                                 
