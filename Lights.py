@@ -104,3 +104,11 @@ class Lights:
     self.on()
     self.high_beam_on()
     time.sleep(self.high_beam_blink_time_and_delay)
+    
+  def receive_message(self, message_type, message):
+    if (message_type == "SpeechRecognition"):
+      if (message == "HIGH"):
+        if (self.is_high_beam_on):
+          self.high_beam_off()
+        else:
+          self.high_beam_on()

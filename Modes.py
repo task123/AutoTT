@@ -52,6 +52,7 @@ class Modes:
                     video_recv = self.cameras)
                 self.lights.off()
                 self.autoTTCommunication.buttons_off()
+                self.autoTTCommunication.speech_recognition_off()
                 self.cameras.stop_following_traffic_rules()
             elif (message == "1"): # Tilt, Lights
                 if (self.following_line_running):
@@ -63,6 +64,7 @@ class Modes:
                     video_recv = self.cameras, button_recv = self.steering)
                 self.steering.button_indicators_on(self.lights)
                 self.autoTTCommunication.buttons_on()
+                self.autoTTCommunication.speech_recognition_off()
                 self.cameras.stop_following_traffic_rules()
             elif (message == "2"): # Tilt with AOA
                 if (self.following_line_running):
@@ -74,6 +76,7 @@ class Modes:
                     video_recv = self.cameras)
                 self.lights.off()
                 self.autoTTCommunication.buttons_off()
+                self.autoTTCommunication.speech_recognition_off()
                 self.cameras.stop_following_traffic_rules()
             elif (message == "3"): # Button Steering
                 if (self.following_line_running):
@@ -85,6 +88,7 @@ class Modes:
                     video_recv = self.cameras, button_recv = self.steering)
                 self.lights.off()
                 self.autoTTCommunication.buttons_on()
+                self.autoTTCommunication.speech_recognition_off()
                 self.cameras.stop_following_traffic_rules()
             elif (message == "4"): # Button with AOA
                 if (self.following_line_running):
@@ -96,6 +100,7 @@ class Modes:
                     video_recv = self.cameras, button_recv = self.steering)
                 self.lights.off()
                 self.autoTTCommunication.buttons_on()
+                self.autoTTCommunication.speech_recognition_off()
                 self.cameras.stop_following_traffic_rules()
             elif (message == "5"): # Follow line
                 if (self.following_line_running):
@@ -108,6 +113,7 @@ class Modes:
                     video_recv = self.cameras)
                 self.lights.off()
                 self.autoTTCommunication.buttons_off()
+                self.autoTTCommunication.speech_recognition_on()
                 self.cameras.stop_following_traffic_rules()
             elif (message == "6"): # Stop sign
                 if (self.following_line_running):
@@ -119,6 +125,7 @@ class Modes:
                     video_recv = self.cameras, button_recv = self.steering)
                 self.steering.button_indicators_on(self.lights)
                 self.autoTTCommunication.buttons_on()
+                self.autoTTCommunication.speech_recognition_off()
                 self.cameras.set_steering(self.steering)
                 self.cameras.stop_following_traffic_rules()
                 self.cameras.start_looking_for_stop_signs()
@@ -134,6 +141,7 @@ class Modes:
                     video_recv = self.cameras)
                 self.lights.off()
                 self.autoTTCommunication.buttons_off()
+                self.autoTTCommunication.speech_recognition_off()
                 self.cameras.stop_following_traffic_rules()
                 self.cameras.start_looking_for_traffic_lights()
                 self.cameras.start_drawing_rectangles()
@@ -148,6 +156,7 @@ class Modes:
                     video_recv = self.cameras, button_recv = self.steering)
                 self.steering.button_indicators_on(self.lights)
                 self.autoTTCommunication.buttons_on()
+                self.autoTTCommunication.speech_recognition_off()
                 self.cameras.stop_following_traffic_rules()
                 self.cameras.start_looking_for_speed_signs()
                 self.cameras.start_drawing_rectangles()
@@ -162,6 +171,7 @@ class Modes:
                     video_recv = self.cameras, button_recv = self.steering)
                 self.steering.button_indicators_on(self.lights)
                 self.autoTTCommunication.buttons_on()
+                self.autoTTCommunication.speech_recognition_off()
                 self.cameras.start_looking_for_stop_signs()
                 self.cameras.start_looking_for_traffic_lights()
                 self.cameras.start_looking_for_speed_signs()
@@ -177,6 +187,7 @@ class Modes:
                     video_recv = self.cameras)
                 self.lights.on()
                 self.autoTTCommunication.buttons_off()
+                self.autoTTCommunication.speech_recognition_on()
                 self.cameras.start_looking_for_stop_signs()
                 self.cameras.start_looking_for_traffic_lights()
                 self.cameras.start_looking_for_speed_signs()

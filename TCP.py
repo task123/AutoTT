@@ -35,7 +35,7 @@ class Connection:
 
 class AutoTTCommunication:
     #all recv classes must implement receive_message(self, message_type, message)
-    def __init__(self, port, ip_address = None, gyro_recv = None, main_view_recv = None, mode_recv = None, status_recv = None, stop_cont_recv = None, disconnect_recv = None, shut_down_recv = None, connection_test_recv = None,  video_recv = None, button_recv = None, speech_recognition_recv = None):
+    def __init__(self, port, ip_address = None, gyro_recv = None, main_view_recv = None, mode_recv = None, status_recv = None, stop_cont_recv = None, disconnect_recv = None, shut_down_recv = None, connection_test_recv = None,  video_recv = None, button_recv = None, speech_recognition_recv = []):
         self.gyro_recv = gyro_recv
         self.mode_recv = mode_recv
         self.status_recv = status_recv
@@ -53,7 +53,7 @@ class AutoTTCommunication:
             ip_address = sock.getsockname()[0]
         self.tcp = Connection(ip_address, port, self)
     
-    def set_receivers(self, gyro_recv = None, main_view_recv = None, mode_recv = None, status_recv = None, stop_cont_recv = None, disconnect_recv = None, shut_down_recv = None, connection_test_recv = None, video_recv = None, button_recv = None, speech_recognition_recv = None):
+    def set_receivers(self, gyro_recv = None, main_view_recv = None, mode_recv = None, status_recv = None, stop_cont_recv = None, disconnect_recv = None, shut_down_recv = None, connection_test_recv = None, video_recv = None, button_recv = None, speech_recognition_recv = []):
         self.gyro_recv = gyro_recv
         self.mode_recv = mode_recv
         self.status_recv = status_recv
@@ -104,8 +104,9 @@ class AutoTTCommunication:
                     self.button_recv.receive_message(type, message)
                 elif (type == "RightButtonTouchUp" and self.button_recv is not None):
                     self.button_recv.receive_message(type, message)
-                elif (type == "SpeechRecognition" and self.speech_recognition_recv is not None):
-                    self.speech_recognition_recv.receive_message(type, message)
+                elif (type == "SpeechRecognition" and len(self.speech_recognition_recv) > 0):
+                    for i in range(0,len(self.speech_recognition_recv)):
+                        self.speech_recognition_recv[i].receive_message(type, message)
                 message = next_message
             except:
                 message = ""
@@ -127,7 +128,13 @@ class AutoTTCommunication:
 
     def buttons_off(self):
         self.send_message("ButtonsOff", "")
+        
+    def speech_recognition_on(self):
+        self.send_message("SpeechRecognitionOn", "")
 
+    def speech_recognition_off(self):
+        self.send_message("SpeechRecognitionOff", "")
+        
     def modes(self, list_of_modes):
         message = ""
         for mode in list_of_modes:

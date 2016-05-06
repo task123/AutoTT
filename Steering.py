@@ -206,7 +206,7 @@ The car must start off the line, such that it will cross it when driving straigh
 """
 # It is adjusted to work for a line of black electrical tape on a grey speckled floor.
 class FollowLine:
-    def __init__(self, motors, speed = 17, lights = None):
+    def __init__(self, motors, speed = 17):
         # these values might need to be adjusted
         self.proportional_term_in_PID = 0.004
         self.derivative_term_in_PID = 0.00
@@ -259,17 +259,7 @@ class FollowLine:
        
         self.arduino.digitalWrite(self.pin_photo_diode_power, 1)
         self.find_line(self.speed)
-        
-                        if (self.is_at_junction() and (self.is_turning_left or self.is_turning_right)):
-                    self.trip_meter.reset()
-                    self.have_detected_junction = True
                     
-                if self.is_turning_left and self.have_detected_junction and self.trip_meter.get_right_distance() > self.turn_after_distance):
-                    self.turn_left()
-                if self.is_turning_right and self.have_detected_junction and self.trip_meter.get_right_distance() > self.turn_after_distance):
-                    self.turn_right()
-                    
-
     def set_speed(speed):
        self.speed = speed
         
@@ -312,11 +302,11 @@ class FollowLine:
                     self.trip_meter.reset()
                     self.have_detected_junction = True
                     
-                if self.is_turning_left and self.have_detected_junction and self.trip_meter.get_left_distance() > self.turn_after_distance):
+                if (self.is_turning_left and self.have_detected_junction and self.trip_meter.get_left_distance() > self.turn_after_distance):
                     self.have_detected_junction = False
                     self.is_turning_left = False
                     self.turn_left()
-                if self.is_turning_right and self.have_detected_junction and self.trip_meter.get_right_distance() > self.turn_after_distance):
+                if (self.is_turning_right and self.have_detected_junction and self.trip_meter.get_right_distance() > self.turn_after_distance):
                     self.have_detected_junction = False
                     self.is_turning_right = False
                     self.turn_right()
@@ -439,7 +429,7 @@ class FollowLine:
             self.traffic_stop = True
             self.motors.set_right_speed(self.new_right_speed)
             self.motors.set_left_speed(self.new_left_speed)
-        elif (type = "SpeechRecognition"):
+        elif (type == "SpeechRecognition"):
             if (message == "DRIVE"):
                 self.stopped = False
                 self.traffic_stop = True
@@ -463,13 +453,7 @@ class FollowLine:
             elif (message == "LEFT"):
                 self.is_turning_left = True
                 self.is_turning_right = False
-            elif (message == "HIGH"):
-                if (self.lights != None):
-                    if (self.lights.is_high_beam_on):
-                        self.lights.high_beam_off()
-                    else:
-                        self.lights.high_beam_on()
-            
+
     def stop_sign(self):
        self.traffic_stop = True
        self.trip_meter.reset()
