@@ -221,7 +221,7 @@ class FollowLine:
         self.distance_to_travel_before_stopping_for_traffic_light = 0.05
         self.distance_to_travel_before_changing_speed_limit = 0.05
         self.turn_after_distance = 0.07
-        self.max_turn = 0.5
+        self.max_turn = 1.0
         self.time_waiting_at_stop_sign = 2.0
         # these values might change
         self.pin_photo_diode_power = 12
