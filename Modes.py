@@ -182,9 +182,10 @@ class Modes:
                     self.steering.stop_following_line()
                     self.following_line_running = False
                 self.steering = Steering.FollowLine(self.motors)
+                speech_recognition_recv = [self.steering, self.lights]
                 self.autoTTCommunication.set_receivers(mode_recv = self, status_recv = self.status, 
                     stop_cont_recv = self.steering, disconnect_recv = self.disconnect, shut_down_recv = self.disconnect, 
-                    video_recv = self.cameras)
+                    video_recv = self.cameras, speech_recognition_recv = speech_recognition_recv)
                 self.lights.on()
                 self.autoTTCommunication.buttons_off()
                 self.autoTTCommunication.speech_recognition_on()

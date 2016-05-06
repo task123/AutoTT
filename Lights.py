@@ -65,17 +65,17 @@ class Lights:
       
   def right_indicator_loop(self):
     while (self.is_right_indicator_on):
+      time.sleep(self.indicator_blink_delay)
       self.arduino.digitalWrite(self.right_indicator_pin, 1)
       time.sleep(self.indicator_blink_time)
       self.arduino.digitalWrite(self.right_indicator_pin, 0)
-      time.sleep(self.indicator_blink_delay)
       
   def left_indicator_loop(self):
     while (self.is_left_indicator_on):
+      time.sleep(self.indicator_blink_delay)
       self.arduino.digitalWrite(self.left_indicator_pin, 1)
       time.sleep(self.indicator_blink_time)
       self.arduino.digitalWrite(self.left_indicator_pin, 0)
-      time.sleep(self.indicator_blink_delay)
       
   def right_indicator_on(self):
     self.is_right_indicator_on = True

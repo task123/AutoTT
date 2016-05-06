@@ -208,19 +208,20 @@ The car must start off the line, such that it will cross it when driving straigh
 class FollowLine:
     def __init__(self, motors, speed = 17):
         # these values might need to be adjusted
-        self.proportional_term_in_PID = 0.004
-        self.derivative_term_in_PID = 0.00
-        self.part_off_new_error_used_in_smoothing = 0.5 #0.18
+        self.proportional_term_in_PID = 0.0043 #0.004
+        self.derivative_term_in_PID = 0.0000005
+        self.part_off_new_error_used_in_smoothing = 1.0 #0.18
         self.left_photo_diode_found_black_line_value = 100
         self.right_photo_diode_found_black_line_value = 100
         self.left_photo_diode_found_white_line_value = 420
         self.right_photo_diode_found_white_line_value = 430
-        self.junction_found_value = 420
+        self.junction_found_value = 100
         self.correction_interval = 0.01
         self.distance_to_travel_before_stopping_for_stop_sign = 0.05
         self.distance_to_travel_before_stopping_for_traffic_light = 0.05
         self.distance_to_travel_before_changing_speed_limit = 0.05
         self.turn_after_distance = 0.07
+        self.max_turn = 1.5
         self.time_waiting_at_stop_sign = 2.0
         # these values might change
         self.pin_photo_diode_power = 12
@@ -232,10 +233,9 @@ class FollowLine:
         
         self.motors = motors
         self.speed = speed
-        self.lights = lights
-        
+
         self.arduino = self.motors.arduino
-        self.trip_meter = self.motor.trip_meter
+        self.trip_meter = self.motors.trip_meter
         
         self.left_speed = self.speed
         self.right_speed = self.speed
@@ -258,8 +258,9 @@ class FollowLine:
         self.arduino.pinMode(self.pin_right_photo_diode, self.arduino.INPUT)
        
         self.arduino.digitalWrite(self.pin_photo_diode_power, 1)
-        self.find_line(self.speed)
-                    
+        #self.find_line(self.speed)
+        self.start_following_line()
+
     def set_speed(speed):
        self.speed = speed
         
@@ -277,13 +278,13 @@ class FollowLine:
             if (self.stopped):
                 self.motors.stop()
             else:
-                self.new_error = self.arduino.analogRead(self.pin_right_photo_diode) - self.arduino.analogRead(self.pin_left_photo_diode)
+                self.new_error = self.arduino.analogRead(self.pin_left_photo_diode) - self.arduino.analogRead(self.pin_right_photo_diode)
                 
                 self.error = self.part_off_new_error_used_in_smoothing * self.new_error + (1.0 - self.part_off_new_error_used_in_smoothing) * self.error
                 
                 self.left_speed = self.speed * (1.0 - self.error*self.proportional_term_in_PID + (self.error - self.previous_error)*self.derivative_term_in_PID/self.correction_interval)
                 self.right_speed = self.speed * (1.0 + self.error*self.proportional_term_in_PID - (self.error - self.previous_error)*self.derivative_term_in_PID/self.correction_interval)
-                
+
                 if (self.left_speed > 100 or self.right_speed > 100):
                     if (self.left_speed > self.right_speed):
                         self.right_speed -= self.left_speed - 100
@@ -296,7 +297,7 @@ class FollowLine:
                 self.motors.set_right_speed(self.right_speed)
                 
                 self.previous_error = self.error
-                print self.error
+                #print self.error
                 
                 if (self.is_at_junction() and (self.is_turning_left or self.is_turning_right) and not self.have_detected_junction):
                     self.trip_meter.reset()
@@ -310,10 +311,10 @@ class FollowLine:
                     self.have_detected_junction = False
                     self.is_turning_right = False
                     self.turn_right()
-                    
+                
             time.sleep(self.correction_interval)
             
-    def is_at_juncition(self):
+    def is_at_junction(self):
         self.junction_left_check[4] = self.junction_left_check[3]
         self.junction_left_check[3] = self.junction_left_check[2]
         self.junction_left_check[2] = self.junction_left_check[1]
@@ -324,7 +325,8 @@ class FollowLine:
         self.junction_right_check[2] = self.junction_right_check[1]
         self.junction_right_check[1] = self.junction_right_check[0]
         self.junction_right_check[0] = self.arduino.analogRead(self.pin_right_photo_diode)
-        if (np.median(self.junction_left_check) > self.junction_found_value and np.median(self.junction_right_check) > self.junction_found_value):
+        if (np.median(self.junction_left_check) < self.junction_found_value and np.median(self.junction_right_check) < self.junction_found_value):
+            print "at junction"
             return True
         else:
             return False
@@ -336,7 +338,6 @@ class FollowLine:
         while (self.trip_meter.get_left_distance() < self.distance_turned_before_looking_for_line):
             time.sleep(0.05)
         
-
     def stop(self):
         self.stopped = True
         self.arduino.digitalWrite(self.pin_photo_diode_power, 0)
@@ -349,8 +350,8 @@ class FollowLine:
         self.find_line_thread.start()
      
     def find_line_loop(self,speed, turning):
-        white_line_found_left = False
-        white_line_found_right = False
+        black_line_found_left = False
+        black_line_found_right = False
         line_found_left = False
         line_found_right = False
         while (self.stopped and not self.quit):
@@ -384,16 +385,16 @@ class FollowLine:
             right_value_list[0] = self.arduino.analogRead(self.pin_right_photo_diode)
             right_value = np.median(right_value_list)
             print str(right_value_list[0]) + "   " + str(left_value_list[0])
-            if (left_value > self.left_photo_diode_found_white_line_value):
-                white_line_found_left = True
+            if (left_value < self.left_photo_diode_found_black_line_value):
+                black_line_found_left = True
                 print "white line left found"
-            if (right_value > self.right_photo_diode_found_white_line_value):
-                white_line_found_right = True
+            if (right_value < self.right_photo_diode_found_black_line_value):
+                black_line_found_right = True
                 print "white line right found"
-            if (left_value < self.left_photo_diode_found_black_line_value and white_line_found_left):
+            if (left_value > self.left_photo_diode_found_white_line_value and black_line_found_left):
                 line_found_left = True
                 print "left diode triggered low"
-            elif (right_value < self.right_photo_diode_found_black_line_value and white_line_found_right):
+            elif (right_value < self.right_photo_diode_found_white_line_value and black_line_found_right):
                 line_found_right = True
                 print "right diode triggered low"
             while (self.stopped and not self.quit):
@@ -401,14 +402,14 @@ class FollowLine:
             time.sleep(self.correction_interval)
         print "Line found!"
         while not self.quit:
-            if (line_found_left and self.arduino.analogRead(self.pin_left_photo_diode) > self.left_photo_diode_found_black_line_value):
+            if (line_found_left and self.arduino.analogRead(self.pin_left_photo_diode) < self.left_photo_diode_found_black_line_value):
                 self.motors.set_right_speed(0.0)
                 self.motors.set_left_speed(0.0)
                 if (not turning):
                     self.start_following_line()
                 print "break"
                 break
-            elif (line_found_right and self.arduino.analogRead(self.pin_right_photo_diode) > self.right_photo_diode_found_black_line_value):
+            elif (line_found_right and self.arduino.analogRead(self.pin_right_photo_diode) < self.right_photo_diode_found_black_line_value):
                 self.motors.set_right_speed(0.0)
                 self.motors.set_left_speed(0.0)
                 if (not turning):
