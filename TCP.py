@@ -35,7 +35,7 @@ class Connection:
 
 class AutoTTCommunication:
     #all recv classes must implement receive_message(self, message_type, message)
-    def __init__(self, port, ip_address = None, gyro_recv = None, main_view_recv = None, mode_recv = None, status_recv = None, stop_cont_recv = None, disconnect_recv = None, shut_down_recv = None, connection_test_recv = None,  video_recv = None, button_recv = None):
+    def __init__(self, port, ip_address = None, gyro_recv = None, main_view_recv = None, mode_recv = None, status_recv = None, stop_cont_recv = None, disconnect_recv = None, shut_down_recv = None, connection_test_recv = None,  video_recv = None, button_recv = None, speech_recognition_recv = None):
         self.gyro_recv = gyro_recv
         self.mode_recv = mode_recv
         self.status_recv = status_recv
@@ -45,6 +45,7 @@ class AutoTTCommunication:
         self.connection_test_recv = connection_test_recv
         self.video_recv = video_recv
         self.button_recv = button_recv
+        self.speech_recognition_recv = speech_recognition_recv
         if (ip_address == None):
             gw = os.popen("ip -4 route show default").read().split() # commando works on raspberry pi, but not mac
             sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -52,7 +53,7 @@ class AutoTTCommunication:
             ip_address = sock.getsockname()[0]
         self.tcp = Connection(ip_address, port, self)
     
-    def set_receivers(self, gyro_recv = None, main_view_recv = None, mode_recv = None, status_recv = None, stop_cont_recv = None, disconnect_recv = None, shut_down_recv = None, connection_test_recv = None, video_recv = None, button_recv = None):
+    def set_receivers(self, gyro_recv = None, main_view_recv = None, mode_recv = None, status_recv = None, stop_cont_recv = None, disconnect_recv = None, shut_down_recv = None, connection_test_recv = None, video_recv = None, button_recv = None, speech_recognition_recv = None):
         self.gyro_recv = gyro_recv
         self.mode_recv = mode_recv
         self.status_recv = status_recv
@@ -62,6 +63,7 @@ class AutoTTCommunication:
         self.connection_test_recv = connection_test_recv
         self.video_recv = video_recv
         self.button_recv = button_recv
+        self.speech_recognition_recv = speech_recognition_recv
 
     def receive_message(self, message):
         while (len(message) > 0):
@@ -102,6 +104,8 @@ class AutoTTCommunication:
                     self.button_recv.receive_message(type, message)
                 elif (type == "RightButtonTouchUp" and self.button_recv is not None):
                     self.button_recv.receive_message(type, message)
+                elif (type == "SpeechRecognition" and self.speech_recognition_recv is not None):
+                    self.speech_recognition_recv.receive_message(type, message)
                 message = next_message
             except:
                 message = ""
